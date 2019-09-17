@@ -4,15 +4,55 @@ Estructura GDD :
 
 2.- Introducción
 	
-	2.1 Concepto del juego		2.2 Características principales		2.3 Género		2.4 Propósito y público objetivo
+	2.1 Concepto del juego	
 
-	2.5 Jugabilidad(idea básica)	2.6 Estilo visual			2.7 Alcance
+	Juego arcade para todos los públicos en el que el objetivo será conseguir la máxima puntuación
+	
+	2.2 Características principales		
+	
+	El juego se desarrolla en un puente con dos puños hidraulicos gigantes en el fondo. Se tendrá que tirar a todos los personajes que pasen sin que crucen al otro lado.
+	
+	2.3 Género	
+	
+	Arcade
+	
+	2.4 Propósito y público objetivo
+
+	Para todos los públicos, pero enfocado al público joven
+
+	2.5 Jugabilidad(idea básica)
+	
+	Varios personajes atravesarán el puente. Al pasar por delante de los puños, se pueden activar para tirar a los personajes fuera del puente.
+	El objetivo del juego es evitar que los personajes crucen el puente. Cuantos más personajes sean tirados, mayor será la puntuación.
+	El juego acaba tras dejar cruzar el puente a demasiados personajes.
+	El juego auméntara la dificultad según avance el tiempo, siendo más rápidas las oleadas de personajes cruzando y con distintos tipos de personajes. También se abrirá el otro lado del puente, pudiendo los personajes cruzar de izquierda a derecha y viciversa. 
+
+	
+	2.6 Estilo visual	
+	
+	-
+	
+	2.7 Alcance
+	
+	-
 
 3.- Mecánicas de juego
 
-	3.1 Jugabilidad(en profundidad)	3.2 Flujo de juego			3.3 Personajes		
+	3.1 Jugabilidad(en profundidad)	
+	
+	-
+	
+	3.2 Flujo de juego	
+	
+	-
+	
+	3.3 Personajes		
+	
+	-
 
 	3.4 Movimiento(interacción entre elementos, controles, físicas...)	
+	
+	-
 
 4.- Interfaz
 
