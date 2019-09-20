@@ -1,4 +1,4 @@
-#H1 Estructura GDD : #H1
+ Estructura GDD : 
 
 1.- Índice 
 
