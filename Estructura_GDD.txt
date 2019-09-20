@@ -1,6 +1,6 @@
-Estructura GDD :
+#H1 Estructura GDD : #H1
 
-1.- Índice
+1.- Índice 
 
 2.- Introducción
 
@@ -20,6 +20,9 @@ Estructura GDD :
 	Arcade
 	
 	2.4 Propósito y público objetivo
+	
+	El propósito general del juego es entretener durante un breve periodo de tiempo para no requerir una dedicación a los jugadores 
+	y poder abarcar un mayor número de jugadores.
 
 	Para todos los públicos, pero enfocado al público joven
 
@@ -35,14 +38,14 @@ Estructura GDD :
 	
 	Se trata de un divertido juego para navegadores con un sistema de monetización para el apartado visual.
 
-3.- Mecánicas de juego
+	3.- Mecánicas de juego
 
 	3.1 Jugabilidad(en profundidad)	
 	
-	Varios personajes atravesarán el puente. Al pasar por delante de los puños, se pueden activar para tirar a los personajes fuera del puente.
-	El objetivo del juego es evitar que los personajes crucen el puente. Cuantos más personajes sean tirados, mayor será la puntuación.
+	Varios personajes atravesarán el puente. Al pasar por delante de los puños, se pueden activar para tirar a los personajes fuera 	del puente.
+	El objetivo del juego es evitar que los personajes crucen el puente. Cuantos más personajes sean tirados, mayor será la 		puntuación.
 	El juego acaba tras dejar cruzar el puente a demasiados personajes.
-	El juego auméntara la dificultad según avance el tiempo, siendo más rápidas las oleadas de personajes cruzando y con distintos tipos de personajes. También se abrirá el otro lado del puente, pudiendo los personajes cruzar de izquierda a derecha y viciversa. 
+	El juego auméntara la dificultad según avance el tiempo, siendo más rápidas las oleadas de personajes cruzando y con distintos 		tipos de personajes. También se abrirá el otro lado del puente, pudiendo los personajes cruzar de izquierda a derecha y 		viciversa. 
 	
 	3.2 Flujo de juego	
 	
