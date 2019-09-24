@@ -1,4 +1,4 @@
-# *Estructura GDD :* 
+# *Estructura GDD :* // no entiendo por qué no se ve bien 
 
 ## *1.- Índice* 
 
