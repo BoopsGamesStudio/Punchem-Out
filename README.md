@@ -1,6 +1,6 @@
  __Estructura GDD :__ 
  
- ![Error al cargar la imagen](./boop.png)
+ ![Error al cargar la imagen](boop.png)
 
 # 1.- Índice
 
