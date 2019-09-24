@@ -85,7 +85,7 @@ Necesita más golpes que un caballero normal
 Brujo
 Se teletransporta a la mitad del mapa
 
-+ <a name="movement"></a>## 3.4 Movimiento
++ ##<a name="movement"></a>3.4 Movimiento
 	
 Los personajes se moverán de un lado al otro del puente. Los puños solo se mueven hacia el jugador para tirar a los personajes.
 
