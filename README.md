@@ -106,6 +106,11 @@ Los personajes se moverán de un lado al otro del puente. Los puños solo se mue
 
 # <a name="art"></a>5.- Arte 
 
-*POR HACER*
+![Error al cargar la imagen](Arte/F81EAE07-0D7A-4873-8E18-173F6B509C55.jpeg)
+![Error al cargar la imagen](Arte/Magos_Caballeros_Art.png)
+![Error al cargar la imagen](Arte/Magos_Caballeros_Art2.png)
+
 
 # <a name="changelog"></a>6.- Historial de versiones
++ (24/09/2019) Estructura básica de código
+
