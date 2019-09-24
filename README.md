@@ -1,57 +1,77 @@
- Estructura GDD : 
+ __Estructura GDD :__ 
+ 
+ ![Error al cargar la imagen](./boop.png)
 
 # 1.- Índice
 
-# 2.- Introducción
++ __[2.- Introducción](#intro)__
+	+ __[2.1 Concepto del juego](#game_concept)__
+	+ __[2.2 Características principales](#main_features)__
+	+ __[2.3 Género](#genre)__
+	+ __[2.4 Propósito y público objetivo](#target)__
+	+ __[2.5 Jugabilidad (idea básica)](#basic_gameplay)__
+	+ __[2.6 Estilo visual](#visual_style)__
+	+ __[2.7 Alcance](#reach)__
++ __[3.- Mecánicas de juego](#mechanics)__
+	+ __[3.1 Jugabilidad (en profundidad)](#gameplay)__
+	+ __[3.2 Flujo de juego](#game_flow)__
+	+ __[3.3 Personajes](#characters)__
+	+ __[3.4 Movimiento](#movement)__
++ __[4.- Interfaz](#interface)__
+
++ __[5. Arte](#art)__
++ __[6. Historial de versiones](#changelog)__
+
+# <a name="intro"></a>2.- Introducción
 
 Este es el documento de diseño de Fist'em Up!, un videojuego de navegador.
 	
-+ ## 2.1 Concepto del juego	
++ ## <a name="game_concept"></a> 2.1 Concepto del juego	
 
 Juego arcade para todos los públicos en el que el objetivo será conseguir la máxima puntuación.
 En un puente dos rivales se encuentran y tú quieres evitarlo. Juega como dos puños de madera gigantes que se encarguen del trabajo.
 	
-+ ## 2.2 Características principales		
++ ## <a name="main_features"></a>2.2 Características principales		
 	
 El juego se desarrolla en un puente con dos puños hidraulicos gigantes en el fondo. Se tendrá que tirar a todos los personajes que pasen sin que crucen al otro lado.
 	
-+ ## 2.3 Género	
++ ## 2.3 <a name="genre"></a>Género	
 	
 Arcade
 	
-+ ## 2.4 Propósito y público objetivo
++ ## <a name="target"></a>2.4 Propósito y público objetivo
 	
 El propósito general del juego es entretener durante un breve periodo de tiempo para no requerir una dedicación a los jugadores 
 y poder abarcar un mayor número de audiencia.
 
 Para todos los públicos, pero enfocado al público joven
 
-+ ## 2.5 Jugabilidad(idea básica)
++ ## <a name="basic_gameplay"></a>2.5 Jugabilidad(idea básica)
 	
 Tú manejas a dos puños gigantes y tienes que evitar que distintos personajes crucen un puente golpeando en el momento preciso.
 	
-+ ## 2.6 Estilo visual	
++ ## <a name="visual_style"></a>2.6 Estilo visual	
 	
 Por decidir
 	
-+ ## 2.7 Alcance
++ ## <a name="reach"></a>2.7 Alcance
 	
 Se trata de un divertido juego para navegadores con un sistema de monetización para el apartado visual.
 
-# 3.- Mecánicas de juego
+# <a name="mechanics"></a>3.- Mecánicas de juego
 
-+ ## 3.1 Jugabilidad(en profundidad)	
++ ## <a name="gameplay"></a>3.1 Jugabilidad (en profundidad)	
 	
 Varios personajes atravesarán el puente. Al pasar por delante de los puños, se pueden activar para tirar a los personajes fuera 	del puente.
 El objetivo del juego es evitar que los personajes crucen el puente. Cuantos más personajes sean tirados, mayor será la 		puntuación.
 El juego acaba tras dejar cruzar el puente a demasiados personajes.
 El juego auméntara la dificultad según avance el tiempo, siendo más rápidas las oleadas de personajes cruzando y con distintos 		tipos de personajes. También se abrirá el otro lado del puente, pudiendo los personajes cruzar de izquierda a derecha y 		viciversa. 
 	
-+ ## 3.2 Flujo de juego	
++ ## <a name="game_flow"></a>3.2 Flujo de juego	
 	
 *POR HACER*
 
-+ ## 3.3 Personajes		
++ ## <a name="characters"></a>3.3 Personajes		
 	
 Mago normal y Caballero Normal
 Sin habilidades especiales
@@ -65,11 +85,11 @@ Necesita más golpes que un caballero normal
 Brujo
 Se teletransporta a la mitad del mapa
 
-+ ## 3.4 Movimiento
++ <a name="movement"></a>## 3.4 Movimiento
 	
 Los personajes se moverán de un lado al otro del puente. Los puños solo se mueven hacia el jugador para tirar a los personajes.
 
-# 4.- Interfaz
+# <a name="interface"></a>4.- Interfaz
 
 + ## 4.1 Diagrama de flujo	
 *POR HACER*
@@ -84,8 +104,8 @@ Los personajes se moverán de un lado al otro del puente. Los puños solo se mue
 + ## 4.6 Fin del nivel
 *POR HACER*
 
-# 5.- Arte 
+# <a name="art"></a>5.- Arte 
 
 *POR HACER*
 
-# 6.- Historial de versiones
+# <a name="changelog"></a>6.- Historial de versiones
