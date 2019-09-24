@@ -1,4 +1,4 @@
-#  *Estructura GDD :* 
+# *Estructura GDD :* 
 
 ## *1.- Índice* 
 
