@@ -24,7 +24,7 @@
 
 # <a name="intro"></a>2.- Introducción
 
-Este es el documento de diseño de Fist'em Up!, un videojuego de navegador.
+Este es el documento de diseño de Punch'em Up!, un videojuego de navegador.
 	
 + ## <a name="game_concept"></a> 2.1 Concepto del juego	
 
@@ -109,6 +109,7 @@ Los personajes se moverán de un lado al otro del puente. Los puños solo se mue
 ![Error al cargar la imagen](Arte/F81EAE07-0D7A-4873-8E18-173F6B509C55.jpeg)
 ![Error al cargar la imagen](Arte/Magos_Caballeros_Art.png)
 ![Error al cargar la imagen](Arte/Magos_Caballeros_Art2.png)
+![Error al cargar la imagen](Arte/Magos_Caballeros_Art3.png)
 
 
 # <a name="changelog"></a>6.- Historial de versiones
