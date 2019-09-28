@@ -1,6 +1,15 @@
  __Estructura GDD :__ 
  
- ![Error al cargar la imagen](boop.png)
+<p align="center">
+  <img src="Arte/31B9A9B0-C7EA-449F-A336-57E720E593D2.png" width="200">
+</p>
+
+* Twitter: https://twitter.com/Boops_Games
+* Instagram: https://www.instagram.com/boopsgamesstudio/
+* Itch.io: https://itch.io/profile/boops-games-studio
+* Youtube:https://www.youtube.com/channel/UCdlggk1-f6dqdhcsiB29jWA
+
+___
 
 # 1.- Índice
 
@@ -12,32 +21,42 @@
 	+ __[2.5 Jugabilidad (idea básica)](#basic_gameplay)__
 	+ __[2.6 Estilo visual](#visual_style)__
 	+ __[2.7 Alcance](#reach)__
+	
 + __[3.- Mecánicas de juego](#mechanics)__
 	+ __[3.1 Jugabilidad (en profundidad)](#gameplay)__
 	+ __[3.2 Flujo de juego](#game_flow)__
 	+ __[3.3 Personajes](#characters)__
 	+ __[3.4 Movimiento](#movement)__
+	
 + __[4.- Interfaz](#interface)__
 
 + __[5. Arte](#art)__
+
 + __[6. Historial de versiones](#changelog)__
+
++ __[7. Boops Games Studio](#credits)__
 
 # <a name="intro"></a>2.- Introducción
 
-Este es el documento de diseño de Punch'em Up!, un videojuego de navegador.
+Este es el documento de diseño de **_Punch'em Up!_**, un videojuego de navegador desarrolado por _Boops Games Studio_.
 	
 + ## <a name="game_concept"></a> 2.1 Concepto del juego	
 
-Juego arcade para todos los públicos en el que el objetivo será conseguir la máxima puntuación.
-En un puente dos rivales se encuentran y tú quieres evitarlo. Juega como dos puños de madera gigantes que se encarguen del trabajo.
+En un puente dos rivales se encuentran y tú quieres evitarlo. Juega como dos puños de madera gigantes e intenta tirar a todo aquel que se atreva a pasar por el puente. ¿Conseguirás la máxima puntuación?
 	
 + ## <a name="main_features"></a>2.2 Características principales		
 	
-El juego se desarrolla en un puente con dos puños hidraulicos gigantes en el fondo. Se tendrá que tirar a todos los personajes que pasen sin que crucen al otro lado.
+**Partidas Rápidas e Intensas**: Partidas que duran poco pero de gran intensidad para que el jugador pueda jugar en periodos cortos y pasárselo bien
+
+**Fácil aprendizaje**: Los controles son sencillos, con un botón activas un puño y con otro botón el otro puño. ¡Ya está!
+
+**Variedad**: En cada dificultad habrá más enemigos con distintas habilidades, nunca sabrás lo que te puedes encontrar.
+
+**Divertidos Personajes**: ¡Los dos bandos que luchan entre sí pueden cambiar! Elige los que más te gusten (No disponible por el momento, idea de monetización)
 	
 + ## 2.3 <a name="genre"></a>Género	
 	
-Arcade
+Se trata de un juego Arcade.
 	
 + ## <a name="target"></a>2.4 Propósito y público objetivo
 	
@@ -48,11 +67,15 @@ Para todos los públicos, pero enfocado al público joven
 
 + ## <a name="basic_gameplay"></a>2.5 Jugabilidad(idea básica)
 	
-Tú manejas a dos puños gigantes y tienes que evitar que distintos personajes crucen un puente golpeando en el momento preciso.
+**Puños Gigantes**: El jugador podrá manejarlos, la idea es que cuando algún personaje pase por delante, lo tires.
+
+**Multiples clases**: A medida que se juegue, aparecerán nuevas clases de personajes con habilidades exclusivas.
+
+**Varios niveles**: En cada nivel se introducirán nuevos personajes y la dificultad aumentará.
 	
 + ## <a name="visual_style"></a>2.6 Estilo visual	
 	
-Por decidir
+Animado y Cartoon. El juego va sobre tirar a gente de un puente, así que hemos optado por un estilo más amigable y menos realista que le reste seriedad y añada humor al asunto.
 	
 + ## <a name="reach"></a>2.7 Alcance
 	
@@ -62,28 +85,48 @@ Se trata de un divertido juego para navegadores con un sistema de monetización 
 
 + ## <a name="gameplay"></a>3.1 Jugabilidad (en profundidad)	
 	
-Varios personajes atravesarán el puente. Al pasar por delante de los puños, se pueden activar para tirar a los personajes fuera 	del puente.
+Varios personajes atravesarán el puente. Tu manejas a dos puños gigantes.
+
+Al pasar por delante de los puños, se pueden activar para tirar a los personajes fuera 	del puente.
+
+
+![Error al cargar la imagen](Arte/mecanicas.png)
+
+
 El objetivo del juego es evitar que los personajes crucen el puente. Cuantos más personajes sean tirados, mayor será la 		puntuación.
 El juego acaba tras dejar cruzar el puente a demasiados personajes.
-El juego auméntara la dificultad según avance el tiempo, siendo más rápidas las oleadas de personajes cruzando y con distintos 		tipos de personajes. También se abrirá el otro lado del puente, pudiendo los personajes cruzar de izquierda a derecha y 		viciversa. 
+
+El juego auméntara la dificultad según avance el tiempo, siendo más rápidas las oleadas de personajes cruzando y con distintos tipos de personajes. 
+También se abrirá el otro lado del puente, pudiendo los personajes cruzar de izquierda a derecha y viciversa. 
 	
 + ## <a name="game_flow"></a>3.2 Flujo de juego	
 	
-*POR HACER*
+El jugador seleccionará una de las dificultades a elegir en el juego, clasificadas por niveles:
+
+* **Nivel 1**: _Unidades Normales_. Tras pasar un rato se abrirá la otra puerta.
+* **Nivel 2**: Todo lo anterior y tras pasar un rato aparecerán _Unidades a Caballo_.
+* **Nivel 3**: Todo lo anterior y tras pasar un rato aparecerán _Unidades Exclusivas_.
+
+Además, durante la partida la velocidad de los personajes que van por el puente irá aumentando con el tiempo.
+
+Tras elegir el nivel a jugar, se procederá a la partida hasta que el jugador se quede sin vida y vaya a la pantalla de Game Over.
+En ella podrá elegir si quiere volver a jugar y mirar si ha superdado la máxima puntuación.
 
 + ## <a name="characters"></a>3.3 Personajes		
 	
-Mago normal y Caballero Normal
-Sin habilidades especiales
+Por defecto:
+
+* **Unidad Normal**: Unidad estándar, sin habilidades especiales.
 	
-Jinetes (Magos y Caballeros)
-Se mueven más rápido
+* **Unidad a Caballo**: Se mueven más rápido que una unidad estándar.
+
+Exclusivas de _Caballeros_:
+
+* **Caballero Gigante**: Necesita más golpes que una unidad estándar para ser tirado.
 	
-Caballero Gigante
-Necesita más golpes que un caballero normal
-	
-Brujo
-Se teletransporta a la mitad del mapa
+Exclusivas de _Magos_:
+
+* **Brujo**: Se teletransporta a la mitad del mapa, esquivando uno de los puños automáticamente.
 
 + ## <a name="movement"></a>3.4 Movimiento
 	
@@ -92,7 +135,9 @@ Los personajes se moverán de un lado al otro del puente. Los puños solo se mue
 # <a name="interface"></a>4.- Interfaz
 
 + ## 4.1 Diagrama de flujo	
-*POR HACER*
+
+![Error al cargar la imagen](flujo.png)
+
 + ## 4.2 Menú principal
 *POR HACER*
 + ## 4.3 Créditos	
@@ -106,12 +151,58 @@ Los personajes se moverán de un lado al otro del puente. Los puños solo se mue
 
 # <a name="art"></a>5.- Arte 
 
-![Error al cargar la imagen](Arte/F81EAE07-0D7A-4873-8E18-173F6B509C55.jpeg)
-![Error al cargar la imagen](Arte/Magos_Caballeros_Art.png)
-![Error al cargar la imagen](Arte/Magos_Caballeros_Art2.png)
-![Error al cargar la imagen](Arte/Magos_Caballeros_Art3.png)
+_Concept Magos y Caballeros 1_
 
+<p align="center">
+  <img src="Arte/F81EAE07-0D7A-4873-8E18-173F6B509C55.jpeg" width="750">
+</p>
+
+_Concept Magos y Caballeros 2_
+
+<p align="center">
+<img src="Arte/Magos_Caballeros_Art.png" width="500">
+</p>
+
+_Concept Magos y Caballeros 3_
+
+<p align="center">
+<img src="Arte/Magos_Caballeros_Art2.png" width="750">
+</p>
+
+_Concept Magos y Caballeros, Diseño "Final"_
+
+<p align="center">
+<img src="Arte/Magos_Caballeros_Art3.png" width="750">
+</p>
+
+_Prueba de Frame_
+
+<p align="center">
+<img src="docs/assets/sprites/frame_prueba.png" width="500">
+</p>
+_Concept Escenario_
+
+<p align="center">
+<img src="Arte/894AB0BA-BA12-4771-9A2A-821255FCE754.jpeg" width="750">
+</p>
 
 # <a name="changelog"></a>6.- Historial de versiones
-+ (24/09/2019) Estructura básica de código
++ (24/09/2019) Estructura básica del documento.
++ (28/09/2019) Añadidas muchas mejoras:
 
+  * Añadido icono nuevo.
+  * Cambiado el "pitch" del juego.
+  * Añadidas imágenes para explicar mejor el juego.
+  * Añadido Diagrama de Flujo
+  * Desarrolladas las secciones de Flujo del Juego y Estilo Visual
+  * Mejorada explicación de Jugabilidad, Personajes y Características.
+  * Créditos al final del documento y RRSS.
+  * Pequeñas mejoras.
+
+# <a name="credits"></a>7.- Boops Games Studio
+
++ Alejandro García Rodríguez -Programador
++ Mario Marquez Balduque - Programador
++ Diego Sagredo de Miguel - Programador
++ Gabriel Muñoz Borchers - Artista/Sonido
++ Carlos Ventura Padina González - Artista/Diseñador
