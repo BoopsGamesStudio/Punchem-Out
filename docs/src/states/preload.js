@@ -15,10 +15,15 @@ PunchemOut.preloadState.prototype = {
         //Carga de assets
         this.load.image('fondo', 'assets/backgrounds/prueba.png');
         this.load.spritesheet('skeleton', 'assets/sprites/skeleton.png', 64, 64);
+        this.load.image('logo_juego', 'assets/logo_juego.png');
+        this.load.image('settings', 'assets/sprites/settings.png');
     },
 
     create: function () {
+        this.add.image(0, 0, 'loading');
+        logo = this.add.image(game.world.centerX - 153, 50, 'logo');
 
+        logo.scale.setTo(0.15, 0.15);
     },
 
     update: function () {

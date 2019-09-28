@@ -19,6 +19,8 @@ PunchemOut.bootState.prototype = {
         this.game.renderer.renderSession.roundPixels = true
         this.time.desiredFps = game.global.FPS
 
+        this.load.image('loading', 'assets/loading_screen.png');
+        this.load.image('logo', 'assets/logo.png');
     },
 
     create: function () {
