@@ -17,6 +17,8 @@ PunchemOut.preloadState.prototype = {
         this.load.spritesheet('skeleton', 'assets/sprites/skeleton.png', 64, 64);
         this.load.image('logo_juego', 'assets/logo_juego.png');
         this.load.image('settings', 'assets/sprites/settings.png');
+        this.load.spritesheet('link', 'assets/sprites/link.png', 96, 104);
+        this.load.spritesheet('punch', 'assets/sprites/punch.png', 150, 150);
     },
 
     create: function () {
