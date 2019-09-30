@@ -201,7 +201,7 @@ _Concept Escenario_
 
 # <a name="credits"></a>7.- Boops Games Studio
 
-+ Alejandro García Rodríguez -Programador
++ Alejandro Hernández Pérez -Programador
 + Mario Marquez Balduque - Programador
 + Diego Sagredo de Miguel - Programador
 + Gabriel Muñoz Borchers - Artista/Sonido
