@@ -230,19 +230,19 @@ function activePunch() {
         pressL = true;
         punchL_CD = 60;
     }
-    else if (cursors.right.isDown && punchR_CD == 0) {
+    if (cursors.right.isDown && punchR_CD == 0) {
         animR.play('punching', 8);
         pressR = true;
         punchR_CD = 60;
     }
-    else if (pressL) {
+    if (pressL) {
         punchL_CD--;
         if (punchL_CD == 0) {
             pressL = false;
         }
 
     }
-    else if (pressR) {
+    if (pressR) {
         punchR_CD--;
         if (punchR_CD == 0) {
             pressR = false;
