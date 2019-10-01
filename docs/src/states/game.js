@@ -10,6 +10,9 @@ var pressL = false;
 var pressR = false;
 var animR;
 var animL;
+var life = 3;
+var score = 0;
+
 //Un Array por cada tipo de enemigo
 var enemiesType1 = new Array(maxEnemies);
 var enemiesType2 = new Array(maxEnemies);
@@ -152,7 +155,7 @@ PunchemOut.gameState.prototype = {
         collidePunchL();
         collidePunchR();
         backToOrigin();
-
+        checkEndgame();
     }
 }
 
@@ -251,19 +254,19 @@ function activePunch() {
         pressL = true;
         punchL_CD = 30;
     }
-    else if (cursors.right.isDown && punchR_CD == 0) {
+    if (cursors.right.isDown && punchR_CD == 0) {
         animR.play('punching', 8);
         pressR = true;
         punchR_CD = 30;
     }
-    else if (pressL) {
+    if (pressL) {
         punchL_CD--;
         if (punchL_CD == 0) {
             pressL = false;
         }
 
     }
-    else if (pressR) {
+    if (pressR) {
         punchR_CD--;
         if (punchR_CD == 0) {
             pressR = false;
@@ -357,6 +360,7 @@ function backToOrigin() {
             enemiesType1[i].direction = enemiesType1[i].initDir;
             enemiesType1[i].bounces = Math.floor(Math.random() * 4);
             enemiesType1[i].sprite.animations.stop();
+            life--;
         }
         if (enemiesType1[i].bounces <= 0 && enemiesType1[i].direction == 2 && enemiesType1[i].sprite.body.position.x <= -25) {
             enemiesType1[i].sprite.body.velocity.x = 0;
@@ -364,6 +368,7 @@ function backToOrigin() {
             enemiesType1[i].direction = enemiesType1[i].initDir;
             enemiesType1[i].bounces = Math.floor(Math.random() * 4);
             enemiesType1[i].sprite.animations.stop();
+            life--;
         }
         if (enemiesType1[i].sprite.body.position.y >= 625) {
             enemiesType1[i].sprite.body.velocity.y = 0;
@@ -372,6 +377,7 @@ function backToOrigin() {
             enemiesType1[i].direction = enemiesType1[i].initDir;
             enemiesType1[i].bounces = Math.floor(Math.random() * 4);
             enemiesType1[i].sprite.animations.stop();
+            score += 100;
         }
 
         //Para enemigos Tipo2
@@ -381,6 +387,7 @@ function backToOrigin() {
             enemiesType2[i].direction = enemiesType2[i].initDir;
             enemiesType2[i].bounces = Math.floor(Math.random() * 4);
             enemiesType2[i].sprite.animations.stop();
+            life--;
         }
         if (enemiesType2[i].bounces <= 0 && enemiesType2[i].direction == 2 && enemiesType2[i].sprite.body.position.x <= -25) {
             enemiesType2[i].sprite.body.velocity.x = 0;
@@ -388,6 +395,7 @@ function backToOrigin() {
             enemiesType2[i].direction = enemiesType2[i].initDir;
             enemiesType2[i].bounces = Math.floor(Math.random() * 4);
             enemiesType2[i].sprite.animations.stop();
+            life--;
         }
         if (enemiesType2[i].sprite.body.position.y >= 625) {
             enemiesType2[i].sprite.body.velocity.y = 0;
@@ -396,6 +404,15 @@ function backToOrigin() {
             enemiesType2[i].direction = enemiesType2[i].initDir;
             enemiesType2[i].bounces = Math.floor(Math.random() * 4);
             enemiesType2[i].sprite.animations.stop();
+            score += 100;
         }
     }
 }
+
+function checkEndgame() {
+    console.log("Vidas restantes: " + life);
+
+    if(life <= 0) {
+        game.state.start("endgameState");
+    }
+} 
