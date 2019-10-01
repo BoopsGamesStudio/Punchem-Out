@@ -10,7 +10,7 @@ var pressL = false;
 var pressR = false;
 var animR;
 var animL;
-var life = 3;
+var life = 1;
 var score = 0;
 
 //Un Array por cada tipo de enemigo
@@ -149,6 +149,7 @@ PunchemOut.gameState.prototype = {
         enemy.animations.play('walkRight', 10, true);
         */
         //destroy();
+
         turnLeft();
         turnRight();
         activePunch();
@@ -413,6 +414,7 @@ function checkEndgame() {
     console.log("Vidas restantes: " + life);
 
     if(life <= 0) {
-        game.state.start("endgameState");
+        game.camera.fade(0x000000, 500);
+        game.camera.onFadeComplete.add(function() { game.state.start("endgameState"); }, this);
     }
 } 
