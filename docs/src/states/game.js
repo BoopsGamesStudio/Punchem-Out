@@ -21,10 +21,15 @@ function enemy(type, id) {
             this.bounces = Math.floor(Math.random() * 4);
             this.direction = Math.floor(Math.random() * 2) + 1;
             if (this.direction == 1) {//1 si el enemigo va hacia la der; 2 si va hacia la izq
-                this.sprite = game.add.sprite(-100, 300, 'skeleton');
+                this.initPos = -100;
+                this.initDir = 1;
+                this.sprite = game.add.sprite(this.initPos, 300, 'skeleton');
             } else {
-                this.sprite = game.add.sprite(900, 300, 'skeleton');
+                this.initPos = 900;
+                this.initDir = 2;
+                this.sprite = game.add.sprite(this.initPos, 300, 'skeleton');
             }
+            this.speed = 100;
             this.sprite.animations.add('walkRightSkeleton', [27, 28, 29, 30, 31, 32, 33, 34, 35]);
             this.sprite.animations.add('walkLeftSkeleton', [17, 16, 15, 14, 13, 12, 11, 10, 9]);
             break;
@@ -34,10 +39,15 @@ function enemy(type, id) {
             this.bounces = Math.floor(Math.random() * 4);
             this.direction = Math.floor(Math.random() * 2) + 1;
             if (this.direction == 1) {
-                this.sprite = game.add.sprite(-100, 300, 'link');
+                this.initPos = -100;
+                this.initDir = 1;
+                this.sprite = game.add.sprite(this.initPos, 300, 'link');    
             } else {
-                this.sprite = game.add.sprite(900, 300, 'link');
+                this.initPos = 900;
+                this.initDir = 2;
+                this.sprite = game.add.sprite(this.initPos, 300, 'link');
             }
+            this.speed = 80;
             this.sprite.scale.setTo(0.67, 0.62);
             this.sprite.animations.add('walkRightLink', [70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80]);
             this.sprite.animations.add('walkLeftLink', [59, 58, 57, 56, 55, 54, 53, 52, 51]);
@@ -81,6 +91,9 @@ PunchemOut.gameState.prototype = {
         animL = punchL.animations.add('punching');
         animR = punchR.animations.add('punching');
 
+        animL.onComplete.add(stopAnimL, this);
+        animR.onComplete.add(stopAnimR, this);
+
         /*
         game.physics.enable(punchL, Phaser.Physics.ARCADE);
         game.physics.enable(punchR, Phaser.Physics.ARCADE);
@@ -115,6 +128,13 @@ PunchemOut.gameState.prototype = {
         timer.loop(2000, moveEnemy, this);
 
         timer.start();
+        
+        timer2 = game.time.create(false);
+
+        timer2.loop(10000, xSpeed, this);
+
+        timer2.start();
+        
 
     },
 
@@ -131,6 +151,7 @@ PunchemOut.gameState.prototype = {
         activePunch();
         collidePunchL();
         collidePunchR();
+        backToOrigin();
 
     }
 }
@@ -150,11 +171,11 @@ function moveEnemy() {
         case 1:
             for (var i = 0; i < maxEnemies; i++) {
                 if (enemiesType1[i].sprite.body.position.x == -100) {
-                    enemiesType1[i].sprite.body.velocity.x = 100;
+                    enemiesType1[i].sprite.body.velocity.x = enemiesType1[i].speed;
                     enemiesType1[i].sprite.animations.play('walkRightSkeleton', 10, true);
                     break;
                 } else if (enemiesType1[i].sprite.body.position.x == 900) {
-                    enemiesType1[i].sprite.body.velocity.x = -100;
+                    enemiesType1[i].sprite.body.velocity.x = -enemiesType1[i].speed;
                     enemiesType1[i].sprite.animations.play('walkLeftSkeleton', 10, true);
                     break;
                 }
@@ -164,11 +185,11 @@ function moveEnemy() {
         case 2:
             for (var i = 0; i < maxEnemies; i++) {
                 if (enemiesType2[i].sprite.body.position.x == -100) {
-                    enemiesType2[i].sprite.body.velocity.x = 80;
+                    enemiesType2[i].sprite.body.velocity.x = enemiesType2[i].speed;
                     enemiesType2[i].sprite.animations.play('walkRightLink', 10, true);
                     break;
                 } else if (enemiesType2[i].sprite.body.position.x == 900) {
-                    enemiesType2[i].sprite.body.velocity.x = -100;
+                    enemiesType2[i].sprite.body.velocity.x = -enemiesType2[i].speed;
                     enemiesType2[i].sprite.animations.play('walkLeftLink', 10, true);
                     break;
                 }
@@ -193,13 +214,13 @@ function destroy() {
 function turnLeft() {
     for (var i = 0; i < maxEnemies; i++) {
         if (enemiesType1[i].sprite.body.position.x >= 725 && enemiesType1[i].bounces > 0 && enemiesType1[i].direction == 1) {
-            enemiesType1[i].sprite.body.velocity.x = -100;
+            enemiesType1[i].sprite.body.velocity.x = - enemiesType1[i].speed;
             enemiesType1[i].sprite.animations.play('walkLeftSkeleton', 10, true);
             enemiesType1[i].bounces--;
             enemiesType1[i].direction = 2;
         }
         if (enemiesType2[i].sprite.body.position.x >= 725 && enemiesType2[i].bounces > 0 && enemiesType2[i].direction == 1) {
-            enemiesType2[i].sprite.body.velocity.x = -80;
+            enemiesType2[i].sprite.body.velocity.x = -enemiesType2[i].speed;
             enemiesType2[i].sprite.animations.play('walkLeftLink', 10, true);
             enemiesType2[i].bounces--;
             enemiesType2[i].direction = 2;
@@ -210,13 +231,13 @@ function turnLeft() {
 function turnRight() {
     for (var i = 0; i < maxEnemies; i++) {
         if (enemiesType1[i].sprite.body.position.x <= 25 && enemiesType1[i].bounces > 0 && enemiesType1[i].direction == 2) {
-            enemiesType1[i].sprite.body.velocity.x = 100;
+            enemiesType1[i].sprite.body.velocity.x = enemiesType1[i].speed;
             enemiesType1[i].sprite.animations.play('walkRightSkeleton', 10, true);
             enemiesType1[i].bounces--;
             enemiesType1[i].direction = 1;
         }
         if (enemiesType2[i].sprite.body.position.x <= 25 && enemiesType2[i].bounces > 0 && enemiesType2[i].direction == 2) {
-            enemiesType2[i].sprite.body.velocity.x = 80;
+            enemiesType2[i].sprite.body.velocity.x = enemiesType2[i].speed;
             enemiesType2[i].sprite.animations.play('walkRightLink', 10, true);
             enemiesType2[i].bounces--;
             enemiesType2[i].direction = 1;
@@ -228,21 +249,21 @@ function activePunch() {
     if (cursors.left.isDown && punchL_CD == 0) {
         animL.play('punching', 8);
         pressL = true;
-        punchL_CD = 60;
+        punchL_CD = 30;
     }
-    if (cursors.right.isDown && punchR_CD == 0) {
+    else if (cursors.right.isDown && punchR_CD == 0) {
         animR.play('punching', 8);
         pressR = true;
-        punchR_CD = 60;
+        punchR_CD = 30;
     }
-    if (pressL) {
+    else if (pressL) {
         punchL_CD--;
         if (punchL_CD == 0) {
             pressL = false;
         }
 
     }
-    if (pressR) {
+    else if (pressR) {
         punchR_CD--;
         if (punchR_CD == 0) {
             pressR = false;
@@ -308,5 +329,73 @@ function collidePunchR() {
     if (animR.isPlaying) {
         checkOverlapR();
         console.log("Overlap");
+    }
+}
+
+function stopAnimL() {
+    animL.stop(true);
+}
+
+function stopAnimR() {
+    animR.stop(true);
+}
+
+function xSpeed() {
+    for (var i = 0; i < maxEnemies; i++) {
+        enemiesType1[i].speed*=1.1;
+        enemiesType2[i].speed*=1.1;
+    }
+
+}
+
+function backToOrigin() {
+    for (var i = 0; i < maxEnemies; i++) {
+        //Para enemigos Tipo1
+        if (enemiesType1[i].bounces <= 0 && enemiesType1[i].direction == 1 && enemiesType1[i].sprite.body.position.x >= 825) {
+            enemiesType1[i].sprite.body.velocity.x = 0;
+            enemiesType1[i].sprite.body.position.x = enemiesType1[i].initPos;
+            enemiesType1[i].direction = enemiesType1[i].initDir;
+            enemiesType1[i].bounces = Math.floor(Math.random() * 4);
+            enemiesType1[i].sprite.animations.stop();
+        }
+        if (enemiesType1[i].bounces <= 0 && enemiesType1[i].direction == 2 && enemiesType1[i].sprite.body.position.x <= -25) {
+            enemiesType1[i].sprite.body.velocity.x = 0;
+            enemiesType1[i].sprite.body.position.x = enemiesType1[i].initPos;
+            enemiesType1[i].direction = enemiesType1[i].initDir;
+            enemiesType1[i].bounces = Math.floor(Math.random() * 4);
+            enemiesType1[i].sprite.animations.stop();
+        }
+        if (enemiesType1[i].sprite.body.position.y >= 625) {
+            enemiesType1[i].sprite.body.velocity.y = 0;
+            enemiesType1[i].sprite.body.position.x = enemiesType1[i].initPos;
+            enemiesType1[i].sprite.body.position.y = 300;
+            enemiesType1[i].direction = enemiesType1[i].initDir;
+            enemiesType1[i].bounces = Math.floor(Math.random() * 4);
+            enemiesType1[i].sprite.animations.stop();
+        }
+
+        //Para enemigos Tipo2
+        if (enemiesType2[i].bounces <= 0 && enemiesType2[i].direction == 1 && enemiesType2[i].sprite.body.position.x >= 825) {
+            enemiesType2[i].sprite.body.velocity.x = 0;
+            enemiesType2[i].sprite.body.position.x = enemiesType2[i].initPos;
+            enemiesType2[i].direction = enemiesType2[i].initDir;
+            enemiesType2[i].bounces = Math.floor(Math.random() * 4);
+            enemiesType2[i].sprite.animations.stop();
+        }
+        if (enemiesType2[i].bounces <= 0 && enemiesType2[i].direction == 2 && enemiesType2[i].sprite.body.position.x <= -25) {
+            enemiesType2[i].sprite.body.velocity.x = 0;
+            enemiesType2[i].sprite.body.position.x = enemiesType2[i].initPos;
+            enemiesType2[i].direction = enemiesType2[i].initDir;
+            enemiesType2[i].bounces = Math.floor(Math.random() * 4);
+            enemiesType2[i].sprite.animations.stop();
+        }
+        if (enemiesType2[i].sprite.body.position.y >= 625) {
+            enemiesType2[i].sprite.body.velocity.y = 0;
+            enemiesType2[i].sprite.body.position.x = enemiesType2[i].initPos;
+            enemiesType2[i].sprite.body.position.y = 300;
+            enemiesType2[i].direction = enemiesType2[i].initDir;
+            enemiesType2[i].bounces = Math.floor(Math.random() * 4);
+            enemiesType2[i].sprite.animations.stop();
+        }
     }
 }
