@@ -12,6 +12,7 @@ var animR;
 var animL;
 var life = 1;
 var score = 0;
+var enemiesPerWave = 20;
 
 //Un Array por cada tipo de enemigo
 var enemiesType1 = new Array(maxEnemies);
@@ -44,7 +45,7 @@ function enemy(type, id) {
             if (this.direction == 1) {
                 this.initPos = -100;
                 this.initDir = 1;
-                this.sprite = game.add.sprite(this.initPos, 300, 'link');    
+                this.sprite = game.add.sprite(this.initPos, 300, 'link');
             } else {
                 this.initPos = 900;
                 this.initDir = 2;
@@ -131,13 +132,16 @@ PunchemOut.gameState.prototype = {
         timer.loop(2000, moveEnemy, this);
 
         timer.start();
-        
+
+        /*
+        //Timer to multiplied enemies' velocity
         timer2 = game.time.create(false);
 
         timer2.loop(10000, xSpeed, this);
 
         timer2.start();
-        
+        */
+
 
     },
 
@@ -157,6 +161,9 @@ PunchemOut.gameState.prototype = {
         collidePunchR();
         backToOrigin();
         checkEndgame();
+        if(timer.paused){
+            timer.resume();
+        }
     }
 }
 
@@ -170,39 +177,53 @@ function spawnEnemy() {
 }
 
 function moveEnemy() {
-    let type = Math.floor(Math.random() * 2) + 1;
-    switch (type) {
-        case 1:
-            for (var i = 0; i < maxEnemies; i++) {
-                if (enemiesType1[i].sprite.body.position.x == -100) {
-                    enemiesType1[i].sprite.body.velocity.x = enemiesType1[i].speed;
-                    enemiesType1[i].sprite.animations.play('walkRightSkeleton', 10, true);
-                    break;
-                } else if (enemiesType1[i].sprite.body.position.x == 900) {
-                    enemiesType1[i].sprite.body.velocity.x = -enemiesType1[i].speed;
-                    enemiesType1[i].sprite.animations.play('walkLeftSkeleton', 10, true);
-                    break;
+    if (enemiesPerWave > 0) {
+        let type = Math.floor(Math.random() * 2) + 1;
+        switch (type) {
+            case 1:
+                for (var i = 0; i < maxEnemies; i++) {
+                    if (enemiesType1[i].sprite.body.position.x == -100) {
+                        enemiesType1[i].sprite.body.velocity.x = enemiesType1[i].speed;
+                        enemiesType1[i].sprite.animations.play('walkRightSkeleton', 10, true);
+                        enemiesPerWave--;
+                        console.log(enemiesPerWave);
+                        break;
+                    } else if (enemiesType1[i].sprite.body.position.x == 900) {
+                        enemiesType1[i].sprite.body.velocity.x = -enemiesType1[i].speed;
+                        enemiesType1[i].sprite.animations.play('walkLeftSkeleton', 10, true);
+                        enemiesPerWave--;
+                        console.log(enemiesPerWave);
+                        break;
+                    }
                 }
-            }
-            break;
+                break;
 
-        case 2:
-            for (var i = 0; i < maxEnemies; i++) {
-                if (enemiesType2[i].sprite.body.position.x == -100) {
-                    enemiesType2[i].sprite.body.velocity.x = enemiesType2[i].speed;
-                    enemiesType2[i].sprite.animations.play('walkRightLink', 10, true);
-                    break;
-                } else if (enemiesType2[i].sprite.body.position.x == 900) {
-                    enemiesType2[i].sprite.body.velocity.x = -enemiesType2[i].speed;
-                    enemiesType2[i].sprite.animations.play('walkLeftLink', 10, true);
-                    break;
+            case 2:
+                for (var i = 0; i < maxEnemies; i++) {
+                    if (enemiesType2[i].sprite.body.position.x == -100) {
+                        enemiesType2[i].sprite.body.velocity.x = enemiesType2[i].speed;
+                        enemiesType2[i].sprite.animations.play('walkRightLink', 10, true);
+                        enemiesPerWave--;
+                        console.log(enemiesPerWave);
+                        break;
+                    } else if (enemiesType2[i].sprite.body.position.x == 900) {
+                        enemiesType2[i].sprite.body.velocity.x = -enemiesType2[i].speed;
+                        enemiesType2[i].sprite.animations.play('walkLeftLink', 10, true);
+                        enemiesPerWave--;
+                        console.log(enemiesPerWave);
+                        break;
+                    }
                 }
-            }
-            break;
+                break;
 
-        default:
-            console.log("Error");
-            break;
+            default:
+                console.log("Error");
+                break;
+        }
+    } else {
+        timer.pause();
+        xSpeed();
+        enemiesPerWave = 20;
     }
 
 }
@@ -346,8 +367,8 @@ function stopAnimR() {
 
 function xSpeed() {
     for (var i = 0; i < maxEnemies; i++) {
-        enemiesType1[i].speed*=1.1;
-        enemiesType2[i].speed*=1.1;
+        enemiesType1[i].speed *= 2;
+        enemiesType2[i].speed *= 2;
     }
 
 }
@@ -413,8 +434,8 @@ function backToOrigin() {
 function checkEndgame() {
     console.log("Vidas restantes: " + life);
 
-    if(life <= 0) {
+    if (life <= 0) {
         game.camera.fade(0x000000, 500);
-        game.camera.onFadeComplete.add(function() { game.state.start("endgameState"); }, this);
+        game.camera.onFadeComplete.add(function () { game.state.start("endgameState"); }, this);
     }
 } 
