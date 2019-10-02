@@ -24,6 +24,9 @@ PunchemOut.levelState.prototype = {
         lvl2.alpha = 0.3;
         lvl3 = this.add.button(game.world.centerX + 105, 400, 'skeleton', function() { console.log("[LOG] Nivel no disponible"); }, this, 2, 1, 0);
         lvl3.alpha = 0.3;
+
+        back = this.add.button(50, 500, 'skeleton', function() { game.state.start('menuState'); }, this, 2, 1, 0);
+        backText = game.add.text(110, 520, "Volver", style);
     },
 
     update: function () {
