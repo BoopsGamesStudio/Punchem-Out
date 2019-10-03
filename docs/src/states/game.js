@@ -13,6 +13,9 @@ var animL;
 var life = 1;
 var score = 0;
 var enemiesPerWave = 20;
+var MaxSpawnTime = 1500;
+var BaseSpawnTime = 1000;
+var spawnTime = Math.floor(Math.random() * MaxSpawnTime) + BaseSpawnTime;
 
 //Un Array por cada tipo de enemigo
 var enemiesType1 = new Array(maxEnemies);
@@ -36,6 +39,7 @@ function enemy(type, id) {
             this.speed = 100;
             this.sprite.animations.add('walkRightSkeleton', [27, 28, 29, 30, 31, 32, 33, 34, 35]);
             this.sprite.animations.add('walkLeftSkeleton', [17, 16, 15, 14, 13, 12, 11, 10, 9]);
+            this.isAlive = false;
             break;
 
         case 'type2':
@@ -55,6 +59,7 @@ function enemy(type, id) {
             this.sprite.scale.setTo(0.67, 0.62);
             this.sprite.animations.add('walkRightLink', [70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80]);
             this.sprite.animations.add('walkLeftLink', [59, 58, 57, 56, 55, 54, 53, 52, 51]);
+            this.isAlive = false;
             break;
 
         default:
@@ -129,9 +134,11 @@ PunchemOut.gameState.prototype = {
         //Timer to spawn enemies
         timer = game.time.create(false);
 
-        timer.loop(2000, moveEnemy, this);
+        loopTimer = timer.loop(spawnTime, moveEnemy, this);
 
         timer.start();
+
+        waveTimer = game.time.create(false);
 
         /*
         //Timer to multiplied enemies' velocity
@@ -153,6 +160,7 @@ PunchemOut.gameState.prototype = {
         enemy.animations.play('walkRight', 10, true);
         */
         //destroy();
+        loopTimer.delay = spawnTime;
 
         turnLeft();
         turnRight();
@@ -161,8 +169,14 @@ PunchemOut.gameState.prototype = {
         collidePunchR();
         backToOrigin();
         checkEndgame();
-        if(timer.paused){
-            timer.resume();
+        if(timer.paused && !checkEnemiesAlive()){
+            waveTimer.start();
+            console.log("...");
+            if(waveTimer.ms>=2000){
+                console.log("NUEVA OLEADA");
+                timer.resume();
+                waveTimer.stop();
+            }
         }
     }
 }
@@ -183,15 +197,19 @@ function moveEnemy() {
             case 1:
                 for (var i = 0; i < maxEnemies; i++) {
                     if (enemiesType1[i].sprite.body.position.x == -100) {
+                        enemiesType1[i].isAlive = true;
                         enemiesType1[i].sprite.body.velocity.x = enemiesType1[i].speed;
                         enemiesType1[i].sprite.animations.play('walkRightSkeleton', 10, true);
                         enemiesPerWave--;
+                        spawnTime = Math.floor(Math.random() * MaxSpawnTime) + BaseSpawnTime;
                         console.log(enemiesPerWave);
                         break;
                     } else if (enemiesType1[i].sprite.body.position.x == 900) {
+                        enemiesType1[i].isAlive = true;
                         enemiesType1[i].sprite.body.velocity.x = -enemiesType1[i].speed;
                         enemiesType1[i].sprite.animations.play('walkLeftSkeleton', 10, true);
                         enemiesPerWave--;
+                        spawnTime = Math.floor(Math.random() * MaxSpawnTime) + BaseSpawnTime;
                         console.log(enemiesPerWave);
                         break;
                     }
@@ -201,15 +219,19 @@ function moveEnemy() {
             case 2:
                 for (var i = 0; i < maxEnemies; i++) {
                     if (enemiesType2[i].sprite.body.position.x == -100) {
+                        enemiesType2[i].isAlive = true;
                         enemiesType2[i].sprite.body.velocity.x = enemiesType2[i].speed;
                         enemiesType2[i].sprite.animations.play('walkRightLink', 10, true);
                         enemiesPerWave--;
+                        spawnTime = Math.floor(Math.random() * MaxSpawnTime) + BaseSpawnTime;
                         console.log(enemiesPerWave);
                         break;
                     } else if (enemiesType2[i].sprite.body.position.x == 900) {
+                        enemiesType2[i].isAlive = true;
                         enemiesType2[i].sprite.body.velocity.x = -enemiesType2[i].speed;
                         enemiesType2[i].sprite.animations.play('walkLeftLink', 10, true);
                         enemiesPerWave--;
+                        spawnTime = Math.floor(Math.random() * MaxSpawnTime) + BaseSpawnTime;
                         console.log(enemiesPerWave);
                         break;
                     }
@@ -223,6 +245,7 @@ function moveEnemy() {
     } else {
         timer.pause();
         xSpeed();
+        decSpawnTime();
         enemiesPerWave = 20;
     }
 
@@ -345,7 +368,7 @@ function collidePunchL() {
 
     if (animL.isPlaying) {
         checkOverlapL();
-        console.log("Overlap");
+        //console.log("Overlap");
     }
 }
 
@@ -353,7 +376,7 @@ function collidePunchR() {
     //console.log("Overlap");
     if (animR.isPlaying) {
         checkOverlapR();
-        console.log("Overlap");
+        //console.log("Overlap");
     }
 }
 
@@ -367,8 +390,8 @@ function stopAnimR() {
 
 function xSpeed() {
     for (var i = 0; i < maxEnemies; i++) {
-        enemiesType1[i].speed *= 2;
-        enemiesType2[i].speed *= 2;
+        enemiesType1[i].speed *= 1.1;
+        enemiesType2[i].speed *= 1.1;
     }
 
 }
@@ -377,6 +400,7 @@ function backToOrigin() {
     for (var i = 0; i < maxEnemies; i++) {
         //Para enemigos Tipo1
         if (enemiesType1[i].bounces <= 0 && enemiesType1[i].direction == 1 && enemiesType1[i].sprite.body.position.x >= 825) {
+            enemiesType1[i].isAlive = false;
             enemiesType1[i].sprite.body.velocity.x = 0;
             enemiesType1[i].sprite.body.position.x = enemiesType1[i].initPos;
             enemiesType1[i].direction = enemiesType1[i].initDir;
@@ -385,6 +409,7 @@ function backToOrigin() {
             life--;
         }
         if (enemiesType1[i].bounces <= 0 && enemiesType1[i].direction == 2 && enemiesType1[i].sprite.body.position.x <= -25) {
+            enemiesType1[i].isAlive = false;
             enemiesType1[i].sprite.body.velocity.x = 0;
             enemiesType1[i].sprite.body.position.x = enemiesType1[i].initPos;
             enemiesType1[i].direction = enemiesType1[i].initDir;
@@ -393,6 +418,7 @@ function backToOrigin() {
             life--;
         }
         if (enemiesType1[i].sprite.body.position.y >= 625) {
+            enemiesType1[i].isAlive = false;
             enemiesType1[i].sprite.body.velocity.y = 0;
             enemiesType1[i].sprite.body.position.x = enemiesType1[i].initPos;
             enemiesType1[i].sprite.body.position.y = 300;
@@ -404,6 +430,7 @@ function backToOrigin() {
 
         //Para enemigos Tipo2
         if (enemiesType2[i].bounces <= 0 && enemiesType2[i].direction == 1 && enemiesType2[i].sprite.body.position.x >= 825) {
+            enemiesType2[i].isAlive = false;
             enemiesType2[i].sprite.body.velocity.x = 0;
             enemiesType2[i].sprite.body.position.x = enemiesType2[i].initPos;
             enemiesType2[i].direction = enemiesType2[i].initDir;
@@ -412,6 +439,7 @@ function backToOrigin() {
             life--;
         }
         if (enemiesType2[i].bounces <= 0 && enemiesType2[i].direction == 2 && enemiesType2[i].sprite.body.position.x <= -25) {
+            enemiesType2[i].isAlive = false;
             enemiesType2[i].sprite.body.velocity.x = 0;
             enemiesType2[i].sprite.body.position.x = enemiesType2[i].initPos;
             enemiesType2[i].direction = enemiesType2[i].initDir;
@@ -420,6 +448,7 @@ function backToOrigin() {
             life--;
         }
         if (enemiesType2[i].sprite.body.position.y >= 625) {
+            enemiesType2[i].isAlive = false;
             enemiesType2[i].sprite.body.velocity.y = 0;
             enemiesType2[i].sprite.body.position.x = enemiesType2[i].initPos;
             enemiesType2[i].sprite.body.position.y = 300;
@@ -432,10 +461,26 @@ function backToOrigin() {
 }
 
 function checkEndgame() {
-    console.log("Vidas restantes: " + life);
+    //console.log("Vidas restantes: " + life);
 
     if (life <= 0) {
         game.camera.fade(0x000000, 500);
         game.camera.onFadeComplete.add(function () { game.state.start("endgameState"); }, this);
     }
 } 
+
+function decSpawnTime(){
+    MaxSpawnTime*=0.8;
+    BaseSpawnTime*=0.8;
+    console.log(MaxSpawnTime);
+    console.log(BaseSpawnTime);
+}
+
+function checkEnemiesAlive() {
+    for(var i = 0; i < maxEnemies; i++) {
+        if (enemiesType1[i].isAlive || enemiesType2[i].isAlive) {
+            return true;
+        }
+    }
+    return false;
+}

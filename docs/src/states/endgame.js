@@ -22,13 +22,13 @@ PunchemOut.endgameState.prototype = {
         scoreText = game.add.text(game.world.centerX - 200, game.world.centerY + 100, "Score: " + score, style);
         scoreText.alpha = 0;
 
-        tryAgain = this.add.button(700, 500, 'skeleton', function() { game.state.start('gameState'); life = 1; }, this, 2, 1, 0);
+        tryAgain = this.add.button(700, 500, 'skeleton', function() { game.state.start('gameState'); resetVariables(); }, this, 2, 1, 0);
         tryAgainText = game.add.text(620, 520, "Try Again", style);
 
         tryAgain.alpha = 0;
         tryAgainText.alpha = 0;
 
-        back = this.add.button(50, 500, 'skeleton', function() { game.state.start('levelState'); }, this, 2, 1, 0);
+        back = this.add.button(50, 500, 'skeleton', function() { game.state.start('levelState'); resetVariables(); }, this, 2, 1, 0);
         backText = game.add.text(110, 520, "Select level", style);
 
         back.alpha = 0;
@@ -45,4 +45,16 @@ PunchemOut.endgameState.prototype = {
     update: function () {
 
     }
+}
+
+function resetVariables() {
+    life = 1;
+    MaxSpawnTime = 1500;
+    BaseSpawnTime = 1000;
+
+    enemiesPerWave = 20;
+    score = 0;
+
+    enemiesType1 = new Array(maxEnemies);
+    enemiesType2 = new Array(maxEnemies);
 }
