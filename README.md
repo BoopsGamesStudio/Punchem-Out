@@ -175,11 +175,10 @@ _Concept Magos y Caballeros, Diseño "Final"_
 <img src="Arte/Magos_Caballeros_Art3.png" width="750">
 </p>
 
-_Prueba de Frame_
+_Sketch de la animación_
 
-<p align="center">
-<img src="docs/assets/sprites/frame_prueba.png" width="500">
-</p>
+![Error al cargar la imagen](https://raw.githubusercontent.com/BoopsGamesStudio/Punchem-Out/master/Arte/animacion%20andando.gif)
+
 _Concept Escenario_
 
 <p align="center">
