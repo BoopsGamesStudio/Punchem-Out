@@ -13,13 +13,15 @@ PunchemOut.preloadState.prototype = {
 
     preload: function () {
         //Carga de assets
-        this.load.image('fondo', 'assets/backgrounds/prueba.png');
+        this.load.image('fondo', 'assets/backgrounds/fondo.jpeg');
         this.load.spritesheet('skeleton', 'assets/sprites/skeleton.png', 64, 64);
         this.load.image('logo_juego', 'assets/logo_juego.png');
         this.load.image('settings', 'assets/sprites/settings.png');
         this.load.spritesheet('link', 'assets/sprites/link.png', 96, 104);
+        this.load.spritesheet('prueba', 'assets/sprites/spritesheetPrueba.png', 72, 128);
         this.load.spritesheet('punch', 'assets/sprites/punch.png', 150, 150);
         this.load.image('game_over', 'assets/sprites/game_over.png');
+        this.load.audio('punch', 'assets/sounds/punch.mp3');
     },
 
     create: function () {

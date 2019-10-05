@@ -52,7 +52,8 @@ function resetVariables() {
     MaxSpawnTime = 1500;
     BaseSpawnTime = 1000;
 
-    enemiesPerWave = 20;
+    baseEnemiesPerWave = 20;
+    enemiesPerWave = baseEnemiesPerWave;
     score = 0;
 
     enemiesType1 = new Array(maxEnemies);

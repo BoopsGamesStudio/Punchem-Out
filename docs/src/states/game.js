@@ -12,14 +12,17 @@ var animR;
 var animL;
 var life = 1;
 var score = 0;
-var enemiesPerWave = 20;
+var baseEnemiesPerWave = 20;
+var enemiesPerWave = baseEnemiesPerWave;
 var MaxSpawnTime = 1500;
 var BaseSpawnTime = 1000;
 var spawnTime = Math.floor(Math.random() * MaxSpawnTime) + BaseSpawnTime;
+var punchSound;
 
 //Un Array por cada tipo de enemigo
 var enemiesType1 = new Array(maxEnemies);
 var enemiesType2 = new Array(maxEnemies);
+var enemiesType3 = new Array(maxEnemies);
 
 function enemy(type, id) {
     switch (type) {
@@ -62,6 +65,17 @@ function enemy(type, id) {
             this.isAlive = false;
             break;
 
+        case 'type3':
+            this.id = id;
+            this.bounces = Math.floor(Math.random() * 4);
+            this.initPos = -100;
+            this.sprite = game.add.sprite(this.initPos, 300, 'prueba');
+            this.speed = 90;
+            this.sprite.scale.setTo(0.8, 0.62);
+            this.sprite.animations.add('walkRightPrueba');
+            this.isAlive = false;
+            break;
+
         default:
             console.log("Error");
             break;
@@ -88,7 +102,8 @@ PunchemOut.gameState.prototype = {
 
     create: function () {
         //Draw background
-        this.add.image(0, 0, 'fondo');
+        var fondo = this.add.image(0, 0, 'fondo');
+        fondo.scale.setTo(0.3, 0.3);
 
         //Controls
         cursors = this.input.keyboard.createCursorKeys();
@@ -119,6 +134,7 @@ PunchemOut.gameState.prototype = {
         for (var i = 0; i < maxEnemies; i++) {
             enemiesType1[i] = new enemy("type1", i);
             enemiesType2[i] = new enemy("type2", i);
+            enemiesType3[i] = new enemy("type3", i);
             //Overlap punches
             /*
             //With enemiesType1
@@ -130,6 +146,8 @@ PunchemOut.gameState.prototype = {
             */
 
         }
+
+        punchSound = game.add.audio('punch');
 
         //Timer to spawn enemies
         timer = game.time.create(false);
@@ -169,10 +187,10 @@ PunchemOut.gameState.prototype = {
         collidePunchR();
         backToOrigin();
         checkEndgame();
-        if(timer.paused && !checkEnemiesAlive()){
+        if (timer.paused && !checkEnemiesAlive()) {
             waveTimer.start();
             console.log("...");
-            if(waveTimer.ms>=2000){
+            if (waveTimer.ms >= 2000) {
                 console.log("NUEVA OLEADA");
                 timer.resume();
                 waveTimer.stop();
@@ -192,7 +210,7 @@ function spawnEnemy() {
 
 function moveEnemy() {
     if (enemiesPerWave > 0) {
-        let type = Math.floor(Math.random() * 2) + 1;
+        let type = Math.floor(Math.random() * 3) + 1;
         switch (type) {
             case 1:
                 for (var i = 0; i < maxEnemies; i++) {
@@ -238,6 +256,20 @@ function moveEnemy() {
                 }
                 break;
 
+            case 3:
+                for (var i = 0; i < maxEnemies; i++) {
+                    if (enemiesType3[i].sprite.body.position.x == -100) {
+                        enemiesType3[i].isAlive = true;
+                        enemiesType3[i].sprite.body.velocity.x = enemiesType3[i].speed;
+                        enemiesType3[i].sprite.animations.play('walkRightPrueba', 10, true);
+                        enemiesPerWave--;
+                        spawnTime = Math.floor(Math.random() * MaxSpawnTime) + BaseSpawnTime;
+                        console.log(enemiesPerWave);
+                        break;
+                    }
+                }
+                break;
+
             default:
                 console.log("Error");
                 break;
@@ -246,7 +278,8 @@ function moveEnemy() {
         timer.pause();
         xSpeed();
         decSpawnTime();
-        enemiesPerWave = 20;
+        baseEnemiesPerWave += 10;
+        enemiesPerWave = baseEnemiesPerWave;
     }
 
 }
@@ -341,12 +374,20 @@ function collidePunchL() {
 function checkOverlapL() {
     for (var i = 0; i < maxEnemies; i++) {
         if (enemiesType1[i].sprite.body.position.x >= 100 && enemiesType1[i].sprite.body.position.x <= 225) {
+            punchSound.play();
             enemiesType1[i].sprite.body.velocity.x = 0;
             enemiesType1[i].sprite.body.velocity.y = 150;
         }
         if (enemiesType2[i].sprite.body.position.x >= 100 && enemiesType2[i].sprite.body.position.x <= 225) {
+            punchSound.play();
             enemiesType2[i].sprite.body.velocity.x = 0;
             enemiesType2[i].sprite.body.velocity.y = 150;
+        }
+
+        if (enemiesType3[i].sprite.body.position.x >= 100 && enemiesType3[i].sprite.body.position.x <= 225) {
+            punchSound.play();
+            enemiesType3[i].sprite.body.velocity.x = 0;
+            enemiesType3[i].sprite.body.velocity.y = 150;
         }
     }
 
@@ -354,12 +395,20 @@ function checkOverlapL() {
 function checkOverlapR() {
     for (var i = 0; i < maxEnemies; i++) {
         if (enemiesType1[i].sprite.body.position.x >= 425 && enemiesType1[i].sprite.body.position.x <= 575) {
+            punchSound.play();
             enemiesType1[i].sprite.body.velocity.x = 0;
             enemiesType1[i].sprite.body.velocity.y = 150;
         }
         if (enemiesType2[i].sprite.body.position.x >= 425 && enemiesType2[i].sprite.body.position.x <= 575) {
+            punchSound.play();
             enemiesType2[i].sprite.body.velocity.x = 0;
             enemiesType2[i].sprite.body.velocity.y = 150;
+        }
+
+        if (enemiesType3[i].sprite.body.position.x >= 425 && enemiesType3[i].sprite.body.position.x <= 575) {
+            punchSound.play();
+            enemiesType3[i].sprite.body.velocity.x = 0;
+            enemiesType3[i].sprite.body.velocity.y = 150;
         }
     }
 }
@@ -392,6 +441,7 @@ function xSpeed() {
     for (var i = 0; i < maxEnemies; i++) {
         enemiesType1[i].speed *= 1.1;
         enemiesType2[i].speed *= 1.1;
+        enemiesType3[i].speed *= 1.1;
     }
 
 }
@@ -457,6 +507,26 @@ function backToOrigin() {
             enemiesType2[i].sprite.animations.stop();
             score += 100;
         }
+
+        //Para enemigos Tipo3
+        if (enemiesType3[i].bounces <= 0 && enemiesType3[i].direction == 1 && enemiesType3[i].sprite.body.position.x >= 825) {
+            enemiesType3[i].isAlive = false;
+            enemiesType3[i].sprite.body.velocity.x = 0;
+            enemiesType3[i].sprite.body.position.x = enemiesType3[i].initPos;
+            enemiesType3[i].bounces = Math.floor(Math.random() * 4);
+            enemiesType3[i].sprite.animations.stop();
+            life--;
+        }
+
+        if (enemiesType3[i].sprite.body.position.y >= 625) {
+            enemiesType3[i].isAlive = false;
+            enemiesType3[i].sprite.body.velocity.y = 0;
+            enemiesType3[i].sprite.body.position.x = enemiesType3[i].initPos;
+            enemiesType3[i].sprite.body.position.y = 300;
+            enemiesType3[i].bounces = Math.floor(Math.random() * 4);
+            enemiesType3[i].sprite.animations.stop();
+            score += 100;
+        }
     }
 }
 
@@ -467,18 +537,18 @@ function checkEndgame() {
         game.camera.fade(0x000000, 500);
         game.camera.onFadeComplete.add(function () { game.state.start("endgameState"); }, this);
     }
-} 
+}
 
-function decSpawnTime(){
-    MaxSpawnTime*=0.8;
-    BaseSpawnTime*=0.8;
+function decSpawnTime() {
+    MaxSpawnTime *= 0.8;
+    BaseSpawnTime *= 0.8;
     console.log(MaxSpawnTime);
     console.log(BaseSpawnTime);
 }
 
 function checkEnemiesAlive() {
-    for(var i = 0; i < maxEnemies; i++) {
-        if (enemiesType1[i].isAlive || enemiesType2[i].isAlive) {
+    for (var i = 0; i < maxEnemies; i++) {
+        if (enemiesType1[i].isAlive || enemiesType2[i].isAlive || enemiesType3[i].isAlive) {
             return true;
         }
     }
