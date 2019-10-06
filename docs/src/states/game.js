@@ -18,6 +18,8 @@ var MaxSpawnTime = 1500;
 var BaseSpawnTime = 1000;
 var spawnTime = Math.floor(Math.random() * MaxSpawnTime) + BaseSpawnTime;
 var punchSound;
+var combo = 0;
+var maxCombo = 0;
 
 //Un Array por cada tipo de enemigo
 var enemiesType1 = new Array(maxEnemies);
@@ -465,16 +467,22 @@ function checkOverlapL() {
             punchSound.play();
             enemiesType1[i].sprite.body.velocity.x = 0;
             enemiesType1[i].sprite.body.velocity.y = 150;
+            combo++;
+            console.log('combo : ',combo);
         }
         if (enemiesType2[i].sprite.body.position.x >= 100 && enemiesType2[i].sprite.body.position.x <= 225) {
             punchSound.play();
             enemiesType2[i].sprite.body.velocity.x = 0;
             enemiesType2[i].sprite.body.velocity.y = 150;
+            combo++;
+            console.log('combo : ',combo);
         }
         if (enemiesType3[i].sprite.body.position.x >= 100 && enemiesType3[i].sprite.body.position.x <= 225) {
             punchSound.play();
             enemiesType3[i].sprite.body.velocity.x = 0;
             enemiesType3[i].sprite.body.velocity.y = 150;
+            combo++;
+            console.log('combo : ',combo);
         }
         if (enemiesType4[i].sprite.body.position.x >= 100 && enemiesType4[i].sprite.body.position.x <= 225) {
             if(enemiesType4[i].hits >= 2) {
@@ -484,12 +492,16 @@ function checkOverlapL() {
                 punchSound.play();
                 enemiesType4[i].sprite.body.velocity.x = 0;
                 enemiesType4[i].sprite.body.velocity.y = 150;
+                combo++;
+                console.log('combo : ',combo);
             }
         }
         if (enemiesType5[i].sprite.body.position.x >= 100 && enemiesType5[i].sprite.body.position.x <= 225) {
             punchSound.play();
             enemiesType5[i].sprite.body.velocity.x = 0;
             enemiesType5[i].sprite.body.velocity.y = 150;
+            combo++;
+            console.log('combo : ',combo);
         }
     }
 
@@ -500,16 +512,22 @@ function checkOverlapR() {
             punchSound.play();
             enemiesType1[i].sprite.body.velocity.x = 0;
             enemiesType1[i].sprite.body.velocity.y = 150;
+            combo++;
+            console.log('combo : ',combo);
         }
         if (enemiesType2[i].sprite.body.position.x >= 425 && enemiesType2[i].sprite.body.position.x <= 575) {
             punchSound.play();
             enemiesType2[i].sprite.body.velocity.x = 0;
             enemiesType2[i].sprite.body.velocity.y = 150;
+            combo++;
+            console.log('combo : ',combo);
         }
         if (enemiesType3[i].sprite.body.position.x >= 425 && enemiesType3[i].sprite.body.position.x <= 575) {
             punchSound.play();
             enemiesType3[i].sprite.body.velocity.x = 0;
             enemiesType3[i].sprite.body.velocity.y = 150;
+            combo++;
+            console.log('combo : ',combo);
         }
         if (enemiesType4[i].sprite.body.position.x >= 425 && enemiesType4[i].sprite.body.position.x <= 575) {
             if(enemiesType4[i].hits >= 2) {
@@ -519,12 +537,16 @@ function checkOverlapR() {
                 punchSound.play();
                 enemiesType4[i].sprite.body.velocity.x = 0;
                 enemiesType4[i].sprite.body.velocity.y = 150;
+                combo++;
+                console.log('combo : ',combo);
             }
         }
         if (enemiesType5[i].sprite.body.position.x >= 425 && enemiesType5[i].sprite.body.position.x <= 575) {
             punchSound.play();
             enemiesType5[i].sprite.body.velocity.x = 0;
             enemiesType5[i].sprite.body.velocity.y = 150;
+            combo++;
+            console.log('combo : ',combo);
         }
     }
 }
@@ -576,6 +598,10 @@ function backToOrigin() {
             enemiesType1[i].direction = enemiesType1[i].initDir;
             enemiesType1[i].bounces = Math.floor(Math.random() * 4);
             enemiesType1[i].sprite.animations.stop();
+            if(combo > maxCombo){
+                maxCombo = combo;
+                combo = 0;
+            }
             life--;
         }
         if (enemiesType1[i].bounces <= 0 && enemiesType1[i].direction == 2 && enemiesType1[i].sprite.body.position.x <= -25) {
@@ -585,6 +611,10 @@ function backToOrigin() {
             enemiesType1[i].direction = enemiesType1[i].initDir;
             enemiesType1[i].bounces = Math.floor(Math.random() * 4);
             enemiesType1[i].sprite.animations.stop();
+            if(combo > maxCombo){
+                maxCombo = combo;
+                combo = 0;
+            }
             life--;
         }
         if (enemiesType1[i].sprite.body.position.y >= 625) {
@@ -606,6 +636,10 @@ function backToOrigin() {
             enemiesType2[i].direction = enemiesType2[i].initDir;
             enemiesType2[i].bounces = Math.floor(Math.random() * 4);
             enemiesType2[i].sprite.animations.stop();
+            if(combo > maxCombo){
+                maxCombo = combo;
+                combo = 0;
+            }
             life--;
         }
         if (enemiesType2[i].bounces <= 0 && enemiesType2[i].direction == 2 && enemiesType2[i].sprite.body.position.x <= -25) {
@@ -615,6 +649,10 @@ function backToOrigin() {
             enemiesType2[i].direction = enemiesType2[i].initDir;
             enemiesType2[i].bounces = Math.floor(Math.random() * 4);
             enemiesType2[i].sprite.animations.stop();
+            if(combo > maxCombo){
+                maxCombo = combo;
+                combo = 0;
+            }
             life--;
         }
         if (enemiesType2[i].sprite.body.position.y >= 625) {
@@ -635,6 +673,10 @@ function backToOrigin() {
             enemiesType3[i].sprite.body.position.x = enemiesType3[i].initPos;
             enemiesType3[i].bounces = Math.floor(Math.random() * 4);
             enemiesType3[i].sprite.animations.stop();
+            if(combo > maxCombo){
+                maxCombo = combo;
+                combo = 0;
+            }
             life--;
         }
 
@@ -658,6 +700,10 @@ function backToOrigin() {
             enemiesType4[i].direction = enemiesType4[i].initDir;
             enemiesType4[i].bounces = Math.floor(Math.random() * 4);
             enemiesType4[i].sprite.animations.stop();
+            if(combo > maxCombo){
+                maxCombo = combo;
+                combo = 0;
+            }
             life--;
         }
         if (enemiesType4[i].bounces <= 0 && enemiesType4[i].direction == 2 && enemiesType4[i].sprite.body.position.x <= -25) {
@@ -669,6 +715,10 @@ function backToOrigin() {
             enemiesType4[i].direction = enemiesType4[i].initDir;
             enemiesType4[i].bounces = Math.floor(Math.random() * 4);
             enemiesType4[i].sprite.animations.stop();
+            if(combo > maxCombo){
+                maxCombo = combo;
+                combo = 0;
+            }
             life--;
         }
         if (enemiesType4[i].sprite.body.position.y >= 625) {
@@ -692,6 +742,10 @@ function backToOrigin() {
             enemiesType5[i].direction = enemiesType5[i].initDir;
             enemiesType5[i].bounces = Math.floor(Math.random() * 4);
             enemiesType5[i].sprite.animations.stop();
+            if(combo > maxCombo){
+                maxCombo = combo;
+                combo = 0;
+            }
             life--;
         }
         if (enemiesType5[i].bounces <= 0 && enemiesType5[i].direction == 2 && enemiesType5[i].sprite.body.position.x <= -25) {
@@ -701,6 +755,10 @@ function backToOrigin() {
             enemiesType5[i].direction = enemiesType5[i].initDir;
             enemiesType5[i].bounces = Math.floor(Math.random() * 4);
             enemiesType5[i].sprite.animations.stop();
+            if(combo > maxCombo){
+                maxCombo = combo;
+                combo = 0;
+            }
             life--;
         }
         if (enemiesType5[i].sprite.body.position.y >= 625) {
