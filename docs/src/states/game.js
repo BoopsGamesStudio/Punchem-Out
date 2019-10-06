@@ -10,7 +10,8 @@ var pressL = false;
 var pressR = false;
 var animR;
 var animL;
-var life = 1;
+var lives = 50;
+var life = lives;
 var score = 0;
 var baseEnemiesPerWave = 20;
 var enemiesPerWave = baseEnemiesPerWave;
@@ -32,6 +33,7 @@ function enemy(type, id) {
     switch (type) {
         case 'type1':
             this.id = id;
+            this.hits;
             this.bounces = Math.floor(Math.random() * 4);
             this.direction = Math.floor(Math.random() * 2) + 1;
             if (this.direction == 1) {//1 si el enemigo va hacia la der; 2 si va hacia la izq
@@ -51,6 +53,7 @@ function enemy(type, id) {
 
         case 'type2':
             this.id = id;
+            this.hits;
             this.bounces = Math.floor(Math.random() * 4);
             this.direction = Math.floor(Math.random() * 2) + 1;
             if (this.direction == 1) {
@@ -71,9 +74,9 @@ function enemy(type, id) {
 
         case 'type3':
             this.id = id;
-            this.bounces = Math.floor(Math.random() * 4);
+            this.hits;
             this.initPos = -100;
-            this.sprite = game.add.sprite(this.initPos, 300, 'prueba');
+            this.sprite = game.add.sprite(this.initPos, 300, 'spritesheet');
             this.speed = 90;
             this.sprite.scale.setTo(0.8, 0.62);
             this.sprite.animations.add('walkRightPrueba');
@@ -82,7 +85,7 @@ function enemy(type, id) {
         case 'type4':
             this.id = id;
             this.bounces = Math.floor(Math.random() * 4);
-            this.hits = 2;
+            this.hits;
             this.direction = Math.floor(Math.random() * 2) + 1;
             if (this.direction == 1) {
                 this.initPos = -100;
@@ -94,14 +97,13 @@ function enemy(type, id) {
                 this.sprite = game.add.sprite(this.initPos, 260, 'link');
             }
             this.speed = 70;
-            //this.sprite.scale.setTo(1.2, 1.1);
             this.sprite.animations.add('walkRightLink', [70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80]);
             this.sprite.animations.add('walkLeftLink', [59, 58, 57, 56, 55, 54, 53, 52, 51]);
             this.isAlive = false;
             break;
         case 'type5':
             this.id = id;
-            this.bounces = 0;
+            this.hits;
             this.initPos = -100;
             this.sprite = game.add.sprite(this.initPos, 300, 'link');
             this.sprite.tint = 0x960585;
@@ -114,6 +116,7 @@ function enemy(type, id) {
             console.log("Error");
             break;
     }
+
     game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
 }
 
@@ -141,6 +144,13 @@ PunchemOut.gameState.prototype = {
 
         //Controls
         cursors = this.input.keyboard.createCursorKeys();
+
+        //Debug
+        /*punchLTest1 = game.add.sprite(150, 250, 'nada');
+        punchLTest2 = game.add.sprite(300, 250, 'nada');
+
+        punchRTest1 = game.add.sprite(500, 250, 'nada');
+        punchRTest2 = game.add.sprite(650, 250, 'nada');*/
 
         //Create punches and their animations
         punchL = game.add.sprite(150, 250, 'punch');
@@ -203,7 +213,6 @@ PunchemOut.gameState.prototype = {
         timer2.start();
         */
 
-
     },
 
     update: function () {
@@ -253,6 +262,7 @@ function moveEnemy() {
                 for (var i = 0; i < maxEnemies; i++) {
                     if (enemiesType1[i].sprite.body.position.x == -100) {
                         enemiesType1[i].isAlive = true;
+                        enemiesType1[i].hits = 1;
                         enemiesType1[i].sprite.body.velocity.x = enemiesType1[i].speed;
                         enemiesType1[i].sprite.animations.play('walkRightSkeleton', 10, true);
                         enemiesPerWave--;
@@ -261,6 +271,7 @@ function moveEnemy() {
                         break;
                     } else if (enemiesType1[i].sprite.body.position.x == 900) {
                         enemiesType1[i].isAlive = true;
+                        enemiesType1[i].hits = 1;
                         enemiesType1[i].sprite.body.velocity.x = -enemiesType1[i].speed;
                         enemiesType1[i].sprite.animations.play('walkLeftSkeleton', 10, true);
                         enemiesPerWave--;
@@ -275,6 +286,7 @@ function moveEnemy() {
                 for (var i = 0; i < maxEnemies; i++) {
                     if (enemiesType2[i].sprite.body.position.x == -100) {
                         enemiesType2[i].isAlive = true;
+                        enemiesType2[i].hits = 1;
                         enemiesType2[i].sprite.body.velocity.x = enemiesType2[i].speed;
                         enemiesType2[i].sprite.animations.play('walkRightLink', 10, true);
                         enemiesPerWave--;
@@ -283,6 +295,7 @@ function moveEnemy() {
                         break;
                     } else if (enemiesType2[i].sprite.body.position.x == 900) {
                         enemiesType2[i].isAlive = true;
+                        enemiesType2[i].hits = 1;
                         enemiesType2[i].sprite.body.velocity.x = -enemiesType2[i].speed;
                         enemiesType2[i].sprite.animations.play('walkLeftLink', 10, true);
                         enemiesPerWave--;
@@ -297,6 +310,7 @@ function moveEnemy() {
                 for (var i = 0; i < maxEnemies; i++) {
                     if (enemiesType3[i].sprite.body.position.x == -100) {
                         enemiesType3[i].isAlive = true;
+                        enemiesType3[i].hits = 1;
                         enemiesType3[i].sprite.body.velocity.x = enemiesType3[i].speed;
                         enemiesType3[i].sprite.animations.play('walkRightPrueba', 10, true);
                         enemiesPerWave--;
@@ -310,6 +324,7 @@ function moveEnemy() {
                 for (var i = 0; i < maxEnemies; i++) {
                     if (enemiesType4[i].sprite.body.position.x == -100) {
                         enemiesType4[i].isAlive = true;
+                        enemiesType4[i].hits = 2;
                         enemiesType4[i].sprite.body.velocity.x = enemiesType4[i].speed;
                         enemiesType4[i].sprite.animations.play('walkRightLink', 10, true);
                         enemiesPerWave--;
@@ -318,6 +333,7 @@ function moveEnemy() {
                         break;
                     } else if (enemiesType4[i].sprite.body.position.x == 900) {
                         enemiesType4[i].isAlive = true;
+                        enemiesType4[i].hits = 2;
                         enemiesType4[i].sprite.body.velocity.x = -enemiesType4[i].speed;
                         enemiesType4[i].sprite.animations.play('walkLeftLink', 10, true);
                         enemiesPerWave--;
@@ -331,16 +347,9 @@ function moveEnemy() {
                 for (var i = 0; i < maxEnemies; i++) {
                     if (enemiesType5[i].sprite.body.position.x == -100) {
                         enemiesType5[i].isAlive = true;
+                        enemiesType5[i].hits = 1;
                         enemiesType5[i].sprite.body.velocity.x = enemiesType5[i].speed;
                         enemiesType5[i].sprite.animations.play('walkRightLink', 10, true);
-                        enemiesPerWave--;
-                        spawnTime = Math.floor(Math.random() * MaxSpawnTime) + BaseSpawnTime;
-                        console.log(enemiesPerWave);
-                        break;
-                    } else if (enemiesType5[i].sprite.body.position.x == 900) {
-                        enemiesType5[i].isAlive = true;
-                        enemiesType5[i].sprite.body.velocity.x = -enemiesType5[i].speed;
-                        enemiesType5[i].sprite.animations.play('walkLeftLink', 10, true);
                         enemiesPerWave--;
                         spawnTime = Math.floor(Math.random() * MaxSpawnTime) + BaseSpawnTime;
                         console.log(enemiesPerWave);
@@ -463,96 +472,150 @@ function collidePunchL() {
 
 function checkOverlapL() {
     for (var i = 0; i < maxEnemies; i++) {
-        if (enemiesType1[i].sprite.body.position.x >= 100 && enemiesType1[i].sprite.body.position.x <= 225) {
-            punchSound.play();
-            enemiesType1[i].sprite.body.velocity.x = 0;
-            enemiesType1[i].sprite.body.velocity.y = 150;
-            combo++;
-            console.log('combo : ',combo);
+        if (enemiesType1[i].sprite.body.position.x >= 120 && enemiesType1[i].sprite.body.position.x <= 250) {
+            if (enemiesType1[i].hits >= 1) {
+                enemiesType1[i].hits--;
+                punchSound.play();
+                enemiesType1[i].sprite.body.velocity.x = 0;
+                enemiesType1[i].sprite.body.velocity.y = 150;
+
+                combo++;
+                giveScore(enemiesType1[i].sprite.body.position.x);
+
+                console.log('combo : ', combo);
+            }
         }
-        if (enemiesType2[i].sprite.body.position.x >= 100 && enemiesType2[i].sprite.body.position.x <= 225) {
-            punchSound.play();
-            enemiesType2[i].sprite.body.velocity.x = 0;
-            enemiesType2[i].sprite.body.velocity.y = 150;
-            combo++;
-            console.log('combo : ',combo);
+        if (enemiesType2[i].sprite.body.position.x >= 120 && enemiesType2[i].sprite.body.position.x <= 250) {
+            if (enemiesType2[i].hits >= 1) {
+                enemiesType2[i].hits--;
+                punchSound.play();
+                enemiesType2[i].sprite.body.velocity.x = 0;
+                enemiesType2[i].sprite.body.velocity.y = 150;
+
+                combo++;
+                giveScore(enemiesType2[i].sprite.body.position.x);
+
+                console.log('combo : ', combo);
+            }
         }
-        if (enemiesType3[i].sprite.body.position.x >= 100 && enemiesType3[i].sprite.body.position.x <= 225) {
-            punchSound.play();
-            enemiesType3[i].sprite.body.velocity.x = 0;
-            enemiesType3[i].sprite.body.velocity.y = 150;
-            combo++;
-            console.log('combo : ',combo);
+        if (enemiesType3[i].sprite.body.position.x >= 120 && enemiesType3[i].sprite.body.position.x <= 250) {
+            if (enemiesType3[i].hits >= 1) {
+                enemiesType3[i].hits--;
+                punchSound.play();
+                enemiesType3[i].sprite.body.velocity.x = 0;
+                enemiesType3[i].sprite.body.velocity.y = 150;
+
+                combo++;
+                giveScore(enemiesType3[i].sprite.body.position.x);
+
+                console.log('combo : ', combo);
+            }
         }
-        if (enemiesType4[i].sprite.body.position.x >= 100 && enemiesType4[i].sprite.body.position.x <= 225) {
-            if(enemiesType4[i].hits >= 2) {
+        if (enemiesType4[i].sprite.body.position.x >= 100 && enemiesType4[i].sprite.body.position.x <= 250) {
+            if (enemiesType4[i].hits >= 2) {
                 enemiesType4[i].hits--;
                 enemiesType4[i].sprite.tint = 0xcc0000;
             } else {
                 punchSound.play();
                 enemiesType4[i].sprite.body.velocity.x = 0;
                 enemiesType4[i].sprite.body.velocity.y = 150;
+
                 combo++;
-                console.log('combo : ',combo);
+                giveScore(enemiesType4[i].sprite.body.position.x);
+
+                console.log('combo : ', combo);
             }
         }
-        if (enemiesType5[i].sprite.body.position.x >= 100 && enemiesType5[i].sprite.body.position.x <= 225) {
-            punchSound.play();
-            enemiesType5[i].sprite.body.velocity.x = 0;
-            enemiesType5[i].sprite.body.velocity.y = 150;
-            combo++;
-            console.log('combo : ',combo);
+        if (enemiesType5[i].sprite.body.position.x >= 120 && enemiesType5[i].sprite.body.position.x <= 250) {
+            if (enemiesType5[i].hits >= 1) {
+                enemiesType5[i].hits--;
+                punchSound.play();
+                enemiesType5[i].sprite.body.velocity.x = 0;
+                enemiesType5[i].sprite.body.velocity.y = 150;
+
+                combo++;
+                giveScore(enemiesType5[i].sprite.body.position.x);
+
+                console.log('combo : ', combo);
+            }
         }
     }
 
 }
 function checkOverlapR() {
     for (var i = 0; i < maxEnemies; i++) {
-        if (enemiesType1[i].sprite.body.position.x >= 425 && enemiesType1[i].sprite.body.position.x <= 575) {
-            punchSound.play();
-            enemiesType1[i].sprite.body.velocity.x = 0;
-            enemiesType1[i].sprite.body.velocity.y = 150;
-            combo++;
-            console.log('combo : ',combo);
+        if (enemiesType1[i].sprite.body.position.x >= 470 && enemiesType1[i].sprite.body.position.x <= 600) {
+            if (enemiesType1[i].hits >= 1) {
+                enemiesType1[i].hits--;
+                punchSound.play();
+                enemiesType1[i].sprite.body.velocity.x = 0;
+                enemiesType1[i].sprite.body.velocity.y = 150;
+
+                combo++;
+                giveScore(enemiesType1[i].sprite.body.position.x);
+
+                console.log('combo : ', combo);
+            }
         }
-        if (enemiesType2[i].sprite.body.position.x >= 425 && enemiesType2[i].sprite.body.position.x <= 575) {
-            punchSound.play();
-            enemiesType2[i].sprite.body.velocity.x = 0;
-            enemiesType2[i].sprite.body.velocity.y = 150;
-            combo++;
-            console.log('combo : ',combo);
+        if (enemiesType2[i].sprite.body.position.x >= 470 && enemiesType2[i].sprite.body.position.x <= 600) {
+            if (enemiesType2[i].hits >= 1) {
+                enemiesType2[i].hits--;
+                punchSound.play();
+                enemiesType2[i].sprite.body.velocity.x = 0;
+                enemiesType2[i].sprite.body.velocity.y = 150;
+
+                combo++;
+                giveScore(enemiesType2[i].sprite.body.position.x);
+
+                console.log('combo : ', combo);
+            }
         }
-        if (enemiesType3[i].sprite.body.position.x >= 425 && enemiesType3[i].sprite.body.position.x <= 575) {
-            punchSound.play();
-            enemiesType3[i].sprite.body.velocity.x = 0;
-            enemiesType3[i].sprite.body.velocity.y = 150;
-            combo++;
-            console.log('combo : ',combo);
+        if (enemiesType3[i].sprite.body.position.x >= 470 && enemiesType3[i].sprite.body.position.x <= 600) {
+            if (enemiesType3[i].hits >= 1) {
+                enemiesType3[i].hits--;
+                punchSound.play();
+                enemiesType3[i].sprite.body.velocity.x = 0;
+                enemiesType3[i].sprite.body.velocity.y = 150;
+
+                combo++;
+                giveScore(enemiesType3[i].sprite.body.position.x);
+
+                console.log('combo : ', combo);
+            }
         }
-        if (enemiesType4[i].sprite.body.position.x >= 425 && enemiesType4[i].sprite.body.position.x <= 575) {
-            if(enemiesType4[i].hits >= 2) {
+        if (enemiesType4[i].sprite.body.position.x >= 450 && enemiesType4[i].sprite.body.position.x <= 600) {
+            if (enemiesType4[i].hits >= 2) {
                 enemiesType4[i].hits--;
                 enemiesType4[i].sprite.tint = 0xcc0000;
             } else {
                 punchSound.play();
                 enemiesType4[i].sprite.body.velocity.x = 0;
                 enemiesType4[i].sprite.body.velocity.y = 150;
+
                 combo++;
-                console.log('combo : ',combo);
+                giveScore(enemiesType4[i].sprite.body.position.x);
+
+                console.log('combo : ', combo);
             }
         }
-        if (enemiesType5[i].sprite.body.position.x >= 425 && enemiesType5[i].sprite.body.position.x <= 575) {
-            punchSound.play();
-            enemiesType5[i].sprite.body.velocity.x = 0;
-            enemiesType5[i].sprite.body.velocity.y = 150;
-            combo++;
-            console.log('combo : ',combo);
+        if (enemiesType5[i].sprite.body.position.x >= 470 && enemiesType5[i].sprite.body.position.x <= 600) {
+            if (enemiesType5[i].hits >= 1) {
+                enemiesType5[i].hits--;
+                punchSound.play();
+                enemiesType5[i].sprite.body.velocity.x = 0;
+                enemiesType5[i].sprite.body.velocity.y = 150;
+
+                combo++;
+                giveScore(enemiesType5[i].sprite.body.position.x);
+
+                console.log('combo : ', combo);
+            }
         }
     }
 }
 
 function checkTPposition() {
-    for(var i = 0; i < maxEnemies; i++) {
+    for (var i = 0; i < maxEnemies; i++) {
         if (enemiesType5[i].sprite.body.position.x >= 50 && enemiesType5[i].sprite.body.position.x <= 75) {
             //sonido de teleport
             enemiesType5[i].sprite.body.position.x = 300;
@@ -598,10 +661,9 @@ function backToOrigin() {
             enemiesType1[i].direction = enemiesType1[i].initDir;
             enemiesType1[i].bounces = Math.floor(Math.random() * 4);
             enemiesType1[i].sprite.animations.stop();
-            if(combo > maxCombo){
+            if (combo > maxCombo)
                 maxCombo = combo;
-                combo = 0;
-            }
+            combo = 0;
             life--;
         }
         if (enemiesType1[i].bounces <= 0 && enemiesType1[i].direction == 2 && enemiesType1[i].sprite.body.position.x <= -25) {
@@ -611,10 +673,9 @@ function backToOrigin() {
             enemiesType1[i].direction = enemiesType1[i].initDir;
             enemiesType1[i].bounces = Math.floor(Math.random() * 4);
             enemiesType1[i].sprite.animations.stop();
-            if(combo > maxCombo){
+            if (combo > maxCombo)
                 maxCombo = combo;
-                combo = 0;
-            }
+            combo = 0;
             life--;
         }
         if (enemiesType1[i].sprite.body.position.y >= 625) {
@@ -625,7 +686,6 @@ function backToOrigin() {
             enemiesType1[i].direction = enemiesType1[i].initDir;
             enemiesType1[i].bounces = Math.floor(Math.random() * 4);
             enemiesType1[i].sprite.animations.stop();
-            score += 100;
         }
 
         //Para enemigos Tipo2
@@ -636,10 +696,9 @@ function backToOrigin() {
             enemiesType2[i].direction = enemiesType2[i].initDir;
             enemiesType2[i].bounces = Math.floor(Math.random() * 4);
             enemiesType2[i].sprite.animations.stop();
-            if(combo > maxCombo){
+            if (combo > maxCombo)
                 maxCombo = combo;
-                combo = 0;
-            }
+            combo = 0;
             life--;
         }
         if (enemiesType2[i].bounces <= 0 && enemiesType2[i].direction == 2 && enemiesType2[i].sprite.body.position.x <= -25) {
@@ -649,10 +708,9 @@ function backToOrigin() {
             enemiesType2[i].direction = enemiesType2[i].initDir;
             enemiesType2[i].bounces = Math.floor(Math.random() * 4);
             enemiesType2[i].sprite.animations.stop();
-            if(combo > maxCombo){
+            if (combo > maxCombo)
                 maxCombo = combo;
-                combo = 0;
-            }
+            combo = 0;
             life--;
         }
         if (enemiesType2[i].sprite.body.position.y >= 625) {
@@ -663,20 +721,18 @@ function backToOrigin() {
             enemiesType2[i].direction = enemiesType2[i].initDir;
             enemiesType2[i].bounces = Math.floor(Math.random() * 4);
             enemiesType2[i].sprite.animations.stop();
-            score += 100;
         }
 
         //Para enemigos Tipo3
-        if (enemiesType3[i].bounces <= 0 && enemiesType3[i].direction == 1 && enemiesType3[i].sprite.body.position.x >= 825) {
+        if (enemiesType3[i].sprite.body.position.x >= 825) {
             enemiesType3[i].isAlive = false;
             enemiesType3[i].sprite.body.velocity.x = 0;
             enemiesType3[i].sprite.body.position.x = enemiesType3[i].initPos;
             enemiesType3[i].bounces = Math.floor(Math.random() * 4);
             enemiesType3[i].sprite.animations.stop();
-            if(combo > maxCombo){
+            if (combo > maxCombo)
                 maxCombo = combo;
-                combo = 0;
-            }
+            combo = 0;
             life--;
         }
 
@@ -687,7 +743,6 @@ function backToOrigin() {
             enemiesType3[i].sprite.body.position.y = 300;
             enemiesType3[i].bounces = Math.floor(Math.random() * 4);
             enemiesType3[i].sprite.animations.stop();
-            score += 100;
         }
 
         //Para enemigos Tipo4
@@ -700,10 +755,9 @@ function backToOrigin() {
             enemiesType4[i].direction = enemiesType4[i].initDir;
             enemiesType4[i].bounces = Math.floor(Math.random() * 4);
             enemiesType4[i].sprite.animations.stop();
-            if(combo > maxCombo){
+            if (combo > maxCombo)
                 maxCombo = combo;
-                combo = 0;
-            }
+            combo = 0;
             life--;
         }
         if (enemiesType4[i].bounces <= 0 && enemiesType4[i].direction == 2 && enemiesType4[i].sprite.body.position.x <= -25) {
@@ -715,10 +769,9 @@ function backToOrigin() {
             enemiesType4[i].direction = enemiesType4[i].initDir;
             enemiesType4[i].bounces = Math.floor(Math.random() * 4);
             enemiesType4[i].sprite.animations.stop();
-            if(combo > maxCombo){
+            if (combo > maxCombo)
                 maxCombo = combo;
-                combo = 0;
-            }
+            combo = 0;
             life--;
         }
         if (enemiesType4[i].sprite.body.position.y >= 625) {
@@ -731,34 +784,19 @@ function backToOrigin() {
             enemiesType4[i].direction = enemiesType4[i].initDir;
             enemiesType4[i].bounces = Math.floor(Math.random() * 4);
             enemiesType4[i].sprite.animations.stop();
-            score += 100;
         }
 
         //Para enemigos Tipo5
-        if (enemiesType5[i].bounces <= 0 && enemiesType5[i].direction == 1 && enemiesType5[i].sprite.body.position.x >= 825) {
+        if (enemiesType5[i].sprite.body.position.x >= 825) {
             enemiesType5[i].isAlive = false;
             enemiesType5[i].sprite.body.velocity.x = 0;
             enemiesType5[i].sprite.body.position.x = enemiesType5[i].initPos;
             enemiesType5[i].direction = enemiesType5[i].initDir;
             enemiesType5[i].bounces = Math.floor(Math.random() * 4);
             enemiesType5[i].sprite.animations.stop();
-            if(combo > maxCombo){
+            if (combo > maxCombo)
                 maxCombo = combo;
-                combo = 0;
-            }
-            life--;
-        }
-        if (enemiesType5[i].bounces <= 0 && enemiesType5[i].direction == 2 && enemiesType5[i].sprite.body.position.x <= -25) {
-            enemiesType5[i].isAlive = false;
-            enemiesType5[i].sprite.body.velocity.x = 0;
-            enemiesType5[i].sprite.body.position.x = enemiesType5[i].initPos;
-            enemiesType5[i].direction = enemiesType5[i].initDir;
-            enemiesType5[i].bounces = Math.floor(Math.random() * 4);
-            enemiesType5[i].sprite.animations.stop();
-            if(combo > maxCombo){
-                maxCombo = combo;
-                combo = 0;
-            }
+            combo = 0;
             life--;
         }
         if (enemiesType5[i].sprite.body.position.y >= 625) {
@@ -769,7 +807,6 @@ function backToOrigin() {
             enemiesType5[i].direction = enemiesType5[i].initDir;
             enemiesType5[i].bounces = Math.floor(Math.random() * 4);
             enemiesType5[i].sprite.animations.stop();
-            score += 100;
         }
     }
 }
@@ -797,4 +834,23 @@ function checkEnemiesAlive() {
         }
     }
     return false;
+}
+
+function giveScore(enemyPos) {
+    if ((enemyPos > 170 && enemyPos < 210) || (enemyPos > 520 && enemyPos < 560)) {
+        scoreToGive = 300 * combo;
+
+        textScore = game.add.text(enemyPos, 200, "+300", style2);
+    } else {
+        scoreToGive = 100 * combo;
+
+        textScore = game.add.text(enemyPos, 200, "+100", style2);
+    }
+
+    textScore.lifespan = 1500;
+    game.time.events.add(500, function () { game.add.tween(textScore).to({ alpha: 0 }, 1000, Phaser.Easing.Linear.None, true); }, this);
+    game.time.events.add(0, function () { game.add.tween(textScore).to({ y: 100 }, 1500, Phaser.Easing.Linear.None, true); }, this);
+
+    console.log("x" + combo + " = " + scoreToGive);
+    score += scoreToGive;
 }

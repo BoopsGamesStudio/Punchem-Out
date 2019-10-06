@@ -18,7 +18,7 @@ PunchemOut.preloadState.prototype = {
         this.load.image('logo_juego', 'assets/logo_juego.png');
         this.load.image('settings', 'assets/sprites/settings.png');
         this.load.spritesheet('link', 'assets/sprites/link.png', 96, 104);
-        this.load.spritesheet('prueba', 'assets/sprites/spritesheetPrueba.png', 72, 128);
+        this.load.spritesheet('spritesheet', 'assets/sprites/spritesheet.png', 72, 128);
         this.load.spritesheet('punch', 'assets/sprites/punch.png', 150, 150);
         this.load.image('game_over', 'assets/sprites/game_over.png');
         this.load.audio('punch', 'assets/sounds/punch.mp3');
