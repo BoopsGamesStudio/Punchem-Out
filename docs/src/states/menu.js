@@ -3,6 +3,7 @@ PunchemOut.menuState = function () {
 }
 
 var style = { font: "15px Arial", fill: "#ffffff", align: "center" };
+var style2 = { font: "30px Arial", fill: "#ffffff", align: "center" };
 
 PunchemOut.menuState.prototype = {
 

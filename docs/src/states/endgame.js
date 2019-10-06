@@ -52,7 +52,7 @@ PunchemOut.endgameState.prototype = {
 }
 
 function resetVariables() {
-    life = 1;
+    life = lives;
     MaxSpawnTime = 1500;
     BaseSpawnTime = 1000;
 
