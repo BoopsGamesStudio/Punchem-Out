@@ -22,6 +22,9 @@ PunchemOut.endgameState.prototype = {
         scoreText = game.add.text(game.world.centerX - 200, game.world.centerY + 100, "Score: " + score, style);
         scoreText.alpha = 0;
 
+        maxComboText = game.add.text(game.world.centerX - 200, game.world.centerY + 150, "MaxCombo: " + maxCombo, style);
+        maxComboText.alpha = 0;
+
         tryAgain = this.add.button(700, 500, 'skeleton', function() { game.state.start('gameState'); resetVariables(); }, this, 2, 1, 0);
         tryAgainText = game.add.text(620, 520, "Try Again", style);
 
@@ -36,6 +39,7 @@ PunchemOut.endgameState.prototype = {
 
         game.add.tween(gameOver).to( { alpha: 1 }, 2000, Phaser.Easing.Linear.None, true, 0);
         game.add.tween(scoreText).to( { alpha: 1 }, 2000, Phaser.Easing.Linear.None, true, 0);
+        game.add.tween(maxComboText).to( { alpha: 1 }, 2000, Phaser.Easing.Linear.None, true, 0);
         game.add.tween(tryAgain).to( { alpha: 1 }, 2000, Phaser.Easing.Linear.None, true, 0);
         game.add.tween(tryAgainText).to( { alpha: 1 }, 2000, Phaser.Easing.Linear.None, true, 0);
         game.add.tween(back).to( { alpha: 1 }, 2000, Phaser.Easing.Linear.None, true, 0);
@@ -55,7 +59,12 @@ function resetVariables() {
     baseEnemiesPerWave = 20;
     enemiesPerWave = baseEnemiesPerWave;
     score = 0;
+    combo = 0;
+    maxCombo = 0;
 
     enemiesType1 = new Array(maxEnemies);
     enemiesType2 = new Array(maxEnemies);
+    enemiesType3 = new Array(maxEnemies);
+    enemiesType4 = new Array(maxEnemies);
+    enemiesType5 = new Array(maxEnemies);
 }
