@@ -23,6 +23,8 @@ var punchSound;
 var enemiesType1 = new Array(maxEnemies);
 var enemiesType2 = new Array(maxEnemies);
 var enemiesType3 = new Array(maxEnemies);
+var enemiesType4 = new Array(maxEnemies);
+var enemiesType5 = new Array(maxEnemies);
 
 function enemy(type, id) {
     switch (type) {
@@ -75,7 +77,37 @@ function enemy(type, id) {
             this.sprite.animations.add('walkRightPrueba');
             this.isAlive = false;
             break;
-
+        case 'type4':
+            this.id = id;
+            this.bounces = Math.floor(Math.random() * 4);
+            this.hits = 2;
+            this.direction = Math.floor(Math.random() * 2) + 1;
+            if (this.direction == 1) {
+                this.initPos = -100;
+                this.initDir = 1;
+                this.sprite = game.add.sprite(this.initPos, 260, 'link');
+            } else {
+                this.initPos = 900;
+                this.initDir = 2;
+                this.sprite = game.add.sprite(this.initPos, 260, 'link');
+            }
+            this.speed = 70;
+            //this.sprite.scale.setTo(1.2, 1.1);
+            this.sprite.animations.add('walkRightLink', [70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80]);
+            this.sprite.animations.add('walkLeftLink', [59, 58, 57, 56, 55, 54, 53, 52, 51]);
+            this.isAlive = false;
+            break;
+        case 'type5':
+            this.id = id;
+            this.bounces = 0;
+            this.initPos = -100;
+            this.sprite = game.add.sprite(this.initPos, 300, 'link');
+            this.sprite.tint = 0x960585;
+            this.speed = 80;
+            this.sprite.scale.setTo(0.67, 0.62);
+            this.sprite.animations.add('walkRightLink', [70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80]);
+            this.isAlive = false;
+            break;
         default:
             console.log("Error");
             break;
@@ -135,6 +167,8 @@ PunchemOut.gameState.prototype = {
             enemiesType1[i] = new enemy("type1", i);
             enemiesType2[i] = new enemy("type2", i);
             enemiesType3[i] = new enemy("type3", i);
+            enemiesType4[i] = new enemy("type4", i);
+            enemiesType5[i] = new enemy("type5", i);
             //Overlap punches
             /*
             //With enemiesType1
@@ -185,6 +219,7 @@ PunchemOut.gameState.prototype = {
         activePunch();
         collidePunchL();
         collidePunchR();
+        checkTPposition();
         backToOrigin();
         checkEndgame();
         if (timer.paused && !checkEnemiesAlive()) {
@@ -210,7 +245,7 @@ function spawnEnemy() {
 
 function moveEnemy() {
     if (enemiesPerWave > 0) {
-        let type = Math.floor(Math.random() * 3) + 1;
+        let type = Math.floor(Math.random() * 5) + 1;
         switch (type) {
             case 1:
                 for (var i = 0; i < maxEnemies; i++) {
@@ -269,7 +304,48 @@ function moveEnemy() {
                     }
                 }
                 break;
-
+            case 4:
+                for (var i = 0; i < maxEnemies; i++) {
+                    if (enemiesType4[i].sprite.body.position.x == -100) {
+                        enemiesType4[i].isAlive = true;
+                        enemiesType4[i].sprite.body.velocity.x = enemiesType4[i].speed;
+                        enemiesType4[i].sprite.animations.play('walkRightLink', 10, true);
+                        enemiesPerWave--;
+                        spawnTime = Math.floor(Math.random() * MaxSpawnTime) + BaseSpawnTime;
+                        console.log(enemiesPerWave);
+                        break;
+                    } else if (enemiesType4[i].sprite.body.position.x == 900) {
+                        enemiesType4[i].isAlive = true;
+                        enemiesType4[i].sprite.body.velocity.x = -enemiesType4[i].speed;
+                        enemiesType4[i].sprite.animations.play('walkLeftLink', 10, true);
+                        enemiesPerWave--;
+                        spawnTime = Math.floor(Math.random() * MaxSpawnTime) + BaseSpawnTime;
+                        console.log(enemiesPerWave);
+                        break;
+                    }
+                }
+                break;
+            case 5:
+                for (var i = 0; i < maxEnemies; i++) {
+                    if (enemiesType5[i].sprite.body.position.x == -100) {
+                        enemiesType5[i].isAlive = true;
+                        enemiesType5[i].sprite.body.velocity.x = enemiesType5[i].speed;
+                        enemiesType5[i].sprite.animations.play('walkRightLink', 10, true);
+                        enemiesPerWave--;
+                        spawnTime = Math.floor(Math.random() * MaxSpawnTime) + BaseSpawnTime;
+                        console.log(enemiesPerWave);
+                        break;
+                    } else if (enemiesType5[i].sprite.body.position.x == 900) {
+                        enemiesType5[i].isAlive = true;
+                        enemiesType5[i].sprite.body.velocity.x = -enemiesType5[i].speed;
+                        enemiesType5[i].sprite.animations.play('walkLeftLink', 10, true);
+                        enemiesPerWave--;
+                        spawnTime = Math.floor(Math.random() * MaxSpawnTime) + BaseSpawnTime;
+                        console.log(enemiesPerWave);
+                        break;
+                    }
+                }
+                break;
             default:
                 console.log("Error");
                 break;
@@ -306,6 +382,12 @@ function turnLeft() {
             enemiesType2[i].bounces--;
             enemiesType2[i].direction = 2;
         }
+        if (enemiesType4[i].sprite.body.position.x >= 725 && enemiesType4[i].bounces > 0 && enemiesType4[i].direction == 1) {
+            enemiesType4[i].sprite.body.velocity.x = -enemiesType4[i].speed;
+            enemiesType4[i].sprite.animations.play('walkLeftLink', 10, true);
+            enemiesType4[i].bounces--;
+            enemiesType4[i].direction = 2;
+        }
     }
 }
 
@@ -322,6 +404,12 @@ function turnRight() {
             enemiesType2[i].sprite.animations.play('walkRightLink', 10, true);
             enemiesType2[i].bounces--;
             enemiesType2[i].direction = 1;
+        }
+        if (enemiesType4[i].sprite.body.position.x <= 25 && enemiesType4[i].bounces > 0 && enemiesType4[i].direction == 2) {
+            enemiesType4[i].sprite.body.velocity.x = enemiesType4[i].speed;
+            enemiesType4[i].sprite.animations.play('walkRightLink', 10, true);
+            enemiesType4[i].bounces--;
+            enemiesType4[i].direction = 1;
         }
     }
 }
@@ -383,11 +471,25 @@ function checkOverlapL() {
             enemiesType2[i].sprite.body.velocity.x = 0;
             enemiesType2[i].sprite.body.velocity.y = 150;
         }
-
         if (enemiesType3[i].sprite.body.position.x >= 100 && enemiesType3[i].sprite.body.position.x <= 225) {
             punchSound.play();
             enemiesType3[i].sprite.body.velocity.x = 0;
             enemiesType3[i].sprite.body.velocity.y = 150;
+        }
+        if (enemiesType4[i].sprite.body.position.x >= 100 && enemiesType4[i].sprite.body.position.x <= 225) {
+            if(enemiesType4[i].hits >= 2) {
+                enemiesType4[i].hits--;
+                enemiesType4[i].sprite.tint = 0xcc0000;
+            } else {
+                punchSound.play();
+                enemiesType4[i].sprite.body.velocity.x = 0;
+                enemiesType4[i].sprite.body.velocity.y = 150;
+            }
+        }
+        if (enemiesType5[i].sprite.body.position.x >= 100 && enemiesType5[i].sprite.body.position.x <= 225) {
+            punchSound.play();
+            enemiesType5[i].sprite.body.velocity.x = 0;
+            enemiesType5[i].sprite.body.velocity.y = 150;
         }
     }
 
@@ -404,29 +506,45 @@ function checkOverlapR() {
             enemiesType2[i].sprite.body.velocity.x = 0;
             enemiesType2[i].sprite.body.velocity.y = 150;
         }
-
         if (enemiesType3[i].sprite.body.position.x >= 425 && enemiesType3[i].sprite.body.position.x <= 575) {
             punchSound.play();
             enemiesType3[i].sprite.body.velocity.x = 0;
             enemiesType3[i].sprite.body.velocity.y = 150;
+        }
+        if (enemiesType4[i].sprite.body.position.x >= 425 && enemiesType4[i].sprite.body.position.x <= 575) {
+            if(enemiesType4[i].hits >= 2) {
+                enemiesType4[i].hits--;
+                enemiesType4[i].sprite.tint = 0xcc0000;
+            } else {
+                punchSound.play();
+                enemiesType4[i].sprite.body.velocity.x = 0;
+                enemiesType4[i].sprite.body.velocity.y = 150;
+            }
+        }
+        if (enemiesType5[i].sprite.body.position.x >= 425 && enemiesType5[i].sprite.body.position.x <= 575) {
+            punchSound.play();
+            enemiesType5[i].sprite.body.velocity.x = 0;
+            enemiesType5[i].sprite.body.velocity.y = 150;
+        }
+    }
+}
+
+function checkTPposition() {
+    for(var i = 0; i < maxEnemies; i++) {
+        if (enemiesType5[i].sprite.body.position.x >= 50 && enemiesType5[i].sprite.body.position.x <= 75) {
+            //sonido de teleport
+            enemiesType5[i].sprite.body.position.x = 300;
         }
     }
 }
 
 function collidePunchL() {
 
-    if (animL.isPlaying) {
-        checkOverlapL();
-        //console.log("Overlap");
-    }
+    animL.onStart.add(checkOverlapL, this)
 }
 
 function collidePunchR() {
-    //console.log("Overlap");
-    if (animR.isPlaying) {
-        checkOverlapR();
-        //console.log("Overlap");
-    }
+    animR.onStart.add(checkOverlapR, this)
 }
 
 function stopAnimL() {
@@ -442,6 +560,8 @@ function xSpeed() {
         enemiesType1[i].speed *= 1.1;
         enemiesType2[i].speed *= 1.1;
         enemiesType3[i].speed *= 1.1;
+        enemiesType4[i].speed *= 1.1;
+        enemiesType5[i].speed *= 1.1;
     }
 
 }
@@ -527,6 +647,72 @@ function backToOrigin() {
             enemiesType3[i].sprite.animations.stop();
             score += 100;
         }
+
+        //Para enemigos Tipo4
+        if (enemiesType4[i].bounces <= 0 && enemiesType4[i].direction == 1 && enemiesType4[i].sprite.body.position.x >= 825) {
+            enemiesType4[i].sprite.tint = 0xffffff;
+            enemiesType4[i].isAlive = false;
+            enemiesType4[i].hits = 2;
+            enemiesType4[i].sprite.body.velocity.x = 0;
+            enemiesType4[i].sprite.body.position.x = enemiesType4[i].initPos;
+            enemiesType4[i].direction = enemiesType4[i].initDir;
+            enemiesType4[i].bounces = Math.floor(Math.random() * 4);
+            enemiesType4[i].sprite.animations.stop();
+            life--;
+        }
+        if (enemiesType4[i].bounces <= 0 && enemiesType4[i].direction == 2 && enemiesType4[i].sprite.body.position.x <= -25) {
+            enemiesType4[i].sprite.tint = 0xffffff;
+            enemiesType4[i].isAlive = false;
+            enemiesType4[i].hits = 2;
+            enemiesType4[i].sprite.body.velocity.x = 0;
+            enemiesType4[i].sprite.body.position.x = enemiesType4[i].initPos;
+            enemiesType4[i].direction = enemiesType4[i].initDir;
+            enemiesType4[i].bounces = Math.floor(Math.random() * 4);
+            enemiesType4[i].sprite.animations.stop();
+            life--;
+        }
+        if (enemiesType4[i].sprite.body.position.y >= 625) {
+            enemiesType4[i].sprite.tint = 0xffffff;
+            enemiesType4[i].isAlive = false;
+            enemiesType4[i].hits = 2;
+            enemiesType4[i].sprite.body.velocity.y = 0;
+            enemiesType4[i].sprite.body.position.x = enemiesType4[i].initPos;
+            enemiesType4[i].sprite.body.position.y = 260;
+            enemiesType4[i].direction = enemiesType4[i].initDir;
+            enemiesType4[i].bounces = Math.floor(Math.random() * 4);
+            enemiesType4[i].sprite.animations.stop();
+            score += 100;
+        }
+
+        //Para enemigos Tipo5
+        if (enemiesType5[i].bounces <= 0 && enemiesType5[i].direction == 1 && enemiesType5[i].sprite.body.position.x >= 825) {
+            enemiesType5[i].isAlive = false;
+            enemiesType5[i].sprite.body.velocity.x = 0;
+            enemiesType5[i].sprite.body.position.x = enemiesType5[i].initPos;
+            enemiesType5[i].direction = enemiesType5[i].initDir;
+            enemiesType5[i].bounces = Math.floor(Math.random() * 4);
+            enemiesType5[i].sprite.animations.stop();
+            life--;
+        }
+        if (enemiesType5[i].bounces <= 0 && enemiesType5[i].direction == 2 && enemiesType5[i].sprite.body.position.x <= -25) {
+            enemiesType5[i].isAlive = false;
+            enemiesType5[i].sprite.body.velocity.x = 0;
+            enemiesType5[i].sprite.body.position.x = enemiesType5[i].initPos;
+            enemiesType5[i].direction = enemiesType5[i].initDir;
+            enemiesType5[i].bounces = Math.floor(Math.random() * 4);
+            enemiesType5[i].sprite.animations.stop();
+            life--;
+        }
+        if (enemiesType5[i].sprite.body.position.y >= 625) {
+            enemiesType5[i].isAlive = false;
+            enemiesType5[i].sprite.body.velocity.y = 0;
+            enemiesType5[i].sprite.body.position.x = enemiesType5[i].initPos;
+            enemiesType5[i].sprite.body.position.y = 300;
+            enemiesType5[i].direction = enemiesType5[i].initDir;
+            enemiesType5[i].bounces = Math.floor(Math.random() * 4);
+            enemiesType5[i].sprite.animations.stop();
+            score += 100;
+        }
     }
 }
 
@@ -548,7 +734,7 @@ function decSpawnTime() {
 
 function checkEnemiesAlive() {
     for (var i = 0; i < maxEnemies; i++) {
-        if (enemiesType1[i].isAlive || enemiesType2[i].isAlive || enemiesType3[i].isAlive) {
+        if (enemiesType1[i].isAlive || enemiesType2[i].isAlive || enemiesType3[i].isAlive || enemiesType4[i].isAlive) {
             return true;
         }
     }
