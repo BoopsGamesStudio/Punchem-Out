@@ -174,13 +174,6 @@ PunchemOut.gameState.prototype = {
         //Controls
         cursors = this.input.keyboard.createCursorKeys();
 
-        //Debug
-        /*punchLTest1 = game.add.sprite(150, 250, 'nada');
-        punchLTest2 = game.add.sprite(300, 250, 'nada');
-
-        punchRTest1 = game.add.sprite(500, 250, 'nada');
-        punchRTest2 = game.add.sprite(650, 250, 'nada');*/
-
         //Create punches and their animations
         punchL = game.add.sprite(150, 250, 'punch');
         punchR = game.add.sprite(500, 250, 'punch');
@@ -191,19 +184,6 @@ PunchemOut.gameState.prototype = {
         animL.onComplete.add(stopAnimL, this);
         animR.onComplete.add(stopAnimR, this);
 
-        /*
-        game.physics.enable(punchL, Phaser.Physics.ARCADE);
-        game.physics.enable(punchR, Phaser.Physics.ARCADE);
-        */
-
-        /*
-        //Load enemy and their animations
-        enemy = this.add.sprite(-100, 300, 'skeleton');
-
-        enemy.animations.add('walkRight', [27, 28, 29, 30, 31, 32, 33, 34, 35]);
-
-        game.physics.enable(enemy, Phaser.Physics.ARCADE);
-        */
         for (var i = 0; i < maxEnemies; i++) {
             if (level >= 1) {
                 enemiesType1[i] = new enemy("type1", i);
@@ -216,16 +196,6 @@ PunchemOut.gameState.prototype = {
             if (level >= 3) {
                 enemiesType5[i] = new enemy("type5", i);
             }
-            //Overlap punches
-            /*
-            //With enemiesType1
-            game.physics.arcade.overlap(punchL, enemiesType1[i].sprite, collidePunch, null, this);
-            game.physics.arcade.overlap(punchR, enemiesType1[i].sprite, collidePunch, null, this);
-            //With enemiesType2
-            game.physics.arcade.overlap(punchL, enemiesType2[i].sprite, collidePunch, null, this);
-            game.physics.arcade.overlap(punchR, enemiesType2[i].sprite, collidePunch, null, this);
-            */
-
         }
 
         if (level < 2) {
@@ -245,26 +215,10 @@ PunchemOut.gameState.prototype = {
         timer.start();
 
         waveTimer = game.time.create(false);
-
-        /*
-        //Timer to multiplied enemies' velocity
-        timer2 = game.time.create(false);
-
-        timer2.loop(10000, xSpeed, this);
-
-        timer2.start();
-        */
-
     },
 
     update: function () {
-        /*
-        //Set velocity and animations of enemies
-        enemy.body.velocity.x = 100;
 
-        enemy.animations.play('walkRight', 10, true);
-        */
-        //destroy();
         loopTimer.delay = spawnTime;
 
         turnLeft();
@@ -281,6 +235,9 @@ PunchemOut.gameState.prototype = {
             waveTimer.start();
             console.log("...");
             if (waveTimer.ms >= 2000) {
+                newWaveText = game.add.text(300, 150, "NUEVA OLEADA");
+                newWaveText.lifespan = 2000;
+                game.time.events.add(0, function () { game.add.tween(newWaveText).to({ alpha: 0 }, 2000, Phaser.Easing.Linear.None, true); }, this);
                 console.log("NUEVA OLEADA");
                 timer.resume();
                 waveTimer.stop();
@@ -500,24 +457,6 @@ function activePunch() {
     }
 
 }
-/*
-function collidePunchL() {
-    //if (punchL.events.onAnimationLoop) {
-        for (var i; i < maxEnemies; i++) {
-            if(checkOverlap(punchL,enemiesType1[i].sprite)){
-                enemiesType1[i].sprite.body.velocity.x = 0;
-                enemiesType1[i].sprite.body.velocity.y = 150;
-                console.log("Overlapping");
-            //}
-            //if(checkOverlap(punchL,enemiesType2[i].sprite)){
-                enemiesType2[i].sprite.body.velocity.x = 0;
-                enemiesType2[i].sprite.body.velocity.y = 150;
-                console.log("Overlapping");
-            //}
-        }   
-    }
-}
-*/
 
 function checkOverlapL() {
     for (var i = 0; i < maxEnemies; i++) {
