@@ -171,6 +171,7 @@ PunchemOut.gameState.prototype = {
         animL.onComplete.add(stopAnimL, this);
         animR.onComplete.add(stopAnimR, this);
 
+
         animL.onStart.add(checkOverlapL, this);
         animR.onStart.add(checkOverlapR, this);
 
@@ -187,6 +188,7 @@ PunchemOut.gameState.prototype = {
                 enemy = new CreateEnemy(TypeArray[i]);
                 AllEnemies.push(enemy);
             }
+
         }
 
         punchSound = game.add.audio('punch');
@@ -200,9 +202,11 @@ PunchemOut.gameState.prototype = {
 
         waveTimer = game.time.create(false);
 
+
     },
 
     update: function () {
+
         loopTimer.delay = spawnTime;
 
         activePunch();
@@ -215,6 +219,9 @@ PunchemOut.gameState.prototype = {
             waveTimer.start();
             console.log("...");
             if (waveTimer.ms >= 2000) {
+                newWaveText = game.add.text(300, 150, "NUEVA OLEADA");
+                newWaveText.lifespan = 2000;
+                game.time.events.add(0, function () { game.add.tween(newWaveText).to({ alpha: 0 }, 2000, Phaser.Easing.Linear.None, true); }, this);
                 console.log("NUEVA OLEADA");
                 timer.resume();
                 waveTimer.stop();

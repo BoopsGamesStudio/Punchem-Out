@@ -179,6 +179,10 @@ _Sketch de la animación_
 
 ![Error al cargar la imagen](https://raw.githubusercontent.com/BoopsGamesStudio/Punchem-Out/master/Arte/animacion%20andando.gif)
 
+_Sketch de la animación del Hechicero_
+
+![Error al cargar la imagen](https://raw.githubusercontent.com/BoopsGamesStudio/Punchem-Out/master/Arte/Hechicero2.gif)
+
 _Concept Escenario_
 
 <p align="center">
@@ -197,6 +201,8 @@ _Concept Escenario_
   * Mejorada explicación de Jugabilidad, Personajes y Características.
   * Créditos al final del documento y RRSS.
   * Pequeñas mejoras.
+  
++  (08/10/2019) Añadidas animaciones al GDD
 
 # <a name="credits"></a>7.- Boops Games Studio
 
