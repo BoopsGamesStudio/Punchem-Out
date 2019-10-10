@@ -19,6 +19,9 @@ PunchemOut.endgameState.prototype = {
         gameOver = this.add.sprite(game.world.centerX - 200, game.world.centerY - 200, 'game_over');
         gameOver.alpha = 0;
         
+        waveText = game.add.text(game.world.centerX - 200, game.world.centerY + 50, "Max Wave: " + waveNumber, style);
+        waveText.alpha = 0;
+        
         scoreText = game.add.text(game.world.centerX - 200, game.world.centerY + 100, "Score: " + score, style);
         scoreText.alpha = 0;
 
@@ -38,6 +41,7 @@ PunchemOut.endgameState.prototype = {
         backText.alpha = 0;
 
         game.add.tween(gameOver).to( { alpha: 1 }, 2000, Phaser.Easing.Linear.None, true, 0);
+        game.add.tween(waveText).to( { alpha: 1 }, 2000, Phaser.Easing.Linear.None, true, 0);
         game.add.tween(scoreText).to( { alpha: 1 }, 2000, Phaser.Easing.Linear.None, true, 0);
         game.add.tween(maxComboText).to( { alpha: 1 }, 2000, Phaser.Easing.Linear.None, true, 0);
         game.add.tween(tryAgain).to( { alpha: 1 }, 2000, Phaser.Easing.Linear.None, true, 0);
@@ -52,9 +56,12 @@ PunchemOut.endgameState.prototype = {
 }
 
 function resetVariables() {
+    powerUpAvailable = true;
+
     life = lives;
     MaxSpawnTime = 1500;
     BaseSpawnTime = 1000;
+    waveNumber = 1;
 
     baseEnemiesPerWave = 20;
     enemiesPerWave = baseEnemiesPerWave;
