@@ -22,6 +22,9 @@ const SpawnCoordinates = {
     LEFT: 900
 }
 
+var powerUpText;
+var powerUpText2;
+var powerUpAvailable = true;
 var time;
 var punchR;
 var punchL;
@@ -36,6 +39,7 @@ var life = lives;
 var score = 0;
 var baseEnemiesPerWave = 20;
 var enemiesPerWave = baseEnemiesPerWave;
+var waveNumber = 1;
 var MaxSpawnTime;
 var BaseSpawnTime;
 var spawnTime;
@@ -45,6 +49,7 @@ var maxCombo = 0;
 var livesLeft;
 var currentcombo;
 var currentScore;
+var spawnHeight = 310;
 
 var EnemySpeed = [100, 80, 90, 70, 80];
 const EnemyHits = [1, 1, 1, 2, 1];
@@ -72,30 +77,35 @@ function CreateEnemy(type) {
 
     switch (type) {
         case EnemyType.TYPE1:
-            this.sprite = game.add.sprite(this.initPos, 300, 'skeleton');
+            this.initHeight = spawnHeight;
+            this.sprite = game.add.sprite(this.initPos, this.initHeight, 'skeleton');
             this.sprite.animations.add('walkRightSkeleton', [27, 28, 29, 30, 31, 32, 33, 34, 35]);
             this.sprite.animations.add('walkLeftSkeleton', [17, 16, 15, 14, 13, 12, 11, 10, 9]);
             break;
 
         case EnemyType.TYPE2:
-            this.sprite = game.add.sprite(this.initPos, 300, 'link');
+            this.initHeight = spawnHeight;
+            this.sprite = game.add.sprite(this.initPos, this.initHeight, 'link');
             this.sprite.scale.setTo(0.67, 0.62);
             this.sprite.animations.add('walkRightLink', [70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80]);
             this.sprite.animations.add('walkLeftLink', [59, 58, 57, 56, 55, 54, 53, 52, 51]);
             break;
 
         case EnemyType.TYPE3:
-            this.sprite = game.add.sprite(this.initPos, 300, 'spritesheet');
+            this.initHeight = spawnHeight;
+            this.sprite = game.add.sprite(this.initPos, this.initHeight, 'spritesheet');
             this.sprite.scale.setTo(0.8, 0.62);
             this.sprite.animations.add('walkRightPrueba');
             break;
         case EnemyType.TYPE4:
-            this.sprite = game.add.sprite(this.initPos, 260, 'link');
+            this.initHeight = spawnHeight - 30;
+            this.sprite = game.add.sprite(this.initPos, this.initHeight, 'link');
             this.sprite.animations.add('walkRightLink', [70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80]);
             this.sprite.animations.add('walkLeftLink', [59, 58, 57, 56, 55, 54, 53, 52, 51]);
             break;
         case EnemyType.TYPE5:
-            this.sprite = game.add.sprite(this.initPos, 300, 'link');
+            this.initHeight = spawnHeight;
+            this.sprite = game.add.sprite(this.initPos, this.initHeight, 'link');
             this.sprite.tint = 0x960585;
             this.sprite.scale.setTo(0.67, 0.62);
             this.sprite.animations.add('walkRightLink', [70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80]);
@@ -158,8 +168,22 @@ PunchemOut.gameState.prototype = {
         currentScore = game.add.text(300, 50, "Score: " + score);
         currentcombo = game.add.text(100, 500, 'x' + combo);
 
+        powerUpText = game.add.text(game.world.centerX, 540, "[SPACEBAR]");
+        powerUpText.anchor.setTo(0.5);
+        powerUpText.alpha = 0.3;
+
+        powerUpText2 = game.add.text(game.world.centerX, 570, "[POWER UP]", style4);
+        powerUpText2.anchor.setTo(0.5);
+        powerUpText2.alpha = 0.3;
+
         //Controls
         cursors = this.input.keyboard.createCursorKeys();
+        powerUp = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+        powerUp.enabled = false;
+
+        cursors.left.onDown.add(activatePunch, { punchSide: 'left' });
+        cursors.right.onDown.add(activatePunch, { punchSide: 'right' });
+        powerUp.onDown.add(executePowerUp);
 
         //Create punches and their animations
         punchL = game.add.sprite(150, 250, 'punch');
@@ -175,6 +199,12 @@ PunchemOut.gameState.prototype = {
         animL.onStart.add(checkOverlapL, this);
         animR.onStart.add(checkOverlapR, this);
 
+        //Create text for first wave
+        newWaveText = game.add.text(game.world.centerX - 160, game.world.centerY - 100, "WAVE " + waveNumber, style3);
+        newWaveText.lifespan = 2000;
+        game.time.events.add(0, function () { game.add.tween(newWaveText).to({ alpha: 0 }, 2000, Phaser.Easing.Linear.None, true); }, this);
+        console.log("OLEADA " + waveNumber);
+
         //Create the array of enemies
         let TypeArray = [EnemyType.TYPE1, EnemyType.TYPE2, EnemyType.TYPE3, EnemyType.TYPE4, EnemyType.TYPE5];
 
@@ -184,7 +214,7 @@ PunchemOut.gameState.prototype = {
         for (var i = 0; i < totalEnemyTypes; i++) {
             for (var j = 0; j < maxEnemies; j++) {
                 index = i * maxEnemies + j;
-                console.log(TypeArray[i] + ' ' + index);
+                //console.log(TypeArray[i] + ' ' + index);
                 enemy = new CreateEnemy(TypeArray[i]);
                 AllEnemies.push(enemy);
             }
@@ -209,7 +239,8 @@ PunchemOut.gameState.prototype = {
 
         loopTimer.delay = spawnTime;
 
-        activePunch();
+        punchCD();
+        checkPowerUpUsable();
         if (AllEnemies.length / maxEnemies >= 5) {
             TeleportMages();
         }
@@ -219,10 +250,11 @@ PunchemOut.gameState.prototype = {
             waveTimer.start();
             console.log("...");
             if (waveTimer.ms >= 2000) {
-                newWaveText = game.add.text(300, 150, "NUEVA OLEADA");
+                newWaveText = game.add.text(game.world.centerX - 160, game.world.centerY - 100, "WAVE " + waveNumber, style3);
                 newWaveText.lifespan = 2000;
                 game.time.events.add(0, function () { game.add.tween(newWaveText).to({ alpha: 0 }, 2000, Phaser.Easing.Linear.None, true); }, this);
-                console.log("NUEVA OLEADA");
+                console.log("OLEADA " + waveNumber);
+
                 timer.resume();
                 waveTimer.stop();
             }
@@ -284,22 +316,26 @@ function moveEnemy() {
                 break;
         }
 
+        waveNumber++;
         baseEnemiesPerWave += 10;
         enemiesPerWave = baseEnemiesPerWave;
     }
 }
 
-function activePunch() {
-    if (cursors.left.isDown && punchL_CD == 0) {
+function activatePunch() {
+    if (this.punchSide == 'left' && punchL_CD == 0) {
         animL.play('punching', 8);
         pressL = true;
         punchL_CD = 30;
     }
-    if (cursors.right.isDown && punchR_CD == 0) {
+    if (this.punchSide == 'right' && punchR_CD == 0) {
         animR.play('punching', 8);
         pressR = true;
         punchR_CD = 30;
     }
+}
+
+function punchCD() {
     if (pressL) {
         punchL_CD--;
         if (punchL_CD == 0) {
@@ -313,22 +349,23 @@ function activePunch() {
             pressR = false;
         }
     }
-
 }
 
 function hitEnemy(enemyIndex) {
+    if (enemyHittable
+        (enemyIndex)) {
+        AllEnemies[enemyIndex].hits--;
 
-    AllEnemies[enemyIndex].hits--;
+        if (AllEnemies[enemyIndex].hits == 0) {
+            punchSound.play();
+            AllEnemies[enemyIndex].sprite.body.velocity.x = 0;
+            AllEnemies[enemyIndex].sprite.body.velocity.y = 200;
 
-    if (AllEnemies[enemyIndex].hits == 0) {
-        punchSound.play();
-        AllEnemies[enemyIndex].sprite.body.velocity.x = 0;
-        AllEnemies[enemyIndex].sprite.body.velocity.y = 200;
+            combo++;
+            giveScore(AllEnemies[enemyIndex].sprite.body.position.x);
 
-        combo++;
-        giveScore(AllEnemies[enemyIndex].sprite.body.position.x);
-
-        //console.log('combo : ', combo);
+            //console.log('combo : ', combo);
+        }
     }
 }
 
@@ -384,7 +421,7 @@ function resetEnemy(enemyIndex) {
     AllEnemies[enemyIndex].isAlive = false;
     AllEnemies[enemyIndex].sprite.body.velocity.x = 0;
     AllEnemies[enemyIndex].sprite.body.velocity.y = 0;
-    AllEnemies[enemyIndex].sprite.body.position.y = 300;
+    AllEnemies[enemyIndex].sprite.body.position.y = AllEnemies[enemyIndex].initHeight;
     AllEnemies[enemyIndex].sprite.body.position.x = AllEnemies[enemyIndex].initPos;
     AllEnemies[enemyIndex].hits = EnemyHits[type];
     AllEnemies[enemyIndex].sprite.animations.stop();
@@ -456,4 +493,51 @@ function giveScore(enemyPos) {
 
     currentScore.setText("Score: " + score);
     currentcombo.setText("x" + combo);
+}
+
+function enemyHittable(index) {
+    return (AllEnemies[index].isAlive && AllEnemies[index].sprite.body.position.x > 25 && AllEnemies[index].sprite.body.position.x < 725 && AllEnemies[index].hits >= 1);
+}
+
+function executePowerUp() {
+    for (var i = 0; i < totalEnemyTypes * maxEnemies; i++) {
+        if (AllEnemies[i].hits == 2) {
+            AllEnemies[i].hits--;
+        }
+
+        hitEnemy(i);
+    }
+
+    powerUpAvailable = false;
+}
+
+function checkPowerUpUsable() {
+    let aux = false;
+
+    if (powerUpAvailable) {
+        for (var i = 0; i < totalEnemyTypes * maxEnemies; i++) {
+            if (enemyHittable(i)) {
+                aux = true;
+                break;
+            }
+        }
+
+        if (aux) {
+            powerUp.enabled = true;
+
+            powerUpText.alpha = 1;
+            powerUpText2.alpha = 1;
+        } else {
+            powerUp.enabled = false;
+
+            powerUpText.alpha = 0.3;
+            powerUpText2.alpha = 0.3;
+        }
+
+    } else {
+        powerUp.enabled = false;
+
+        powerUpText.alpha = 0.3;
+        powerUpText2.alpha = 0.3;
+    }
 }
