@@ -15,6 +15,7 @@ PunchemOut.preloadState.prototype = {
         //Carga de assets
         this.load.image('fondo', 'assets/backgrounds/fondo.jpeg');
         this.load.image('menuPausa', 'assets/menuPausa.png');
+        this.load.image('powerUpCharge', 'assets/sprites/cargaPowerUp.png');
         this.load.spritesheet('skeleton', 'assets/sprites/skeleton.png', 64, 64);
         this.load.image('logo_juego', 'assets/logo_juego.png');
         this.load.image('settings', 'assets/sprites/settings.png');
