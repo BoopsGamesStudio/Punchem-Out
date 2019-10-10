@@ -22,9 +22,7 @@ const SpawnCoordinates = {
     LEFT: 900
 }
 
-var powerUpText;
-var powerUpText;
-var powerUpAvailable = true;
+var powerUpCharge = 0;
 var time;
 var punchR;
 var punchL;
@@ -192,12 +190,11 @@ PunchemOut.gameState.prototype = {
 
         powerUp = game.add.button(game.world.centerX, game.world.height - 100, 'link', function () { executePowerUp(); }, this, 2, 1, 0);
         powerUp.anchor.setTo(0.5);
-        powerUp.alpha = 0.3;
         powerUp.inputEnabled = false;
 
-        powerUpText = game.add.text(game.world.centerX, 570, "[POWER UP]");
-        powerUpText.anchor.setTo(0.5);
-        powerUpText.alpha = 0.3;
+        powerUpBar = game.add.image(game.world.centerX, 560, 'powerUpCharge');
+        powerUpBar.scale.setTo(0.4, 0.5);
+        powerUpBar.anchor.setTo(0.5);
 
         pauseButton = game.add.button(game.world.width - 60, 10, 'skeleton', function () { pauseEvent(); }, this, 2, 1, 0);
 
@@ -221,7 +218,7 @@ PunchemOut.gameState.prototype = {
         game.time.events.add(0, function () { game.add.tween(newWaveText).to({ alpha: 0 }, 2000, Phaser.Easing.Linear.None, true); }, this);
         console.log("OLEADA " + waveNumber);
 
-        game.time.events.add(2000, function() { track.play() }, this);
+        game.time.events.add(2000, function () { track.play() }, this);
 
         //Create the array of enemies
         let TypeArray = [EnemyType.TYPE1, EnemyType.TYPE2, EnemyType.TYPE3, EnemyType.TYPE4, EnemyType.TYPE5];
@@ -382,6 +379,10 @@ function hitEnemy(enemyIndex) {
             combo++;
             giveScore(AllEnemies[enemyIndex].sprite.body.position.x);
 
+            if (powerUpCharge < 10) {
+                powerUpCharge++;
+            }
+
             //console.log('combo : ', combo);
         }
     }
@@ -526,37 +527,27 @@ function executePowerUp() {
         hitEnemy(i);
     }
 
-    powerUpAvailable = false;
+    powerUpCharge = 0;
 }
 
 function checkPowerUpUsable() {
     let aux = false;
 
-    if (powerUpAvailable) {
-        for (var i = 0; i < totalEnemyTypes * maxEnemies; i++) {
-            if (enemyHittable(i)) {
-                aux = true;
-                break;
-            }
+    powerUpBar.scale.x = powerUpCharge / 25;
+
+    for (var i = 0; i < totalEnemyTypes * maxEnemies; i++) {
+        if (enemyHittable(i)) {
+            aux = true;
+            break;
         }
+    }
 
-        if (aux) {
-            powerUp.inputEnabled = true;
-
-            powerUp.alpha = 1;
-            powerUpText.alpha = 1;
-        } else {
-            powerUp.inputEnabled = false;
-
-            powerUp.alpha = 0.3;
-            powerUpText.alpha = 0.3;
-        }
-
+    if (powerUpCharge >= 10 && aux) {
+        powerUp.inputEnabled = true;
+        powerUp.alpha = 1;
     } else {
         powerUp.inputEnabled = false;
-
         powerUp.alpha = 0.3;
-        powerUpText.alpha = 0.3;
     }
 }
 
@@ -607,7 +598,7 @@ function pauseEvent() {
 }
 
 function resetVariables() {
-    powerUpAvailable = true;
+    powerUpCharge = 0;
 
     life = lives;
     MaxSpawnTime = 1500;
@@ -619,7 +610,7 @@ function resetVariables() {
     score = 0;
     combo = 0;
     maxCombo = 0;
-    
+
     EnemySpeed = [100, 80, 90, 70, 80];
 
     enemiesType1 = new Array(maxEnemies);
