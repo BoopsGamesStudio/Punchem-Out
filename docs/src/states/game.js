@@ -251,6 +251,8 @@ PunchemOut.gameState.prototype = {
 
     update: function () {
 
+        //console.log(EnemySpeed);
+
         loopTimer.delay = spawnTime;
 
         punchCD();
@@ -467,7 +469,7 @@ function checkEndgame() {
 
     if (life <= 0) {
         game.camera.fade(0x000000, 500);
-        game.camera.onFadeComplete.add(function () { track.stop(); game.state.start("endgameState"); }, this);
+        game.camera.onFadeComplete.add(function () { track.stop(); resetVariables(); game.state.start("endgameState"); }, this);
     }
 }
 

@@ -54,26 +54,3 @@ PunchemOut.endgameState.prototype = {
 
     }
 }
-
-function resetVariables() {
-    powerUpAvailable = true;
-
-    life = lives;
-    MaxSpawnTime = 1500;
-    BaseSpawnTime = 1000;
-    waveNumber = 1;
-
-    baseEnemiesPerWave = 20;
-    enemiesPerWave = baseEnemiesPerWave;
-    score = 0;
-    combo = 0;
-    maxCombo = 0;
-
-    EnemySpeed = [100, 80, 90, 70, 80];
-    
-    enemiesType1 = new Array(maxEnemies);
-    enemiesType2 = new Array(maxEnemies);
-    enemiesType3 = new Array(maxEnemies);
-    enemiesType4 = new Array(maxEnemies);
-    enemiesType5 = new Array(maxEnemies);
-}
