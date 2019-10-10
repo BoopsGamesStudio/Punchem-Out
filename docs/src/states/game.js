@@ -50,6 +50,7 @@ var livesLeft;
 var currentcombo;
 var currentScore;
 var spawnHeight = 310;
+var track;
 
 var EnemySpeed = [100, 80, 90, 70, 80];
 const EnemyHits = [1, 1, 1, 2, 1];
@@ -143,18 +144,23 @@ PunchemOut.gameState.prototype = {
                 MaxSpawnTime = 1500;
                 BaseSpawnTime = 1000;
                 totalEnemyTypes = 3;
+                track = game.add.audio('track1');
                 break;
             case 2:
                 MaxSpawnTime = 1400;
                 BaseSpawnTime = 900;
                 totalEnemyTypes = 4;
+                track = game.add.audio('track2');
                 break;
             case 3:
                 MaxSpawnTime = 1300;
                 BaseSpawnTime = 800;
                 totalEnemyTypes = 5;
+                track = game.add.audio('track3');
                 break;
         }
+
+        track.loop = true;
 
         spawnTime = Math.floor(Math.random() * MaxSpawnTime) + BaseSpawnTime;
 
@@ -167,10 +173,6 @@ PunchemOut.gameState.prototype = {
         livesLeft = game.add.text(300, 100, "Lives left: " + life);
         currentScore = game.add.text(300, 50, "Score: " + score);
         currentcombo = game.add.text(100, 500, 'x' + combo);
-
-        powerUpText = game.add.text(game.world.centerX, 570, "[POWER UP]");
-        powerUpText.anchor.setTo(0.5);
-        powerUpText.alpha = 0.3;
 
         //Controls
         cursors = this.input.keyboard.createCursorKeys();
@@ -186,8 +188,14 @@ PunchemOut.gameState.prototype = {
         punchButtonR.width = game.world.width / 2;
         punchButtonR.height = game.world.height;
 
-        powerUp = game.add.button(game.world.centerX - 50, game.world.height - 150, 'link', function () { executePowerUp(); }, this, 2, 1, 0);
+        powerUp = game.add.button(game.world.centerX, game.world.height - 100, 'link', function () { executePowerUp(); }, this, 2, 1, 0);
+        powerUp.anchor.setTo(0.5);
+        powerUp.alpha = 0.3;
         powerUp.inputEnabled = false;
+
+        powerUpText = game.add.text(game.world.centerX, 570, "[POWER UP]");
+        powerUpText.anchor.setTo(0.5);
+        powerUpText.alpha = 0.3;
 
         pauseButton = game.add.button(game.world.width - 60, 10, 'skeleton', function () { pauseEvent(); }, this, 2, 1, 0);
 
@@ -210,6 +218,8 @@ PunchemOut.gameState.prototype = {
         newWaveText.lifespan = 2000;
         game.time.events.add(0, function () { game.add.tween(newWaveText).to({ alpha: 0 }, 2000, Phaser.Easing.Linear.None, true); }, this);
         console.log("OLEADA " + waveNumber);
+
+        game.time.events.add(2000, function() { track.play() }, this);
 
         //Create the array of enemies
         let TypeArray = [EnemyType.TYPE1, EnemyType.TYPE2, EnemyType.TYPE3, EnemyType.TYPE4, EnemyType.TYPE5];
@@ -237,8 +247,6 @@ PunchemOut.gameState.prototype = {
         timer.start();
 
         waveTimer = game.time.create(false);
-
-
     },
 
     update: function () {
@@ -459,7 +467,7 @@ function checkEndgame() {
 
     if (life <= 0) {
         game.camera.fade(0x000000, 500);
-        game.camera.onFadeComplete.add(function () { game.state.start("endgameState"); }, this);
+        game.camera.onFadeComplete.add(function () { track.stop(); game.state.start("endgameState"); }, this);
     }
 }
 
@@ -531,16 +539,19 @@ function checkPowerUpUsable() {
         if (aux) {
             powerUp.inputEnabled = true;
 
+            powerUp.alpha = 1;
             powerUpText.alpha = 1;
         } else {
             powerUp.inputEnabled = false;
 
+            powerUp.alpha = 0.3;
             powerUpText.alpha = 0.3;
         }
 
     } else {
         powerUp.inputEnabled = false;
 
+        powerUp.alpha = 0.3;
         powerUpText.alpha = 0.3;
     }
 }
@@ -560,16 +571,18 @@ function pauseEvent() {
         menu.anchor.setTo(0.5, 0.5);
 
         tryAgain = game.add.button(game.world.centerX + 200, game.world.centerY + 100, 'skeleton', function () {
+            track.stop();
             game.paused = false;
-            game.state.start('gameState');
             resetVariables();
+            game.state.start('gameState');
         }, this, 2, 1, 0);
         tryAgainText = game.add.text(game.world.centerX + 120, game.world.centerY + 120, "Try Again", style);
 
         back = game.add.button(game.world.centerX - 200, game.world.centerY + 100, 'skeleton', function () {
+            track.stop();
             game.paused = false;
-            game.state.start('levelState');
             resetVariables();
+            game.state.start('levelState');
         }, this, 2, 1, 0);
         backText = game.add.text(game.world.centerX - 140, game.world.centerY + 120, "Select level", style);
     } else {
