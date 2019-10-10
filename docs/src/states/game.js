@@ -23,7 +23,7 @@ const SpawnCoordinates = {
 }
 
 var powerUpText;
-var powerUpText2;
+var powerUpText;
 var powerUpAvailable = true;
 var time;
 var punchR;
@@ -168,22 +168,28 @@ PunchemOut.gameState.prototype = {
         currentScore = game.add.text(300, 50, "Score: " + score);
         currentcombo = game.add.text(100, 500, 'x' + combo);
 
-        powerUpText = game.add.text(game.world.centerX, 540, "[SPACEBAR]");
+        powerUpText = game.add.text(game.world.centerX, 570, "[POWER UP]");
         powerUpText.anchor.setTo(0.5);
         powerUpText.alpha = 0.3;
 
-        powerUpText2 = game.add.text(game.world.centerX, 570, "[POWER UP]", style4);
-        powerUpText2.anchor.setTo(0.5);
-        powerUpText2.alpha = 0.3;
-
         //Controls
         cursors = this.input.keyboard.createCursorKeys();
-        powerUp = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-        powerUp.enabled = false;
-
         cursors.left.onDown.add(activatePunch, { punchSide: 'left' });
         cursors.right.onDown.add(activatePunch, { punchSide: 'right' });
-        powerUp.onDown.add(executePowerUp);
+
+        punchButtonL = game.add.button(0, 0, null, function () { activatePunch('left'); }, this, 2, 1, 0);
+        punchButtonR = game.add.button(game.world.centerX, 0, null, function () { activatePunch('right'); }, this, 2, 1, 0);
+
+        punchButtonL.width = game.world.width / 2;
+        punchButtonL.height = game.world.height;
+
+        punchButtonR.width = game.world.width / 2;
+        punchButtonR.height = game.world.height;
+
+        powerUp = game.add.button(game.world.centerX - 50, game.world.height - 150, 'link', function () { executePowerUp(); }, this, 2, 1, 0);
+        powerUp.inputEnabled = false;
+
+        pauseButton = game.add.button(game.world.width - 60, 10, 'skeleton', function () { pauseEvent(); }, this, 2, 1, 0);
 
         //Create punches and their animations
         punchL = game.add.sprite(150, 250, 'punch');
@@ -322,13 +328,13 @@ function moveEnemy() {
     }
 }
 
-function activatePunch() {
-    if (this.punchSide == 'left' && punchL_CD == 0) {
+function activatePunch(punchSide) {
+    if ((this.punchSide == 'left' || punchSide == 'left') && punchL_CD == 0) {
         animL.play('punching', 8);
         pressL = true;
         punchL_CD = 30;
     }
-    if (this.punchSide == 'right' && punchR_CD == 0) {
+    if ((this.punchSide == 'right' || punchSide == 'right') && punchR_CD == 0) {
         animR.play('punching', 8);
         pressR = true;
         punchR_CD = 30;
@@ -523,21 +529,83 @@ function checkPowerUpUsable() {
         }
 
         if (aux) {
-            powerUp.enabled = true;
+            powerUp.inputEnabled = true;
 
             powerUpText.alpha = 1;
-            powerUpText2.alpha = 1;
         } else {
-            powerUp.enabled = false;
+            powerUp.inputEnabled = false;
 
             powerUpText.alpha = 0.3;
-            powerUpText2.alpha = 0.3;
         }
 
     } else {
-        powerUp.enabled = false;
+        powerUp.inputEnabled = false;
 
         powerUpText.alpha = 0.3;
-        powerUpText2.alpha = 0.3;
     }
+}
+
+function pauseEvent() {
+    if (!game.paused) {
+        game.paused = true;
+
+        powerUp.inputEnabled = false;
+        cursors.left.enabled = false;
+        punchButtonL.inputEnabled = false;
+        cursors.right.enabled = false;
+        punchButtonR.inputEnabled = false;
+
+        menu = game.add.sprite(game.world.centerX, game.world.centerY, 'menuPausa');
+        menu.alpha = 0.75;
+        menu.anchor.setTo(0.5, 0.5);
+
+        tryAgain = game.add.button(game.world.centerX + 200, game.world.centerY + 100, 'skeleton', function () {
+            game.paused = false;
+            game.state.start('gameState');
+            resetVariables();
+        }, this, 2, 1, 0);
+        tryAgainText = game.add.text(game.world.centerX + 120, game.world.centerY + 120, "Try Again", style);
+
+        back = game.add.button(game.world.centerX - 200, game.world.centerY + 100, 'skeleton', function () {
+            game.paused = false;
+            game.state.start('levelState');
+            resetVariables();
+        }, this, 2, 1, 0);
+        backText = game.add.text(game.world.centerX - 140, game.world.centerY + 120, "Select level", style);
+    } else {
+        game.paused = false;
+
+        powerUp.inputEnabled = true;
+        cursors.left.enabled = true;
+        punchButtonL.inputEnabled = true;
+        cursors.right.enabled = true;
+        punchButtonR.inputEnabled = true;
+
+        menu.destroy();
+        tryAgain.destroy();
+        tryAgainText.destroy();
+        back.destroy();
+        backText.destroy();
+    }
+}
+
+function resetVariables() {
+    powerUpAvailable = true;
+
+    life = lives;
+    MaxSpawnTime = 1500;
+    BaseSpawnTime = 1000;
+    waveNumber = 1;
+
+    baseEnemiesPerWave = 20;
+    enemiesPerWave = baseEnemiesPerWave;
+    score = 0;
+    combo = 0;
+    maxCombo = 0;
+
+    enemiesType1 = new Array(maxEnemies);
+    enemiesType2 = new Array(maxEnemies);
+    enemiesType3 = new Array(maxEnemies);
+    enemiesType4 = new Array(maxEnemies);
+    enemiesType5 = new Array(maxEnemies);
 }
