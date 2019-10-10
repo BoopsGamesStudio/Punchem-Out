@@ -5,7 +5,7 @@ PunchemOut.menuState = function () {
 var style = { font: "15px Arial", fill: "#ffffff", align: "center" };
 var style2 = { font: "30px Arial", fill: "#ffffff", align: "center" };
 var style3 = { font: "80px Arial", fill: "#000000", align: "center" };
-var style4 = { font: "15px Arial", fill: "#000000", align: "center" };
+//var style4 = { font: "15px Arial", fill: "#000000", align: "center" };
 
 PunchemOut.menuState.prototype = {
 
