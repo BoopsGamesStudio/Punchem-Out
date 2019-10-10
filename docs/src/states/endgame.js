@@ -69,6 +69,8 @@ function resetVariables() {
     combo = 0;
     maxCombo = 0;
 
+    EnemySpeed = [100, 80, 90, 70, 80];
+    
     enemiesType1 = new Array(maxEnemies);
     enemiesType2 = new Array(maxEnemies);
     enemiesType3 = new Array(maxEnemies);
