@@ -19,7 +19,7 @@ PunchemOut.endgameState.prototype = {
         gameOver = this.add.sprite(game.world.centerX - 200, game.world.centerY - 200, 'game_over');
         gameOver.alpha = 0;
         
-        waveText = game.add.text(game.world.centerX - 200, game.world.centerY + 50, "Max Wave: " + waveNumber, style);
+        waveText = game.add.text(game.world.centerX - 200, game.world.centerY + 50, "Wave: " + waveNumber, style);
         waveText.alpha = 0;
         
         scoreText = game.add.text(game.world.centerX - 200, game.world.centerY + 100, "Score: " + score, style);

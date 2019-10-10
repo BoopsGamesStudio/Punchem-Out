@@ -138,6 +138,8 @@ PunchemOut.gameState.prototype = {
     },
 
     create: function () {
+        resetVariables();
+
         //Different levels
         switch (level) {
             case 1:
@@ -469,7 +471,7 @@ function checkEndgame() {
 
     if (life <= 0) {
         game.camera.fade(0x000000, 500);
-        game.camera.onFadeComplete.add(function () { track.stop(); resetVariables(); game.state.start("endgameState"); }, this);
+        game.camera.onFadeComplete.add(function () { track.stop(); game.state.start("endgameState"); }, this);
     }
 }
 
@@ -575,7 +577,7 @@ function pauseEvent() {
         tryAgain = game.add.button(game.world.centerX + 200, game.world.centerY + 100, 'skeleton', function () {
             track.stop();
             game.paused = false;
-            resetVariables();
+            //resetVariables();
             game.state.start('gameState');
         }, this, 2, 1, 0);
         tryAgainText = game.add.text(game.world.centerX + 120, game.world.centerY + 120, "Try Again", style);
@@ -583,7 +585,7 @@ function pauseEvent() {
         back = game.add.button(game.world.centerX - 200, game.world.centerY + 100, 'skeleton', function () {
             track.stop();
             game.paused = false;
-            resetVariables();
+            //resetVariables();
             game.state.start('levelState');
         }, this, 2, 1, 0);
         backText = game.add.text(game.world.centerX - 140, game.world.centerY + 120, "Select level", style);
