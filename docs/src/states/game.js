@@ -20,7 +20,7 @@ const EnemyType = {
 
 const SpawnCoordinates = {
     RIGHT: -100,
-    LEFT: 100 //+ width
+    LEFT: undefined
 }
 
 var powerUpCharge = 0;
@@ -50,18 +50,17 @@ var livesLeftL;
 var livesLeftR;
 var currentcombo;
 var currentScore;
-var spawnHeight = 10; // + centerY
+var spawnHeight = undefined
 var track;
 
-var EnemySpeed = [100, 80, 90, 70, 80];
+var EnemySpeed;
 const EnemyHits = [1, 1, 1, 2, 1];
-var EnemyAnimations = [{ RIGHT: 'walkRightSkeleton', LEFT: 'walkLeftSkeleton' },
+const EnemyAnimations = [{ RIGHT: 'walkRightSkeleton', LEFT: 'walkLeftSkeleton' },
 { RIGHT: 'walkRightLink', LEFT: 'walkLeftLink' },
 { RIGHT: 'walkRightPrueba', LEFT: 'walkRightPrueba' },
 { RIGHT: 'walkRightLink', LEFT: 'walkLeftLink' },
 { RIGHT: 'walkRightLink', LEFT: 'walkLeftLink' }]
 
-//Un Array por cada tipo de enemigo
 var AllEnemies;
 
 function CreateEnemy(type) {
@@ -84,7 +83,6 @@ function CreateEnemy(type) {
             this.sprite.animations.add('walkRightSkeleton', [27, 28, 29, 30, 31, 32, 33, 34, 35]);
             this.sprite.animations.add('walkLeftSkeleton', [17, 16, 15, 14, 13, 12, 11, 10, 9]);
             break;
-
         case EnemyType.TYPE2:
             this.initHeight = spawnHeight;
             this.sprite = game.add.sprite(this.initPos, this.initHeight, 'link');
@@ -92,7 +90,6 @@ function CreateEnemy(type) {
             this.sprite.animations.add('walkRightLink', [70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80]);
             this.sprite.animations.add('walkLeftLink', [59, 58, 57, 56, 55, 54, 53, 52, 51]);
             break;
-
         case EnemyType.TYPE3:
             this.initHeight = spawnHeight;
             this.sprite = game.add.sprite(this.initPos, this.initHeight, 'spritesheet');
@@ -128,15 +125,13 @@ PunchemOut.gameState = function () {
 PunchemOut.gameState.prototype = {
 
     init: function () {
-
         if (game.global.DEBUG_MODE) {
             console.log("[DEBUG] Entering **GAME** state. LEVEL " + level);
         }
     },
 
     preload: function () {
-        spawnHeight += game.world.centerY;
-        SpawnCoordinates.LEFT += game.world.width
+        
     },
 
     create: function () {
@@ -653,8 +648,6 @@ function resetVariables() {
 
     lifeL = livesL;
     lifeR = livesR;
-    MaxSpawnTime = 1500;
-    BaseSpawnTime = 1000;
     waveNumber = 1;
 
     baseEnemiesPerWave = 20;
@@ -665,9 +658,8 @@ function resetVariables() {
 
     EnemySpeed = [100, 80, 90, 70, 80];
 
-    enemiesType1 = new Array(maxEnemies);
-    enemiesType2 = new Array(maxEnemies);
-    enemiesType3 = new Array(maxEnemies);
-    enemiesType4 = new Array(maxEnemies);
-    enemiesType5 = new Array(maxEnemies);
+    AllEnemies = [];
+
+    spawnHeight = game.world.centerY + 10;
+    SpawnCoordinates.LEFT = game.world.width + 100;
 }
