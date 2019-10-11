@@ -1,4 +1,4 @@
-var game = new Phaser.Game(1200, 700, Phaser.AUTO, 'gameDiv')
+var game = new Phaser.Game(window.innerWidth, window.innerHeight, Phaser.AUTO, 'gameDiv')
 
 // GLOBAL VARIABLES
 game.global = {
