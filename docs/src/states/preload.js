@@ -12,6 +12,15 @@ PunchemOut.preloadState.prototype = {
     },
 
     preload: function () {
+        //Imagen de carga
+        loadingScreen = this.add.image(0, 0, 'loading');
+        loadingScreen.height = game.world.height;
+        loadingScreen.width = game.world.width;
+
+        logo = this.add.image(game.world.centerX, game.world.centerY - 70, 'logo');
+        logo.anchor.setTo(0.5);
+        logo.scale.setTo(0.2, 0.2);
+        
         //Carga de assets
 
         //imagenes
@@ -44,13 +53,7 @@ PunchemOut.preloadState.prototype = {
     },
 
     create: function () {
-        loadingScreen = this.add.image(0, 0, 'loading');
-        loadingScreen.height = game.world.height;
-        loadingScreen.width = game.world.width;
-
-        logo = this.add.image(game.world.centerX, game.world.centerY - 70, 'logo');
-        logo.anchor.setTo(0.5);
-        logo.scale.setTo(0.2, 0.2);
+        
     },
 
     update: function () {
