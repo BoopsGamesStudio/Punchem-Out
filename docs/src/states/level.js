@@ -18,15 +18,26 @@ PunchemOut.levelState.prototype = {
     },
 
     create: function () {
-        levelSelector = this.add.image(game.world.centerX - 125, 80, 'logo_juego');
-        levelSelector.scale.setTo(0.5, 0.5);
+        fondoMenu = this.add.image(0, 0, 'menuFondo');
+        fondoMenu.height = game.world.height;
+        fondoMenu.width = game.world.width;
 
-        lvl1 = this.add.button(game.world.centerX - 295, 400, 'skeleton', function() { startLevel(1); }, this, 2, 1, 0);
-        lvl2 = this.add.button(game.world.centerX - 95, 400, 'skeleton', function() { startLevel(2); }, this, 2, 1, 0);
-        lvl3 = this.add.button(game.world.centerX + 105, 400, 'skeleton', function() { startLevel(3); }, this, 2, 1, 0);
+        logo = this.add.image(game.world.centerX, 170, 'logo_juego');
+        logo.scale.setTo(0.4, 0.4);
+        logo.anchor.setTo(0.5);
 
-        back = this.add.button(50, 500, 'skeleton', function() { game.state.start('menuState'); }, this, 2, 1, 0);
-        backText = game.add.text(110, 520, "Volver", style);
+        lvl1 = this.add.button(game.world.centerX - 200, game.world.centerY, 'skeleton', function () { startLevel(1); }, this, 2, 1, 0);
+        lvl1.anchor.setTo(0.5);
+
+        lvl2 = this.add.button(game.world.centerX, game.world.centerY, 'skeleton', function () { startLevel(2); }, this, 2, 1, 0);
+        lvl2.anchor.setTo(0.5);
+
+        lvl3 = this.add.button(game.world.centerX + 200, game.world.centerY, 'skeleton', function () { startLevel(3); }, this, 2, 1, 0);
+        lvl3.anchor.setTo(0.5);
+
+        back = this.add.button(150, game.world.height - 100, 'botones', function () { game.state.start('menuState'); }, this, 9, 8);
+        back.scale.setTo(0.2);
+        back.anchor.setTo(0.5);
     },
 
     update: function () {

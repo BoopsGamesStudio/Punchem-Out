@@ -1,4 +1,4 @@
-var game = new Phaser.Game(800, 600, Phaser.AUTO, 'gameDiv')
+var game = new Phaser.Game(1200, 700, Phaser.AUTO, 'gameDiv')
 
 // GLOBAL VARIABLES
 game.global = {
@@ -13,6 +13,7 @@ game.state.add('preloadState', PunchemOut.preloadState)
 game.state.add('endgameState', PunchemOut.endgameState)
 game.state.add('menuState', PunchemOut.menuState)
 game.state.add('settingsState', PunchemOut.settingsState)
+game.state.add('socialmediaState', PunchemOut.socialmediaState)
 game.state.add('shopState', PunchemOut.shopState)
 game.state.add('levelState', PunchemOut.levelState)
 game.state.add('gameState', PunchemOut.gameState)

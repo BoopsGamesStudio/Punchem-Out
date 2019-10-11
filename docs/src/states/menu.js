@@ -21,26 +21,36 @@ PunchemOut.menuState.prototype = {
     },
 
     create: function () {
-        logo = this.add.image(game.world.centerX - 125, 80, 'logo_juego');
-        logo.scale.setTo(0.5, 0.5);
+        fondoMenu = this.add.image(0, 0, 'menuFondo');
+        fondoMenu.height = game.world.height;
+        fondoMenu.width = game.world.width;
 
-        contacto = this.add.button(50, 490, 'logo', function() { window.location.href = "https://github.com/BoopsGamesStudio/Punchem-Out"; });
-        contacto.scale.setTo(0.03, 0.03);
+        logo = this.add.image(game.world.centerX, 170, 'logo_juego');
+        logo.scale.setTo(0.4, 0.4);
+        logo.anchor.setTo(0.5);
 
-        //cambiar estos sprites por un boton con tres estados del spritesheet para cuando pase el raton por encima y cuando este siendo pulsado
-        jugar = this.add.button(game.world.centerX - 95, 300, 'skeleton', function() { game.state.start('levelState'); }, this, 2, 1, 0);
-        shop = this.add.button(game.world.centerX - 95, 400, 'skeleton', function() { game.state.start('shopState'); }, this, 2, 1, 0);
-        creditos = this.add.button(game.world.centerX - 95, 500, 'skeleton', function() { game.state.start('creditsState'); }, this, 2, 1, 0);
+        contacto = this.add.button(120, game.world.height - 100, 'logo', function () { game.state.start('socialmediaState'); });
+        contacto.scale.setTo(0.07, 0.07);
+        contacto.anchor.setTo(0.5);
 
-        jugarText = this.add.text(game.world.centerX - 30, 330, "Jugar", style)
-        shopText = this.add.text(game.world.centerX - 30, 430, "Tienda", style)
-        creditosText = this.add.text(game.world.centerX - 30, 530, "Creditos", style)
+        settings = this.add.button(game.world.width - 120, game.world.height - 100, 'botones', function () { game.state.start('settingsState'); }, this, 7, 6);
+        settings.scale.setTo(0.2, 0.2);
+        settings.anchor.setTo(0.5);
+        
+        jugar = this.add.button(game.world.centerX, 300, 'botones', function () { game.state.start('levelState'); }, this, 1, 0);
+        jugar.scale.setTo(0.2);
+        jugar.anchor.setTo(0.5);
 
-        settings = this.add.button(700, 500, 'settings', function() { game.state.start('settingsState'); });
-        settings.scale.setTo(0.5, 0.5);
+        shop = this.add.button(game.world.centerX, 400, 'botones', function () { game.state.start('shopState'); }, this, 3, 2);
+        shop.scale.setTo(0.2);
+        shop.anchor.setTo(0.5);
+
+        creditos = this.add.button(game.world.centerX, 500, 'botones', function () { game.state.start('creditsState'); }, this, 5, 4);
+        creditos.scale.setTo(0.2);
+        creditos.anchor.setTo(0.5);
     },
 
     update: function () {
-        
+
     }
 }

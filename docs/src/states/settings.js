@@ -16,11 +16,16 @@ PunchemOut.settingsState.prototype = {
     },
 
     create: function () {
-        back = this.add.button(50, 500, 'skeleton', function() { game.state.start('menuState'); }, this, 2, 1, 0);
-        backText = game.add.text(110, 520, "Volver", style);
+        fondoMenu = this.add.image(0, 0, 'menuFondo');
+        fondoMenu.height = game.world.height;
+        fondoMenu.width = game.world.width;
+
+        back = this.add.button(150, game.world.height - 100, 'botones', function () { game.state.start('menuState'); }, this, 9, 8);
+        back.scale.setTo(0.2);
+        back.anchor.setTo(0.5);
     },
 
     update: function () {
-        
+
     }
 }
