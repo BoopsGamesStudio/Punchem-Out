@@ -1,4 +1,5 @@
-const lives = 5;
+const livesL = 3;
+const livesR = 3;
 const maxEnemies = 10;
 //Esto porque hasta el nivel no sabes cuantos usas
 var totalEnemyTypes;
@@ -19,7 +20,7 @@ const EnemyType = {
 
 const SpawnCoordinates = {
     RIGHT: -100,
-    LEFT: 900
+    LEFT: 100 //+ width
 }
 
 var powerUpCharge = 0;
@@ -33,7 +34,8 @@ var pressL = false;
 var pressR = false;
 var animR;
 var animL;
-var life = lives;
+var lifeL = livesL;
+var lifeR = livesR;
 var score = 0;
 var baseEnemiesPerWave = 20;
 var enemiesPerWave = baseEnemiesPerWave;
@@ -44,10 +46,11 @@ var spawnTime;
 var punchSound;
 var combo = 0;
 var maxCombo = 0;
-var livesLeft;
+var livesLeftL;
+var livesLeftR;
 var currentcombo;
 var currentScore;
-var spawnHeight = 310;
+var spawnHeight = 10; // + centerY
 var track;
 
 var EnemySpeed = [100, 80, 90, 70, 80];
@@ -132,7 +135,8 @@ PunchemOut.gameState.prototype = {
     },
 
     preload: function () {
-
+        spawnHeight += game.world.centerY;
+        SpawnCoordinates.LEFT += game.world.width
     },
 
     create: function () {
@@ -166,13 +170,24 @@ PunchemOut.gameState.prototype = {
 
         //Draw background
         var fondo = this.add.image(0, 0, 'fondo');
-        fondo.scale.setTo(0.3, 0.3);
+        fondo.height = game.world.height;
+        fondo.width = game.world.width;
 
         game.add.text(20, 20, "LEVEL " + level);
 
-        livesLeft = game.add.text(300, 100, "Lives left: " + life);
-        currentScore = game.add.text(300, 50, "Score: " + score);
-        currentcombo = game.add.text(100, 500, 'x' + combo);
+        livesLeftL = game.add.sprite(100, 150, 'vidas');
+        livesLeftL.anchor.setTo(0.5);
+        livesLeftL.scale.setTo(0.2);
+
+        livesLeftR = game.add.sprite(game.world.width - 100, 150, 'vidas', 1);
+        livesLeftR.anchor.setTo(0.5);
+        livesLeftR.scale.setTo(0.2);
+
+        currentScore = game.add.text(game.world.centerX, 50, "Score: " + score);
+        currentScore.anchor.setTo(0.5);
+
+        currentcombo = game.add.text(100, game.world.height - 100, 'x' + combo);
+        currentcombo.anchor.setTo(0.5);
 
         //Controls
         cursors = this.input.keyboard.createCursorKeys();
@@ -192,15 +207,19 @@ PunchemOut.gameState.prototype = {
         powerUp.anchor.setTo(0.5);
         powerUp.inputEnabled = false;
 
-        powerUpBar = game.add.image(game.world.centerX, 560, 'powerUpCharge');
+        powerUpBar = game.add.image(game.world.centerX, game.world.height - 40, 'powerUpCharge');
         powerUpBar.scale.setTo(0.4, 0.5);
         powerUpBar.anchor.setTo(0.5);
 
-        pauseButton = game.add.button(game.world.width - 60, 10, 'skeleton', function () { pauseEvent(); }, this, 2, 1, 0);
+        pauseButton = game.add.button(game.world.width - 50, 50, 'skeleton', function () { pauseEvent(); }, this, 2, 1, 0);
+        pauseButton.anchor.setTo(0.5);
 
         //Create punches and their animations
-        punchL = game.add.sprite(150, 250, 'punch');
-        punchR = game.add.sprite(500, 250, 'punch');
+        punchL = game.add.sprite(game.world.centerX - 175, game.world.centerY + 25, 'punch');
+        punchL.anchor.setTo(0.5);
+
+        punchR = game.add.sprite(game.world.centerX + 175, game.world.centerY + 25, 'punch');
+        punchR.anchor.setTo(0.5);
 
         animL = punchL.animations.add('punching');
         animR = punchR.animations.add('punching');
@@ -213,7 +232,8 @@ PunchemOut.gameState.prototype = {
         animR.onStart.add(checkOverlapR, this);
 
         //Create text for first wave
-        newWaveText = game.add.text(game.world.centerX - 160, game.world.centerY - 100, "WAVE " + waveNumber, style3);
+        newWaveText = game.add.text(game.world.centerX, game.world.centerY - 100, "WAVE " + waveNumber, style3);
+        newWaveText.anchor.setTo(0.5);
         newWaveText.lifespan = 2000;
         game.time.events.add(0, function () { game.add.tween(newWaveText).to({ alpha: 0 }, 2000, Phaser.Easing.Linear.None, true); }, this);
         console.log("OLEADA " + waveNumber);
@@ -265,7 +285,8 @@ PunchemOut.gameState.prototype = {
             waveTimer.start();
             console.log("...");
             if (waveTimer.ms >= 2000) {
-                newWaveText = game.add.text(game.world.centerX - 160, game.world.centerY - 100, "WAVE " + waveNumber, style3);
+                newWaveText = game.add.text(game.world.centerX, game.world.centerY - 100, "WAVE " + waveNumber, style3);
+                newWaveText.anchor.setTo(0.5);
                 newWaveText.lifespan = 2000;
                 game.time.events.add(0, function () { game.add.tween(newWaveText).to({ alpha: 0 }, 2000, Phaser.Easing.Linear.None, true); }, this);
                 console.log("OLEADA " + waveNumber);
@@ -289,7 +310,6 @@ function moveEnemy() {
                 case AllEnemies[index].sprite.position.x == SpawnCoordinates.LEFT:
                     AllEnemies[index].isAlive = true;
                     AllEnemies[index].hits = EnemyHits[type];
-
 
                     switch (AllEnemies[index].direction) {
                         case FacingDirection.RIGHT:
@@ -367,8 +387,7 @@ function punchCD() {
 }
 
 function hitEnemy(enemyIndex) {
-    if (enemyHittable
-        (enemyIndex)) {
+    if (enemyHittable(enemyIndex)) {
         AllEnemies[enemyIndex].hits--;
 
         if (AllEnemies[enemyIndex].hits == 0) {
@@ -391,7 +410,7 @@ function hitEnemy(enemyIndex) {
 function checkOverlapL() {
     for (var i = 0; i < totalEnemyTypes * maxEnemies; i++) {
         switch (true) {
-            case AllEnemies[i].sprite.body.position.x >= 120 && AllEnemies[i].sprite.body.position.x <= 250:
+            case AllEnemies[i].sprite.body.position.x + 40 >= punchL.position.x - 65 && AllEnemies[i].sprite.body.position.x + 40 <= punchL.position.x + 65:
                 hitEnemy(i);
                 break;
 
@@ -401,7 +420,7 @@ function checkOverlapL() {
 function checkOverlapR() {
     for (var i = 0; i < totalEnemyTypes * maxEnemies; i++) {
         switch (true) {
-            case AllEnemies[i].sprite.body.position.x >= 470 && AllEnemies[i].sprite.body.position.x <= 600:
+            case AllEnemies[i].sprite.body.position.x + 40 >= punchR.position.x - 65 && AllEnemies[i].sprite.body.position.x + 40 <= punchR.position.x + 65:
                 hitEnemy(i);
                 break;
 
@@ -412,11 +431,11 @@ function checkOverlapR() {
 function TeleportMages() {
     for (var i = maxEnemies * 4; i < maxEnemies * 5; i++) {
         switch (true) {
-            case (AllEnemies[i].sprite.body.position.x >= 50 && AllEnemies[i].sprite.body.position.x <= 75) && AllEnemies[i].direction == FacingDirection.RIGHT:
-                AllEnemies[i].sprite.body.position.x = 300;
+            case (AllEnemies[i].sprite.body.position.x >= punchL.position.x - 175 && AllEnemies[i].sprite.body.position.x <= punchL.position.x - 150) && AllEnemies[i].direction == FacingDirection.RIGHT:
+                AllEnemies[i].sprite.body.position.x = game.world.centerX - 40;
                 break;
-            case (AllEnemies[i].sprite.body.position.x >= 675 && AllEnemies[i].sprite.body.position.x <= 700) && AllEnemies[i].direction == FacingDirection.LEFT:
-                AllEnemies[i].sprite.body.position.x = 350;
+            case (AllEnemies[i].sprite.body.position.x >= punchR.position.x + 125 && AllEnemies[i].sprite.body.position.x <= punchR.position.x + 150) && AllEnemies[i].direction == FacingDirection.LEFT:
+                AllEnemies[i].sprite.body.position.x = game.world.centerX;
                 break;
         }
     }
@@ -449,28 +468,55 @@ function resetEnemy(enemyIndex) {
 function backToOrigin() {
     for (var i = 0; i < totalEnemyTypes * maxEnemies; i++) {
         switch (true) {
-            case AllEnemies[i].direction == FacingDirection.RIGHT && AllEnemies[i].sprite.body.position.x >= 825:
+            case AllEnemies[i].direction == FacingDirection.RIGHT && AllEnemies[i].sprite.body.position.x >= game.world.width + 25:
+                resetEnemy(i);
+                if (combo > maxCombo)
+                    maxCombo = combo;
+                combo = 0;
+
+                lifeR--;
+
+                if (lifeR <= 0) {
+                    lifeR = 0;
+                    livesLeftR.destroy();
+                    punchR.alpha = 0.3;
+                    punchButtonR.inputEnabled = false;
+                    cursors.right.enabled = false;
+                } else {
+                    livesLeftR.frame += 2;
+                }
+                break;
             case AllEnemies[i].direction == FacingDirection.LEFT && AllEnemies[i].sprite.body.position.x <= -25:
                 resetEnemy(i);
                 if (combo > maxCombo)
                     maxCombo = combo;
                 combo = 0;
-                life--;
+
+                lifeL--;
+
+                if (lifeL <= 0) {
+                    lifeL = 0;
+                    livesLeftL.destroy();
+                    punchL.alpha = 0.3;
+                    punchButtonL.inputEnabled = false;
+                    cursors.left.enabled = false;
+                } else {
+                    livesLeftL.frame += 2;
+                }
                 break;
-            case AllEnemies[i].sprite.body.position.y >= 625:
+            case AllEnemies[i].sprite.body.position.y >= game.world.height - 80:
                 resetEnemy(i);
                 break;
 
         }
     }
     currentcombo.setText("x" + combo);
-    livesLeft.setText("Lives left: " + life);
 }
 
 function checkEndgame() {
     //console.log("Vidas restantes: " + life);
 
-    if (life <= 0) {
+    if (lifeL + lifeR <= 0) {
         game.camera.fade(0x000000, 500);
         game.camera.onFadeComplete.add(function () { track.stop(); game.state.start("endgameState"); }, this);
     }
@@ -493,19 +539,21 @@ function checkEnemiesAlive() {
 }
 
 function giveScore(enemyPos) {
-    if ((enemyPos > 170 && enemyPos < 210) || (enemyPos > 520 && enemyPos < 560)) {
+    let scoreShow;
+
+    if ((enemyPos > punchL.position.x - 55 && enemyPos < punchL.position.x - 15) || (enemyPos > punchR.position.x - 55 && enemyPos < punchR.position.x - 15)) {
         scoreToGive = 300 * combo;
 
-        textScore = game.add.text(enemyPos, 200, "+300", style2);
+        scoreShow = game.add.image(enemyPos, 200, '+300');
     } else {
         scoreToGive = 100 * combo;
 
-        textScore = game.add.text(enemyPos, 200, "+100", style2);
+        scoreShow = game.add.image(enemyPos, 200, '+100');
     }
 
-    textScore.lifespan = 1500;
-    game.time.events.add(500, function () { game.add.tween(textScore).to({ alpha: 0 }, 1000, Phaser.Easing.Linear.None, true); }, this);
-    game.time.events.add(0, function () { game.add.tween(textScore).to({ y: 100 }, 1500, Phaser.Easing.Linear.None, true); }, this);
+    scoreShow.lifespan = 1500;
+    game.time.events.add(500, function () { game.add.tween(scoreShow).to({ alpha: 0 }, 1000, Phaser.Easing.Linear.None, true); }, this);
+    game.time.events.add(0, function () { game.add.tween(scoreShow).to({ y: 100 }, 1500, Phaser.Easing.Linear.None, true); }, this);
 
     console.log("x" + combo + " = " + scoreToGive);
     score += scoreToGive;
@@ -515,7 +563,7 @@ function giveScore(enemyPos) {
 }
 
 function enemyHittable(index) {
-    return (AllEnemies[index].isAlive && AllEnemies[index].sprite.body.position.x > 25 && AllEnemies[index].sprite.body.position.x < 725 && AllEnemies[index].hits >= 1);
+    return (AllEnemies[index].isAlive && AllEnemies[index].sprite.body.position.x > 25 && AllEnemies[index].sprite.body.position.x < game.world.width - 75 && AllEnemies[index].hits >= 1);
 }
 
 function executePowerUp() {
@@ -562,24 +610,27 @@ function pauseEvent() {
         punchButtonR.inputEnabled = false;
 
         menu = game.add.sprite(game.world.centerX, game.world.centerY, 'menuPausa');
-        menu.alpha = 0.75;
-        menu.anchor.setTo(0.5, 0.5);
+        menu.anchor.setTo(0.5);
 
-        tryAgain = game.add.button(game.world.centerX + 200, game.world.centerY + 100, 'skeleton', function () {
+        tryAgain = game.add.button(game.world.centerX + 150, game.world.centerY + 150, 'skeleton', function () {
             track.stop();
             game.paused = false;
-            //resetVariables();
             game.state.start('gameState');
         }, this, 2, 1, 0);
-        tryAgainText = game.add.text(game.world.centerX + 120, game.world.centerY + 120, "Try Again", style);
+        tryAgain.anchor.setTo(0.5);
 
-        back = game.add.button(game.world.centerX - 200, game.world.centerY + 100, 'skeleton', function () {
+        tryAgainText = game.add.text(game.world.centerX + 150, game.world.centerY + 150, "Try Again", style);
+        tryAgainText.anchor.setTo(0.5);
+
+        back = game.add.button(game.world.centerX - 150, game.world.centerY + 150, 'skeleton', function () {
             track.stop();
             game.paused = false;
-            //resetVariables();
             game.state.start('levelState');
         }, this, 2, 1, 0);
-        backText = game.add.text(game.world.centerX - 140, game.world.centerY + 120, "Select level", style);
+        back.anchor.setTo(0.5);
+
+        backText = game.add.text(game.world.centerX - 150, game.world.centerY + 150, "Select level", style);
+        backText.anchor.setTo(0.5);
     } else {
         game.paused = false;
 
@@ -600,7 +651,8 @@ function pauseEvent() {
 function resetVariables() {
     powerUpCharge = 0;
 
-    life = lives;
+    lifeL = livesL;
+    lifeR = livesR;
     MaxSpawnTime = 1500;
     BaseSpawnTime = 1000;
     waveNumber = 1;
