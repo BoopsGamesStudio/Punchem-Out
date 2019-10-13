@@ -17,7 +17,7 @@ PunchemOut.preloadState.prototype = {
         loadingScreen.height = game.world.height;
         loadingScreen.width = game.world.width;
 
-        logo = this.add.image(game.world.centerX, game.world.centerY - 70, 'logo');
+        logo = this.add.image(game.world.centerX, game.world.height * 0.4, 'logo');
         logo.anchor.setTo(0.5);
         logo.scale.setTo(0.2, 0.2);
         

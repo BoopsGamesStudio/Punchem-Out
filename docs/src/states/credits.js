@@ -24,7 +24,7 @@ PunchemOut.creditsState.prototype = {
             "Alejandro Hernández Pérez\nMario Márquez Balduque\nGabriel Muñoz Borchers\nCarlos Ventura Padina González\nDiego Sagredo de Miguel", style);
         nombres.anchor.setTo(0.5)
 
-        back = this.add.button(150, game.world.height - 100, 'botones', function () { game.state.start('menuState'); }, this, 9, 8);
+        back = this.add.button(game.world.width * 0.15, game.world.height * 0.8, 'botones', function () { game.state.start('menuState'); }, this, 9, 8);
         back.scale.setTo(0.2);
         back.anchor.setTo(0.5);
     },

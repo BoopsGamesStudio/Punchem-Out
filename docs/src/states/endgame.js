@@ -21,32 +21,32 @@ PunchemOut.endgameState.prototype = {
         fondoMenu.width = game.world.width;
         fondoMenu.alpha = 0;
 
-        gameOver = this.add.sprite(game.world.centerX, game.world.centerY - 150, 'game_over');
+        gameOver = this.add.sprite(game.world.centerX, game.world.height * 0.25, 'game_over');
         gameOver.anchor.setTo(0.5);
         gameOver.alpha = 0;
         
-        waveText = this.add.text(game.world.centerX, game.world.centerY + 50, "Wave: " + waveNumber, style);
+        waveText = this.add.text(game.world.centerX, game.world.height * 0.6, "Wave: " + waveNumber, style);
         waveText.anchor.setTo(0.5);
         waveText.alpha = 0;
         
-        scoreText = this.add.text(game.world.centerX, game.world.centerY + 100, "Score: " + score, style);
+        scoreText = this.add.text(game.world.centerX, game.world.height * 0.65, "Score: " + score, style);
         scoreText.anchor.setTo(0.5);
         scoreText.alpha = 0;
 
-        maxComboText = this.add.text(game.world.centerX, game.world.centerY + 150, "MaxCombo: " + maxCombo, style);
+        maxComboText = this.add.text(game.world.centerX, game.world.height * 0.7, "MaxCombo: " + maxCombo, style);
         maxComboText.anchor.setTo(0.5);
         maxComboText.alpha = 0;
 
-        tryAgain = this.add.button(game.world.width - 100, game.world.height - 100, 'skeleton', function() { game.state.start('gameState'); resetVariables(); }, this, 2, 1, 0);
+        tryAgain = this.add.button(game.world.width * 0.85, game.world.height * 0.8, 'skeleton', function() { game.state.start('gameState'); resetVariables(); }, this, 2, 1, 0);
         tryAgain.anchor.setTo(0.5);
         tryAgain.alpha = 0;
 
         //TEMPORAL
-        tryAgainText = this.add.text(game.world.width - 100, game.world.height - 100, "Try Again", style);
+        tryAgainText = this.add.text(game.world.width * 0.85, game.world.height * 0.8, "Try Again", style);
         tryAgainText.anchor.setTo(0.5);
         tryAgainText.alpha = 0;
 
-        back = this.add.button(100, game.world.height - 100, 'botones', function () { game.state.start('levelState'); resetVariables(); }, this, 9, 8);
+        back = this.add.button(game.world.width * 0.15, game.world.height * 0.8, 'botones', function () { game.state.start('levelState'); resetVariables(); }, this, 9, 8);
         back.scale.setTo(0.2);
         back.anchor.setTo(0.5);
         back.alpha = 0;
