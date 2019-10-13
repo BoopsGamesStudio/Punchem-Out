@@ -131,7 +131,7 @@ PunchemOut.gameState.prototype = {
     },
 
     preload: function () {
-        
+
     },
 
     create: function () {
@@ -170,18 +170,18 @@ PunchemOut.gameState.prototype = {
 
         game.add.text(20, 20, "LEVEL " + level);
 
-        livesLeftL = game.add.sprite(100, 150, 'vidas');
+        livesLeftL = game.add.sprite(game.world.width * 0.15, game.world.height * 0.2, 'vidas');
         livesLeftL.anchor.setTo(0.5);
         livesLeftL.scale.setTo(0.2);
 
-        livesLeftR = game.add.sprite(game.world.width - 100, 150, 'vidas', 1);
+        livesLeftR = game.add.sprite(game.world.width * 0.85, game.world.height * 0.2, 'vidas', 1);
         livesLeftR.anchor.setTo(0.5);
         livesLeftR.scale.setTo(0.2);
 
         currentScore = game.add.text(game.world.centerX, 50, "Score: " + score);
         currentScore.anchor.setTo(0.5);
 
-        currentcombo = game.add.text(100, game.world.height - 100, 'x' + combo);
+        currentcombo = game.add.text(game.world.width * 0.15, game.world.height * 0.85, 'x' + combo);
         currentcombo.anchor.setTo(0.5);
 
         //Controls
@@ -210,10 +210,10 @@ PunchemOut.gameState.prototype = {
         pauseButton.anchor.setTo(0.5);
 
         //Create punches and their animations
-        punchL = game.add.sprite(game.world.centerX - 175, game.world.centerY + 25, 'punch');
+        punchL = game.add.sprite(game.world.centerX - 175, game.world.centerY, 'punch');
         punchL.anchor.setTo(0.5);
 
-        punchR = game.add.sprite(game.world.centerX + 175, game.world.centerY + 25, 'punch');
+        punchR = game.add.sprite(game.world.centerX + 175, game.world.centerY, 'punch');
         punchR.anchor.setTo(0.5);
 
         animL = punchL.animations.add('punching');
@@ -605,26 +605,27 @@ function pauseEvent() {
         punchButtonR.inputEnabled = false;
 
         menu = game.add.sprite(game.world.centerX, game.world.centerY, 'menuPausa');
+        menu.scale.setTo(game.world.height / 800);
         menu.anchor.setTo(0.5);
 
-        tryAgain = game.add.button(game.world.centerX + 150, game.world.centerY + 150, 'skeleton', function () {
+        tryAgain = game.add.button(menu.right - 50, menu.bottom - 50, 'skeleton', function () {
             track.stop();
             game.paused = false;
             game.state.start('gameState');
         }, this, 2, 1, 0);
         tryAgain.anchor.setTo(0.5);
 
-        tryAgainText = game.add.text(game.world.centerX + 150, game.world.centerY + 150, "Try Again", style);
+        tryAgainText = game.add.text(menu.right - 50, menu.bottom - 50, "Try Again", style);
         tryAgainText.anchor.setTo(0.5);
 
-        back = game.add.button(game.world.centerX - 150, game.world.centerY + 150, 'skeleton', function () {
+        back = game.add.button(menu.left + 50, menu.bottom - 50, 'skeleton', function () {
             track.stop();
             game.paused = false;
             game.state.start('levelState');
         }, this, 2, 1, 0);
         back.anchor.setTo(0.5);
 
-        backText = game.add.text(game.world.centerX - 150, game.world.centerY + 150, "Select level", style);
+        backText = game.add.text(menu.left + 50, menu.bottom - 50, "Select level", style);
         backText.anchor.setTo(0.5);
     } else {
         game.paused = false;
@@ -660,6 +661,6 @@ function resetVariables() {
 
     AllEnemies = [];
 
-    spawnHeight = game.world.centerY + 10;
+    spawnHeight = game.world.height * 0.48;
     SpawnCoordinates.LEFT = game.world.width + 100;
 }
