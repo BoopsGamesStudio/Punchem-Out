@@ -183,6 +183,10 @@ _Sketch de la animación del Hechicero_
 
 ![Error al cargar la imagen](https://raw.githubusercontent.com/BoopsGamesStudio/Punchem-Out/master/Arte/Hechicero2.gif)
 
+_Sketch de la animación del Caballero Gigante_
+
+![Error al cargar la imagen](https://raw.githubusercontent.com/BoopsGamesStudio/Punchem-Out/master/docs/assets/sprites/fuerte2.gif)
+
 _Concept Escenario_
 
 <p align="center">
