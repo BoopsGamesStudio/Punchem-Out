@@ -37,6 +37,7 @@ PunchemOut.preloadState.prototype = {
         this.load.image('+100', 'assets/sprites/+100.png');
         this.load.image('+300', 'assets/sprites/+300.png');
         this.load.image('puente', 'assets/backgrounds/puente.png');
+        this.load.image('madera', 'assets/backgrounds/madera.png');
 
         //spritesheets
         this.load.spritesheet('skeleton', 'assets/sprites/skeleton.png', 64, 64); //placeholders

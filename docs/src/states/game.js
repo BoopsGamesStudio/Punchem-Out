@@ -49,12 +49,13 @@ var livesLeftL;
 var livesLeftR;
 var currentcombo;
 var currentScore;
-var spawnHeight = undefined
+var spawnHeight = undefined;
 var track;
 
 var EnemySpeed;
 const EnemyHits = [1, 1, 2, 1];
-const EnemyAnimations = ['walkRightCaballero', 'walkRightMago', 'walkRightFuerte', 'walkRightBrujo']
+const EnemyAnimations = ['walkRightCaballero', 'walkRightMago', 'walkRightFuerte', 'walkRightBrujo'];
+const EnemyFrameRate = [24, 24, 12, 24];
 
 var AllEnemies;
 
@@ -97,7 +98,7 @@ function CreateEnemy(type) {
             this.sprite.animations.add('walkRightBrujo', [0, 1, 2, 3, 4, 5, 6, 7, 8]);
             this.sprite.animations.add('brujoTP', [18, 19, 20, 21, 22, 23, 24, 25, 26]).onComplete.add(function () {
                 this.sprite.position.x = game.world.centerX;
-                this.sprite.animations.play('walkRightBrujo');
+                this.sprite.animations.play('walkRightBrujo', EnemyFrameRate[type]);
                 this.sprite.body.velocity.x = this.previousSpeed;
             }, this);
             break;
@@ -159,8 +160,19 @@ PunchemOut.gameState.prototype = {
         fondo.height = game.world.height;
         fondo.width = game.world.width;
 
+        maderaL = this.add.image(game.world.centerX - 175, 0, 'madera');
+        maderaL.anchor.setTo(0.5, 0);
+        maderaL.scale.setTo(0.2);
+        maderaL.height = game.world.height;
+
+        maderaR = this.add.image(game.world.centerX + 175, 0, 'madera');
+        maderaR.anchor.setTo(0.5, 0);
+        maderaR.scale.setTo(0.2);
+        maderaR.height = game.world.height;
+
         puente = this.add.image(0, game.world.centerY + 30, 'puente');
         puente.width = game.world.width;
+        puente.height = 300;
 
         game.add.text(20, 20, "LEVEL " + level);
 
@@ -308,14 +320,14 @@ function moveEnemy() {
                     switch (AllEnemies[index].direction) {
                         case FacingDirection.RIGHT:
                             AllEnemies[index].sprite.body.velocity.x = EnemySpeed[type];
-                            AllEnemies[index].sprite.animations.play(EnemyAnimations[type], 10, true);
+                            AllEnemies[index].sprite.animations.play(EnemyAnimations[type], EnemyFrameRate[type], true);
                             break;
                         case FacingDirection.LEFT:
                             AllEnemies[index].sprite.anchor.setTo(0.5);
                             AllEnemies[index].sprite.scale.x *= -1;
                             AllEnemies[index].sprite.anchor.setTo(0);
                             AllEnemies[index].sprite.body.velocity.x = -EnemySpeed[type];
-                            AllEnemies[index].sprite.animations.play(EnemyAnimations[type], 10, true);
+                            AllEnemies[index].sprite.animations.play(EnemyAnimations[type], EnemyFrameRate[type], true);
                             break;
                         default:
                             console.log('Error en el switch direction')
@@ -525,6 +537,7 @@ function backToOrigin() {
                 }
                 break;
             case AllEnemies[i].sprite.body.position.y >= game.world.height - 80:
+                console.log("Enemy " + i + " died");
                 resetEnemy(i);
                 break;
 
