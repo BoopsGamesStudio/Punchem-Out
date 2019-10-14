@@ -159,6 +159,9 @@ PunchemOut.gameState.prototype = {
         fondo.height = game.world.height;
         fondo.width = game.world.width;
 
+        puente = this.add.image(0, game.world.centerY + 30, 'puente');
+        puente.width = game.world.width;
+
         game.add.text(20, 20, "LEVEL " + level);
 
         livesLeftL = game.add.sprite(game.world.width * 0.15, game.world.height * 0.2, 'vidas');
@@ -241,6 +244,10 @@ PunchemOut.gameState.prototype = {
                 enemy = new CreateEnemy(TypeArray[i]);
                 AllEnemies.push(enemy);
             }
+        }
+
+        for (var i = maxEnemies * (totalEnemyTypes - 2); i < maxEnemies * (totalEnemyTypes - 1); i++) {
+            AllEnemies[i].sprite.bringToTop();
         }
 
         punchSound = game.add.audio('punch');
@@ -679,6 +686,6 @@ function resetVariables() {
 
     AllEnemies = [];
 
-    spawnHeight = game.world.height * 0.48;
+    spawnHeight = game.world.centerY - 10;
     SpawnCoordinates.LEFT = game.world.width + 100;
 }
