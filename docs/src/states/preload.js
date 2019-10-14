@@ -19,7 +19,7 @@ PunchemOut.preloadState.prototype = {
 
         logo = this.add.image(game.world.centerX, game.world.height * 0.4, 'logo');
         logo.anchor.setTo(0.5);
-        logo.scale.setTo(0.2, 0.2);
+        logo.scale.setTo(game.world.height / 3000);
         
         //Carga de assets
 
