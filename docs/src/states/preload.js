@@ -29,7 +29,7 @@ PunchemOut.preloadState.prototype = {
         this.load.image('menuPausa', 'assets/menuPausa.png');
         this.load.image('powerUpCharge', 'assets/sprites/cargaPowerUp.png');
         this.load.image('logo_juego', 'assets/sprites/logo.png');
-        this.load.image('settings', 'assets/sprites/settings.png');
+        //this.load.image('settings', 'assets/sprites/settings.png');
         this.load.image('game_over', 'assets/sprites/game_over.png');
         this.load.image('twitterLogo', 'assets/sprites/twitterLogo.png');
         this.load.image('instagramLogo', 'assets/sprites/instagramLogo.png');
@@ -38,12 +38,18 @@ PunchemOut.preloadState.prototype = {
         this.load.image('+300', 'assets/sprites/+300.png');
 
         //spritesheets
+        this.load.spritesheet('skeleton', 'assets/sprites/skeleton.png', 64, 64); //placeholders
+        this.load.spritesheet('link', 'assets/sprites/link.png', 96, 104); //placeholders
+        //this.load.spritesheet('spritesheet', 'assets/sprites/spritesheet.png', 72, 128);
+        this.load.spritesheet('caballero', 'assets/sprites/caballero.png', 72, 128);
+        this.load.spritesheet('mago', 'assets/sprites/mago.png', 72, 128);
+        this.load.spritesheet('fuerte', 'assets/sprites/fuerte.png', 108, 192);
+        this.load.spritesheet('brujo', 'assets/sprites/hechicero.png', 72, 128);
         this.load.spritesheet('vidas', 'assets/sprites/vidas.png', 945, 436);
         this.load.spritesheet('botones', 'assets/sprites/botones.png', 862, 300);
-        this.load.spritesheet('skeleton', 'assets/sprites/skeleton.png', 64, 64);
-        this.load.spritesheet('link', 'assets/sprites/link.png', 96, 104);
-        this.load.spritesheet('spritesheet', 'assets/sprites/spritesheet.png', 72, 128);
-        this.load.spritesheet('punch', 'assets/sprites/punch.png', 150, 150);
+        this.load.spritesheet('punchL', 'assets/sprites/punchLAnimation.png', 491, 491);
+        this.load.spritesheet('punchR', 'assets/sprites/punchRAnimation.png', 491, 491);
+        this.load.spritesheet('punchIdle', 'assets/sprites/stillPunch.png', 635, 635);
 
         //audios
         this.load.audio('punch', 'assets/sounds/beat.mp3');

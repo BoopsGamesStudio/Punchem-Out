@@ -11,11 +11,10 @@ const FacingDirection = {
 };
 
 const EnemyType = {
-    TYPE1: 'Skeleton',
-    TYPE2: 'Link',
-    TYPE3: 'Prueba',
-    TYPE4: 'Giant',
-    TYPE5: 'Mage'
+    TYPE1: 'Estandar',
+    TYPE2: 'Caballero',
+    TYPE3: 'Giant',
+    TYPE4: 'Mage'
 }
 
 const SpawnCoordinates = {
@@ -54,12 +53,8 @@ var spawnHeight = undefined
 var track;
 
 var EnemySpeed;
-const EnemyHits = [1, 1, 1, 2, 1];
-const EnemyAnimations = [{ RIGHT: 'walkRightSkeleton', LEFT: 'walkLeftSkeleton' },
-{ RIGHT: 'walkRightLink', LEFT: 'walkLeftLink' },
-{ RIGHT: 'walkRightPrueba', LEFT: 'walkRightPrueba' },
-{ RIGHT: 'walkRightLink', LEFT: 'walkLeftLink' },
-{ RIGHT: 'walkRightLink', LEFT: 'walkLeftLink' }]
+const EnemyHits = [1, 1, 2, 1];
+const EnemyAnimations = ['walkRightCaballero', 'walkRightMago', 'walkRightFuerte', 'walkRightBrujo']
 
 var AllEnemies;
 
@@ -79,36 +74,32 @@ function CreateEnemy(type) {
     switch (type) {
         case EnemyType.TYPE1:
             this.initHeight = spawnHeight;
-            this.sprite = game.add.sprite(this.initPos, this.initHeight, 'skeleton');
-            this.sprite.animations.add('walkRightSkeleton', [27, 28, 29, 30, 31, 32, 33, 34, 35]);
-            this.sprite.animations.add('walkLeftSkeleton', [17, 16, 15, 14, 13, 12, 11, 10, 9]);
+            this.sprite = game.add.sprite(this.initPos, this.initHeight, 'caballero');
+            this.sprite.scale.setTo(0.8, 0.62);
+            this.sprite.animations.add('walkRightCaballero');
             break;
         case EnemyType.TYPE2:
             this.initHeight = spawnHeight;
-            this.sprite = game.add.sprite(this.initPos, this.initHeight, 'link');
-            this.sprite.scale.setTo(0.67, 0.62);
-            this.sprite.animations.add('walkRightLink', [70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80]);
-            this.sprite.animations.add('walkLeftLink', [59, 58, 57, 56, 55, 54, 53, 52, 51]);
+            this.sprite = game.add.sprite(this.initPos, this.initHeight, 'mago');
+            this.sprite.scale.setTo(0.8, 0.62);
+            this.sprite.animations.add('walkRightMago');
             break;
         case EnemyType.TYPE3:
-            this.initHeight = spawnHeight;
-            this.sprite = game.add.sprite(this.initPos, this.initHeight, 'spritesheet');
-            this.sprite.scale.setTo(0.8, 0.62);
-            this.sprite.animations.add('walkRightPrueba');
+            this.initHeight = spawnHeight - 30;
+            this.sprite = game.add.sprite(this.initPos, this.initHeight, 'fuerte');
+            this.sprite.animations.add('walkRightFuerte');
             break;
         case EnemyType.TYPE4:
-            this.initHeight = spawnHeight - 30;
-            this.sprite = game.add.sprite(this.initPos, this.initHeight, 'link');
-            this.sprite.animations.add('walkRightLink', [70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80]);
-            this.sprite.animations.add('walkLeftLink', [59, 58, 57, 56, 55, 54, 53, 52, 51]);
-            break;
-        case EnemyType.TYPE5:
             this.initHeight = spawnHeight;
-            this.sprite = game.add.sprite(this.initPos, this.initHeight, 'link');
-            this.sprite.tint = 0x960585;
-            this.sprite.scale.setTo(0.67, 0.62);
-            this.sprite.animations.add('walkRightLink', [70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80]);
-            this.sprite.animations.add('walkLeftLink', [59, 58, 57, 56, 55, 54, 53, 52, 51]);
+            this.alreadyTP = false;
+            this.sprite = game.add.sprite(this.initPos, this.initHeight, 'brujo');
+            this.sprite.scale.setTo(0.8, 0.62);
+            this.sprite.animations.add('walkRightBrujo', [0, 1, 2, 3, 4, 5, 6, 7, 8]);
+            this.sprite.animations.add('brujoTP', [18, 19, 20, 21, 22, 23, 24, 25, 26]).onComplete.add(function () {
+                this.sprite.position.x = game.world.centerX;
+                this.sprite.animations.play('walkRightBrujo');
+                this.sprite.body.velocity.x = this.previousSpeed;
+            }, this);
             break;
         default:
             console.log("Error");
@@ -142,19 +133,19 @@ PunchemOut.gameState.prototype = {
             case 1:
                 MaxSpawnTime = 1500;
                 BaseSpawnTime = 1000;
-                totalEnemyTypes = 3;
+                totalEnemyTypes = 2;
                 track = game.add.audio('track1');
                 break;
             case 2:
                 MaxSpawnTime = 1400;
                 BaseSpawnTime = 900;
-                totalEnemyTypes = 4;
+                totalEnemyTypes = 3;
                 track = game.add.audio('track2');
                 break;
             case 3:
                 MaxSpawnTime = 1300;
                 BaseSpawnTime = 800;
-                totalEnemyTypes = 5;
+                totalEnemyTypes = 4;
                 track = game.add.audio('track3');
                 break;
         }
@@ -210,14 +201,16 @@ PunchemOut.gameState.prototype = {
         pauseButton.anchor.setTo(0.5);
 
         //Create punches and their animations
-        punchL = game.add.sprite(game.world.centerX - 175, game.world.centerY, 'punch');
+        punchL = game.add.sprite(game.world.centerX - 175, game.world.centerY, 'punchL');
+        punchL.scale.setTo(0.3);
         punchL.anchor.setTo(0.5);
 
-        punchR = game.add.sprite(game.world.centerX + 175, game.world.centerY, 'punch');
+        punchR = game.add.sprite(game.world.centerX + 175, game.world.centerY, 'punchR');
+        punchR.scale.setTo(0.3);
         punchR.anchor.setTo(0.5);
 
-        animL = punchL.animations.add('punching');
-        animR = punchR.animations.add('punching');
+        animL = punchL.animations.add('punching', [0, 1, 2, 3, 4, 5, 6, 7, 8]);
+        animR = punchR.animations.add('punching', [0, 1, 2, 3, 4, 5, 6, 7, 8]);
 
         animL.onComplete.add(stopAnimL, this);
         animR.onComplete.add(stopAnimR, this);
@@ -248,7 +241,6 @@ PunchemOut.gameState.prototype = {
                 enemy = new CreateEnemy(TypeArray[i]);
                 AllEnemies.push(enemy);
             }
-
         }
 
         punchSound = game.add.audio('punch');
@@ -271,7 +263,7 @@ PunchemOut.gameState.prototype = {
 
         punchCD();
         checkPowerUpUsable();
-        if (AllEnemies.length / maxEnemies >= 5) {
+        if (AllEnemies.length / maxEnemies >= 4) {
             TeleportMages();
         }
         backToOrigin();
@@ -309,11 +301,14 @@ function moveEnemy() {
                     switch (AllEnemies[index].direction) {
                         case FacingDirection.RIGHT:
                             AllEnemies[index].sprite.body.velocity.x = EnemySpeed[type];
-                            AllEnemies[index].sprite.animations.play(EnemyAnimations[type].RIGHT, 10, true);
+                            AllEnemies[index].sprite.animations.play(EnemyAnimations[type], 10, true);
                             break;
                         case FacingDirection.LEFT:
+                            AllEnemies[index].sprite.anchor.setTo(0.5);
+                            AllEnemies[index].sprite.scale.x *= -1;
+                            AllEnemies[index].sprite.anchor.setTo(0);
                             AllEnemies[index].sprite.body.velocity.x = -EnemySpeed[type];
-                            AllEnemies[index].sprite.animations.play(EnemyAnimations[type].LEFT, 10, true);
+                            AllEnemies[index].sprite.animations.play(EnemyAnimations[type], 10, true);
                             break;
                         default:
                             console.log('Error en el switch direction')
@@ -369,6 +364,8 @@ function punchCD() {
     if (pressL) {
         punchL_CD--;
         if (punchL_CD == 0) {
+            punchL.frame = 0;
+            punchL.alpha = 1;
             pressL = false;
         }
 
@@ -376,6 +373,8 @@ function punchCD() {
     if (pressR) {
         punchR_CD--;
         if (punchR_CD == 0) {
+            punchR.frame = 0;
+            punchR.alpha = 1;
             pressR = false;
         }
     }
@@ -396,8 +395,6 @@ function hitEnemy(enemyIndex) {
             if (powerUpCharge < 10) {
                 powerUpCharge++;
             }
-
-            //console.log('combo : ', combo);
         }
     }
 }
@@ -424,13 +421,14 @@ function checkOverlapR() {
 }
 //Revisar después
 function TeleportMages() {
-    for (var i = maxEnemies * 4; i < maxEnemies * 5; i++) {
+    for (var i = maxEnemies * (totalEnemyTypes - 1); i < maxEnemies * totalEnemyTypes; i++) {
         switch (true) {
-            case (AllEnemies[i].sprite.body.position.x >= punchL.position.x - 175 && AllEnemies[i].sprite.body.position.x <= punchL.position.x - 150) && AllEnemies[i].direction == FacingDirection.RIGHT:
-                AllEnemies[i].sprite.body.position.x = game.world.centerX - 40;
-                break;
-            case (AllEnemies[i].sprite.body.position.x >= punchR.position.x + 125 && AllEnemies[i].sprite.body.position.x <= punchR.position.x + 150) && AllEnemies[i].direction == FacingDirection.LEFT:
-                AllEnemies[i].sprite.body.position.x = game.world.centerX;
+            case (!AllEnemies[i].alreadyTP && AllEnemies[i].sprite.body.position.x >= punchL.position.x - 175 && AllEnemies[i].sprite.body.position.x <= punchL.position.x - 150) && AllEnemies[i].direction == FacingDirection.RIGHT:
+            case (!AllEnemies[i].alreadyTP && AllEnemies[i].sprite.body.position.x >= punchR.position.x + 125 && AllEnemies[i].sprite.body.position.x <= punchR.position.x + 150) && AllEnemies[i].direction == FacingDirection.LEFT:
+                AllEnemies[i].alreadyTP = true;
+                AllEnemies[i].previousSpeed = AllEnemies[i].sprite.body.velocity.x;
+                AllEnemies[i].sprite.body.velocity.x = 0;
+                AllEnemies[i].sprite.animations.play("brujoTP", 15);
                 break;
         }
     }
@@ -438,10 +436,14 @@ function TeleportMages() {
 
 function stopAnimL() {
     animL.stop(true);
+    punchL.frame = 9;
+    punchL.alpha = 0.6;
 }
 
 function stopAnimR() {
     animR.stop(true);
+    punchR.frame = 9;
+    punchR.alpha = 0.6;
 }
 
 function xSpeed(SpeedIncrement) {
@@ -451,6 +453,19 @@ function xSpeed(SpeedIncrement) {
 
 function resetEnemy(enemyIndex) {
     let type = Math.floor(enemyIndex / maxEnemies);
+
+    //Descomentar esto hace que dejen de spawnear alrededor de la ronda 3
+
+    /*AllEnemies[enemyIndex].direction = Math.floor(Math.random() * 2) + 1;
+    switch (AllEnemies[enemyIndex].direction) {
+        case FacingDirection.RIGHT:
+            AllEnemies[enemyIndex].initPos = SpawnCoordinates.RIGHT;
+            break;
+        case FacingDirection.LEFT:
+            AllEnemies[enemyIndex].initPos = SpawnCoordinates.LEFT;
+            break;
+    }*/
+
     AllEnemies[enemyIndex].isAlive = false;
     AllEnemies[enemyIndex].sprite.body.velocity.x = 0;
     AllEnemies[enemyIndex].sprite.body.velocity.y = 0;
@@ -458,6 +473,7 @@ function resetEnemy(enemyIndex) {
     AllEnemies[enemyIndex].sprite.body.position.x = AllEnemies[enemyIndex].initPos;
     AllEnemies[enemyIndex].hits = EnemyHits[type];
     AllEnemies[enemyIndex].sprite.animations.stop();
+    if (type = 4) AllEnemies[enemyIndex].alreadyTP = false;
 }
 
 function backToOrigin() {
@@ -474,6 +490,7 @@ function backToOrigin() {
                 if (lifeR <= 0) {
                     lifeR = 0;
                     livesLeftR.destroy();
+                    punchR.frame = 9;
                     punchR.alpha = 0.3;
                     punchButtonR.inputEnabled = false;
                     cursors.right.enabled = false;
@@ -492,6 +509,7 @@ function backToOrigin() {
                 if (lifeL <= 0) {
                     lifeL = 0;
                     livesLeftL.destroy();
+                    punchL.frame = 9;
                     punchL.alpha = 0.3;
                     punchButtonL.inputEnabled = false;
                     cursors.left.enabled = false;
@@ -657,7 +675,7 @@ function resetVariables() {
     combo = 0;
     maxCombo = 0;
 
-    EnemySpeed = [100, 80, 90, 70, 80];
+    EnemySpeed = [80, 100, 70, 80];
 
     AllEnemies = [];
 
