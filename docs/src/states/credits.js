@@ -21,12 +21,12 @@ PunchemOut.creditsState.prototype = {
         fondoMenu.width = game.world.width;
 
         nombres = game.add.text(game.world.centerX, game.world.centerY - 50,
-            "Alejandro Hernández Pérez\nMario Márquez Balduque\nGabriel Muñoz Borchers\nCarlos Ventura Padina González\nDiego Sagredo de Miguel", style);
+            "Alejandro Hernández Pérez\nMario Márquez Balduque\nGabriel Muñoz Borchers\nCarlos Ventura Padina González\nDiego Sagredo de Miguel", styleSmall);
         nombres.anchor.setTo(0.5)
 
-        back = this.add.button(game.world.width * 0.15, game.world.height * 0.8, 'botones', function () { game.state.start('menuState'); }, this, 9, 8);
+        back = this.add.button(game.world.width * 0.13, game.world.height * 0.87, 'botones', function () { game.state.start('menuState'); }, this, 9, 8);
         back.scale.setTo(0.2);
-        back.anchor.setTo(0.5);
+        back.anchor.setTo(0.3, 1);
     },
 
     update: function () {

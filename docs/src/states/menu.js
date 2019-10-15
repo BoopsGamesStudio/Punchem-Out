@@ -2,10 +2,10 @@ PunchemOut.menuState = function () {
 
 }
 
-var style = { font: "15px Arial", fill: "#ffffff", align: "center" };
-var style2 = { font: "30px Arial", fill: "#ffffff", align: "center" };
-var style3 = { font: "80px Arial", fill: "#000000", align: "center" };
-//var style4 = { font: "15px Arial", fill: "#000000", align: "center" };
+var styleSmall = { font: "15px Arial", fill: "#ffffff", align: "center" };
+var styleMedium = { font: "20px Arial", fill: "#000000", align: "center" };
+var styleBig = { font: "80px Arial Black", fill: "#000000", align: "center" };
+var styleAux = { font: "30px Arial", fill: "#ffffff", align: "center" };
 
 var fondoMenu;
 var logo;
@@ -37,13 +37,13 @@ PunchemOut.menuState.prototype = {
         logo.scale.setTo(game.world.height / 1500);
         logo.anchor.setTo(0.5);
 
-        contacto = this.add.button(game.world.width * 0.15, game.world.height * 0.8, 'logo', function () { game.state.start('socialmediaState'); });
+        contacto = this.add.button(game.world.width * 0.13, game.world.height * 0.87, 'logo', function () { game.state.start('socialmediaState'); });
         contacto.scale.setTo(0.07, 0.07);
-        contacto.anchor.setTo(0.5);
+        contacto.anchor.setTo(0, 1);
 
-        settings = this.add.button(game.world.width * 0.85, game.world.height * 0.8, 'botones', function () { game.state.start('settingsState'); }, this, 7, 6);
+        settings = this.add.button(game.world.width * 0.87, game.world.height * 0.87, 'botones', function () { game.state.start('settingsState'); }, this, 7, 6);
         settings.scale.setTo(0.2, 0.2);
-        settings.anchor.setTo(0.5);
+        settings.anchor.setTo(0.7, 1);
 
         jugar = this.add.button(game.world.centerX, game.world.centerY, 'botones', function () { game.state.start('levelState'); }, this, 1, 0);
         jugar.scale.setTo(0.2);
