@@ -100,7 +100,7 @@ function CreateEnemy(type) {
             this.alreadyTP = false;
             this.sprite = game.add.sprite(this.initPos, this.initHeight, 'brujo');
             this.sprite.anchor.x = 0.5;
-            this.sprite.animations.add('walkRightBrujo', [0, 1, 2, 3, 4, 5, 6, 7, 8]);
+            this.sprite.animations.add('walkRightBrujo', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]);
             this.sprite.animations.add('brujoTP', [18, 19, 20, 21, 22, 23, 24, 25, 26]).onComplete.add(function () {
                 this.sprite.position.x = game.world.centerX;
                 this.sprite.animations.play('walkRightBrujo', EnemyFrameRate[type]);
