@@ -26,7 +26,7 @@ PunchemOut.preloadState.prototype = {
         //imagenes
         this.load.image('fondo', 'assets/backgrounds/fondo.jpeg');
         this.load.image('menuFondo', 'assets/backgrounds/menuFondo.png');
-        this.load.image('menuPausa', 'assets/menuPausa.png');
+        this.load.image('menuPausa', 'assets/sprites/menuPausa.png');
         this.load.image('powerUpCharge', 'assets/sprites/cargaPowerUp.png');
         this.load.image('logo_juego', 'assets/sprites/logo.png');
         //this.load.image('settings', 'assets/sprites/settings.png');
@@ -38,10 +38,12 @@ PunchemOut.preloadState.prototype = {
         this.load.image('+300', 'assets/sprites/+300.png');
         this.load.image('puente', 'assets/backgrounds/puente.png');
         this.load.image('madera', 'assets/backgrounds/madera.png');
+        this.load.image('powerUpLogo', 'assets/sprites/powerUpLogo.png');
+        this.load.image('scoreText', 'assets/sprites/scoreText.png');
 
         //spritesheets
         this.load.spritesheet('skeleton', 'assets/sprites/skeleton.png', 64, 64); //placeholders
-        this.load.spritesheet('link', 'assets/sprites/link.png', 96, 104); //placeholders
+        //this.load.spritesheet('link', 'assets/sprites/link.png', 96, 104); //placeholders
         //this.load.spritesheet('spritesheet', 'assets/sprites/spritesheet.png', 72, 128);
         this.load.spritesheet('caballero', 'assets/sprites/caballero.png', 72, 128);
         this.load.spritesheet('mago', 'assets/sprites/mago.png', 72, 128);
@@ -52,6 +54,8 @@ PunchemOut.preloadState.prototype = {
         this.load.spritesheet('punchL', 'assets/sprites/punchLAnimation.png', 491, 491);
         this.load.spritesheet('punchR', 'assets/sprites/punchRAnimation.png', 491, 491);
         this.load.spritesheet('punchIdle', 'assets/sprites/stillPunch.png', 635, 635);
+        this.load.spritesheet('powerUpEffect', 'assets/sprites/powerUpEffect.png', 400, 360);
+        this.load.spritesheet('botones2', 'assets/sprites/botones2.png', 916, 427);
 
         //audios
         this.load.audio('punch', 'assets/sounds/beat.mp3');
@@ -65,6 +69,6 @@ PunchemOut.preloadState.prototype = {
     },
 
     update: function () {
-        game.state.start('menuState')
+        game.state.start('menuState');
     }
 }

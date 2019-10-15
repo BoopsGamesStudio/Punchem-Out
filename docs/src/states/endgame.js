@@ -25,30 +25,26 @@ PunchemOut.endgameState.prototype = {
         gameOver.anchor.setTo(0.5);
         gameOver.alpha = 0;
         
-        waveText = this.add.text(game.world.centerX, game.world.height * 0.6, "Wave: " + waveNumber, style);
+        waveText = this.add.text(game.world.centerX, game.world.height * 0.6, "Wave: " + waveNumberFinal, styleSmall);
         waveText.anchor.setTo(0.5);
         waveText.alpha = 0;
         
-        scoreText = this.add.text(game.world.centerX, game.world.height * 0.65, "Score: " + score, style);
+        scoreText = this.add.text(game.world.centerX, game.world.height * 0.65, "Score: " + scoreFinal, styleSmall);
         scoreText.anchor.setTo(0.5);
         scoreText.alpha = 0;
 
-        maxComboText = this.add.text(game.world.centerX, game.world.height * 0.7, "MaxCombo: " + maxCombo, style);
+        maxComboText = this.add.text(game.world.centerX, game.world.height * 0.7, "MaxCombo: " + maxComboFinal, styleSmall);
         maxComboText.anchor.setTo(0.5);
         maxComboText.alpha = 0;
 
-        tryAgain = this.add.button(game.world.width * 0.85, game.world.height * 0.8, 'skeleton', function() { game.state.start('gameState'); resetVariables(); }, this, 2, 1, 0);
-        tryAgain.anchor.setTo(0.5);
+        tryAgain = this.add.button(game.world.width * 0.87, game.world.height * 0.87, 'botones2', function() { game.state.start('gameState'); resetVariables(); }, this, 1, 0);
+        tryAgain.scale.setTo(0.2);
+        tryAgain.anchor.setTo(1);
         tryAgain.alpha = 0;
 
-        //TEMPORAL
-        tryAgainText = this.add.text(game.world.width * 0.85, game.world.height * 0.8, "Try Again", style);
-        tryAgainText.anchor.setTo(0.5);
-        tryAgainText.alpha = 0;
-
-        back = this.add.button(game.world.width * 0.15, game.world.height * 0.8, 'botones', function () { game.state.start('levelState'); resetVariables(); }, this, 9, 8);
+        back = this.add.button(game.world.width * 0.13, game.world.height * 0.87, 'botones', function () { game.state.start('levelState'); resetVariables(); }, this, 9, 8);
         back.scale.setTo(0.2);
-        back.anchor.setTo(0.5);
+        back.anchor.setTo(0.3, 1);
         back.alpha = 0;
         
         game.add.tween(fondoMenu).to( { alpha: 1 }, 2000, Phaser.Easing.Linear.None, true, 0);
@@ -57,7 +53,6 @@ PunchemOut.endgameState.prototype = {
         game.add.tween(scoreText).to( { alpha: 1 }, 2000, Phaser.Easing.Linear.None, true, 0);
         game.add.tween(maxComboText).to( { alpha: 1 }, 2000, Phaser.Easing.Linear.None, true, 0);
         game.add.tween(tryAgain).to( { alpha: 1 }, 2000, Phaser.Easing.Linear.None, true, 0);
-        game.add.tween(tryAgainText).to( { alpha: 1 }, 2000, Phaser.Easing.Linear.None, true, 0);
         game.add.tween(back).to( { alpha: 1 }, 2000, Phaser.Easing.Linear.None, true, 0);
     },
 
