@@ -65,7 +65,6 @@ var AllEnemies;
 
 function CreateEnemy(type) {
     this.hits;
-    this.direction = Math.floor(Math.random() * 2) + 1;
     this.isAlive = false;
     switch (this.direction) {
         case FacingDirection.RIGHT:
@@ -79,24 +78,32 @@ function CreateEnemy(type) {
     switch (type) {
         case EnemyType.TYPE1:
             this.initHeight = spawnHeight;
+            this.direction = 1;
+            this.initPos = SpawnCoordinates.RIGHT;
             this.sprite = game.add.sprite(this.initPos, this.initHeight, 'caballero');
             this.sprite.anchor.x = 0.5;
             this.sprite.animations.add('walkRightCaballero');
             break;
         case EnemyType.TYPE2:
             this.initHeight = spawnHeight;
+            this.direction = 2;
+            this.initPos = SpawnCoordinates.LEFT;
             this.sprite = game.add.sprite(this.initPos, this.initHeight, 'mago');
             this.sprite.anchor.x = 0.5;
             this.sprite.animations.add('walkRightMago');
             break;
         case EnemyType.TYPE3:
             this.initHeight = spawnHeight - 30;
+            this.direction = 1;
+            this.initPos = SpawnCoordinates.RIGHT;
             this.sprite = game.add.sprite(this.initPos, this.initHeight, 'fuerte');
             this.sprite.anchor.x = 0.5;
             this.sprite.animations.add('walkRightFuerte');
             break;
         case EnemyType.TYPE4:
             this.initHeight = spawnHeight;
+            this.direction = 2;
+            this.initPos = SpawnCoordinates.LEFT;
             this.alreadyTP = false;
             this.sprite = game.add.sprite(this.initPos, this.initHeight, 'brujo');
             this.sprite.anchor.x = 0.5;
@@ -368,11 +375,11 @@ function moveEnemy() {
                 break;
             case 2:
                 xSpeed(1.2);
-                decSpawnTime(0.8);
+                decSpawnTime(0.9);
                 break;
             case 3:
                 xSpeed(1.3);
-                decSpawnTime(0.7);
+                decSpawnTime(0.9);
                 break;
         }
 
@@ -490,19 +497,10 @@ function resetEnemy(enemyIndex) {
     let type = Math.floor(enemyIndex / maxEnemies);
 
     AllEnemies[enemyIndex].isAlive = false;
-    AllEnemies[enemyIndex].direction = Math.floor(Math.random() * 2) + 1;
-    switch (AllEnemies[enemyIndex].direction) {
-        case FacingDirection.RIGHT:
-            AllEnemies[enemyIndex].initPos = SpawnCoordinates.RIGHT;
-            break;
-        case FacingDirection.LEFT:
-            AllEnemies[enemyIndex].initPos = SpawnCoordinates.LEFT;
-            break;
-    }
     AllEnemies[enemyIndex].sprite.body.velocity.x = 0;
     AllEnemies[enemyIndex].sprite.body.velocity.y = 0;
-    AllEnemies[enemyIndex].sprite.body.position.y = AllEnemies[enemyIndex].initHeight;
-    AllEnemies[enemyIndex].sprite.body.position.x = AllEnemies[enemyIndex].initPos;
+    AllEnemies[enemyIndex].sprite.position.y = AllEnemies[enemyIndex].initHeight;
+    AllEnemies[enemyIndex].sprite.position.x = AllEnemies[enemyIndex].initPos;
     AllEnemies[enemyIndex].hits = EnemyHits[type];
     AllEnemies[enemyIndex].sprite.animations.stop();
     if (type = 4) AllEnemies[enemyIndex].alreadyTP = false;
@@ -610,7 +608,7 @@ function giveScore(enemyPos) {
 }
 
 function enemyHittable(index) {
-    return (AllEnemies[index].isAlive && AllEnemies[index].sprite.body.position.x > 50 && AllEnemies[index].sprite.body.position.x < game.world.width - 50 && AllEnemies[index].hits >= 1);
+    return (AllEnemies[index].isAlive && AllEnemies[index].sprite.position.x > 50 && AllEnemies[index].sprite.position.x < game.world.width - 50 && AllEnemies[index].hits >= 1);
 }
 
 function executePowerUp() {
@@ -738,10 +736,12 @@ function resetVariables() {
 }
 
 function checkBuggedUnits() {
+    console.log("CHECKING UNITS");
     for (var i = 0; i < totalEnemyTypes * maxEnemies; i++) {
-        if (((AllEnemies[i].sprite.position.x < 0 && AllEnemies[i].sprite.position.x != SpawnCoordinates.RIGHT) || (AllEnemies[i].sprite.position.x > game.world.width && AllEnemies[i].sprite.position.x != SpawnCoordinates.LEFT)) && AllEnemies[i].sprite.body.velocity.x == 0) {
+        if (AllEnemies[i].sprite.position.x != AllEnemies[i].initPos && AllEnemies[i].sprite.body.velocity.x == 0 && AllEnemies[i].sprite.body.velocity.y == 0) {
+            if (AllEnemies[i].alreadyTP) continue;
+            console.log("Unit found at " + AllEnemies[i].sprite.position.x + ", has been moved to " + AllEnemies[i].initPos);
             resetEnemy(i);
-            console.log("Bugged unit found at " + AllEnemies[i].sprite.position.x + ", has been moved to " + AllEnemies[i].initPos);
         }
     }
 }
