@@ -67,7 +67,6 @@ function CreateEnemy(type) {
     this.hits;
     this.direction = Math.floor(Math.random() * 2) + 1;
     this.isAlive = false;
-    this.initAnchor = 0;
     switch (this.direction) {
         case FacingDirection.RIGHT:
             this.initPos = SpawnCoordinates.RIGHT;
@@ -81,23 +80,26 @@ function CreateEnemy(type) {
         case EnemyType.TYPE1:
             this.initHeight = spawnHeight;
             this.sprite = game.add.sprite(this.initPos, this.initHeight, 'caballero');
+            this.sprite.anchor.x = 0.5;
             this.sprite.animations.add('walkRightCaballero');
             break;
         case EnemyType.TYPE2:
             this.initHeight = spawnHeight;
             this.sprite = game.add.sprite(this.initPos, this.initHeight, 'mago');
+            this.sprite.anchor.x = 0.5;
             this.sprite.animations.add('walkRightMago');
             break;
         case EnemyType.TYPE3:
             this.initHeight = spawnHeight - 30;
             this.sprite = game.add.sprite(this.initPos, this.initHeight, 'fuerte');
-            this.initAnchor = 0.15;
+            this.sprite.anchor.x = 0.5;
             this.sprite.animations.add('walkRightFuerte');
             break;
         case EnemyType.TYPE4:
             this.initHeight = spawnHeight;
             this.alreadyTP = false;
             this.sprite = game.add.sprite(this.initPos, this.initHeight, 'brujo');
+            this.sprite.anchor.x = 0.5;
             this.sprite.animations.add('walkRightBrujo', [0, 1, 2, 3, 4, 5, 6, 7, 8]);
             this.sprite.animations.add('brujoTP', [18, 19, 20, 21, 22, 23, 24, 25, 26]).onComplete.add(function () {
                 this.sprite.position.x = game.world.centerX;
@@ -335,9 +337,7 @@ function moveEnemy() {
                             AllEnemies[index].sprite.animations.play(EnemyAnimations[type], EnemyFrameRate[type], true);
                             break;
                         case FacingDirection.LEFT:
-                            AllEnemies[index].sprite.anchor.setTo(0.5);
                             AllEnemies[index].sprite.scale.x = -1;
-                            AllEnemies[index].sprite.anchor.setTo(AllEnemies[index].initAnchor, 0);
                             AllEnemies[index].sprite.body.velocity.x = -EnemySpeed[type];
                             AllEnemies[index].sprite.animations.play(EnemyAnimations[type], EnemyFrameRate[type], true);
                             break;
@@ -353,9 +353,10 @@ function moveEnemy() {
             }
             if (created)
                 break;
-            if (i == maxEnemies - 1 && enemiesPerWave > 0) {
+            //Shouldn't be necesary
+            /*if (i == maxEnemies - 1 && enemiesPerWave > 0) {
                 checkBuggedUnits();
-            }
+            }*/
         }
     } else {
         timer.pause();
@@ -417,14 +418,14 @@ function punchCD() {
 function hitEnemy(enemyIndex) {
     if (enemyHittable(enemyIndex)) {
         AllEnemies[enemyIndex].hits--;
+        punchSound.play();
 
         if (AllEnemies[enemyIndex].hits == 0) {
-            punchSound.play();
             AllEnemies[enemyIndex].sprite.body.velocity.x = 0;
             AllEnemies[enemyIndex].sprite.body.velocity.y = 200;
 
             combo++;
-            giveScore(AllEnemies[enemyIndex].sprite.body.position.x);
+            giveScore(AllEnemies[enemyIndex].sprite.body.center.x);
 
             if (powerUpCharge < powerUpMax) {
                 powerUpCharge++;
@@ -436,7 +437,7 @@ function hitEnemy(enemyIndex) {
 function checkOverlapL() {
     for (var i = 0; i < totalEnemyTypes * maxEnemies; i++) {
         switch (true) {
-            case AllEnemies[i].sprite.body.position.x + 40 >= punchL.position.x - 65 && AllEnemies[i].sprite.body.position.x + 40 <= punchL.position.x + 65:
+            case AllEnemies[i].sprite.body.center.x >= punchL.position.x - 65 && AllEnemies[i].sprite.body.center.x <= punchL.position.x + 65:
                 hitEnemy(i);
                 break;
 
@@ -446,7 +447,7 @@ function checkOverlapL() {
 function checkOverlapR() {
     for (var i = 0; i < totalEnemyTypes * maxEnemies; i++) {
         switch (true) {
-            case AllEnemies[i].sprite.body.position.x + 40 >= punchR.position.x - 65 && AllEnemies[i].sprite.body.position.x + 40 <= punchR.position.x + 65:
+            case AllEnemies[i].sprite.body.center.x >= punchR.position.x - 65 && AllEnemies[i].sprite.body.center.x <= punchR.position.x + 65:
                 hitEnemy(i);
                 break;
 
@@ -457,8 +458,8 @@ function checkOverlapR() {
 function TeleportMages() {
     for (var i = maxEnemies * (totalEnemyTypes - 1); i < maxEnemies * totalEnemyTypes; i++) {
         switch (true) {
-            case (!AllEnemies[i].alreadyTP && AllEnemies[i].sprite.body.position.x >= punchL.position.x - 175 && AllEnemies[i].sprite.body.position.x <= punchL.position.x - 150) && AllEnemies[i].direction == FacingDirection.RIGHT:
-            case (!AllEnemies[i].alreadyTP && AllEnemies[i].sprite.body.position.x >= punchR.position.x + 125 && AllEnemies[i].sprite.body.position.x <= punchR.position.x + 150) && AllEnemies[i].direction == FacingDirection.LEFT:
+            case (!AllEnemies[i].alreadyTP && AllEnemies[i].sprite.body.center.x >= punchL.position.x - 175) && AllEnemies[i].direction == FacingDirection.RIGHT:
+            case (!AllEnemies[i].alreadyTP && AllEnemies[i].sprite.body.center.x <= punchR.position.x + 150) && AllEnemies[i].direction == FacingDirection.LEFT:
                 AllEnemies[i].alreadyTP = true;
                 AllEnemies[i].previousSpeed = AllEnemies[i].sprite.body.velocity.x;
                 AllEnemies[i].sprite.body.velocity.x = 0;
@@ -559,13 +560,13 @@ function backToOrigin() {
 }
 
 function checkEndgame() {
-    /*if (lifeL + lifeR <= 0) {
+    if (lifeL + lifeR <= 0) {
         scoreFinal = score;
         maxComboFinal = maxCombo;
         waveNumberFinal = waveNumber;
         game.camera.fade(0x000000, 500);
         game.camera.onFadeComplete.add(function () { track.stop(); game.state.start("endgameState"); }, this);
-    }*/
+    }
 }
 
 function decSpawnTime(decreaseInSpawn) {
@@ -587,14 +588,14 @@ function checkEnemiesAlive() {
 function giveScore(enemyPos) {
     let scoreShow;
 
-    if ((enemyPos > punchL.position.x - 55 && enemyPos < punchL.position.x - 15) || (enemyPos > punchR.position.x - 55 && enemyPos < punchR.position.x - 15)) {
+    if ((enemyPos > punchL.centerX - 20 && enemyPos < punchL.centerX + 20) || (enemyPos > punchR.centerX - 20 && enemyPos < punchR.centerX + 20)) {
         scoreToGive = 300 * combo;
 
-        scoreShow = game.add.image(enemyPos, 200, '+300');
+        scoreShow = game.add.image(enemyPos, game.world.centerY - 100, '+300');
     } else {
         scoreToGive = 100 * combo;
 
-        scoreShow = game.add.image(enemyPos, 200, '+100');
+        scoreShow = game.add.image(enemyPos, game.world.centerY - 100, '+100');
     }
 
     scoreShow.lifespan = 1500;
@@ -609,7 +610,7 @@ function giveScore(enemyPos) {
 }
 
 function enemyHittable(index) {
-    return (AllEnemies[index].isAlive && AllEnemies[index].sprite.body.position.x > 25 && AllEnemies[index].sprite.body.position.x < game.world.width - 75 && AllEnemies[index].hits >= 1);
+    return (AllEnemies[index].isAlive && AllEnemies[index].sprite.body.position.x > 50 && AllEnemies[index].sprite.body.position.x < game.world.width - 50 && AllEnemies[index].hits >= 1);
 }
 
 function executePowerUp() {
@@ -696,10 +697,16 @@ function pauseEvent() {
         if (lifeL > 0) {
             cursors.left.enabled = true;
             punchButtonL.inputEnabled = true;
+        } else {
+            cursors.left.enabled = false;
+            punchButtonL.inputEnabled = false;
         }
         if (lifeR > 0) {
             cursors.right.enabled = true;
             punchButtonR.inputEnabled = true;
+        } else {
+            cursors.right.enabled = false;
+            punchButtonR.inputEnabled = false;
         }
 
         menu.destroy();
@@ -732,7 +739,7 @@ function resetVariables() {
 
 function checkBuggedUnits() {
     for (var i = 0; i < totalEnemyTypes * maxEnemies; i++) {
-        if (((AllEnemies[i].sprite.position.x < 0 && AllEnemies[i].sprite.position.x != SpawnCoordinates.RIGHT) || (AllEnemies[i].sprite.position.x > game.world.width  && AllEnemies[i].sprite.position.x != SpawnCoordinates.LEFT)) && AllEnemies[i].sprite.body.velocity.x == 0) {
+        if (((AllEnemies[i].sprite.position.x < 0 && AllEnemies[i].sprite.position.x != SpawnCoordinates.RIGHT) || (AllEnemies[i].sprite.position.x > game.world.width && AllEnemies[i].sprite.position.x != SpawnCoordinates.LEFT)) && AllEnemies[i].sprite.body.velocity.x == 0) {
             resetEnemy(i);
             console.log("Bugged unit found at " + AllEnemies[i].sprite.position.x + ", has been moved to " + AllEnemies[i].initPos);
         }
