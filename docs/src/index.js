@@ -18,6 +18,7 @@ game.state.add('shopState', PunchemOut.shopState)
 game.state.add('levelState', PunchemOut.levelState)
 game.state.add('gameState', PunchemOut.gameState)
 game.state.add('creditsState', PunchemOut.creditsState)
+game.state.add('leaderboardState', PunchemOut.leaderboardState)
 
 game.state.start('bootState')
 
