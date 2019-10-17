@@ -33,36 +33,39 @@ PunchemOut.endgameState.prototype = {
         fondoMenu.alpha = 0;
 
         gameOver = this.add.sprite(game.world.centerX, game.world.height * 0.25, 'game_over');
-        gameOver.scale.setTo(game.world.height / 2000);
+        gameOver.scale.setTo(game.world.height / 1000);
         gameOver.anchor.setTo(0.5);
         gameOver.alpha = 0;
 
         waveText = this.add.text(game.world.centerX, game.world.height * 0.5, "Oleada: " + waveNumberFinal, styleSmall);
         waveText.anchor.setTo(0.5);
         waveText.alpha = 0;
+        waveText.fontSize = game.world.height * 0.03;
 
         scoreText = this.add.text(game.world.centerX, game.world.height * 0.55, "Puntuación: " + scoreFinal, styleSmall);
         scoreText.anchor.setTo(0.5);
         scoreText.alpha = 0;
+        scoreText.fontSize = game.world.height * 0.03;
 
         maxComboText = this.add.text(game.world.centerX, game.world.height * 0.6, "Combo máximo: " + maxComboFinal, styleSmall);
         maxComboText.anchor.setTo(0.5);
         maxComboText.alpha = 0;
+        maxComboText.fontSize = game.world.height * 0.03;
 
         if (topScore != 0) {
             CongratsText = this.add.text(game.world.centerX, game.world.height * 0.65, "Enhorabuena!! Has alcanzado el TOP " + topScore, styleSmall);
             CongratsText.anchor.setTo(0.5);
             CongratsText.alpha = 0;
+            CongratsText.fontSize = game.world.height * 0.03;
         }
 
-
         tryAgain = this.add.button(game.world.width * 0.87, game.world.height * 0.87, 'botones2', function () { game.state.start('gameState'); resetVariables(); }, this, 1, 0);
-        tryAgain.scale.setTo(0.2);
+        tryAgain.scale.setTo(0.7);
         tryAgain.anchor.setTo(1);
         tryAgain.alpha = 0;
 
         levelSelect = this.add.button(game.world.width * 0.13, game.world.height * 0.87, 'levelSelect', function () { game.state.start('levelState'); resetVariables(); }, this,  1, 0);
-        levelSelect.scale.setTo(0.3);
+        levelSelect.scale.setTo(0.7);
         levelSelect.anchor.setTo(0, 1);
         levelSelect.alpha = 0;
 

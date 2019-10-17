@@ -34,27 +34,26 @@ PunchemOut.menuState.prototype = {
         fondoMenu.width = game.world.width;
 
         logo = this.add.image(game.world.centerX, game.world.height * 0.2, 'logo_juego');
-        logo.scale.setTo(game.world.height / 1500);
+        logo.scale.setTo(game.world.height / 1000);
         logo.anchor.setTo(0.5);
 
         contacto = this.add.button(game.world.width * 0.13, game.world.height * 0.87, 'logo', function () { game.state.start('socialmediaState'); });
-        contacto.scale.setTo(0.07, 0.07);
+        contacto.scale.setTo(0.25);
         contacto.anchor.setTo(0, 1);
 
         settings = this.add.button(game.world.width * 0.87, game.world.height * 0.87, 'botones', function () { game.state.start('settingsState'); }, this, 13, 12);
-        settings.scale.setTo(0.2, 0.2);
         settings.anchor.setTo(0.7, 1);
 
         jugar = this.add.button(game.world.centerX, game.world.centerY, 'botones', function () { game.state.start('levelState'); }, this, 1, 0);
-        jugar.scale.setTo(0.2);
+        jugar.scale.setTo(game.world.height / 650);
         jugar.anchor.setTo(0.5);
 
         shop = this.add.button(game.world.centerX, game.world.height * 0.65, 'botones', function () { game.state.start('shopState'); }, this, 3, 2);
-        shop.scale.setTo(0.2);
+        shop.scale.setTo(game.world.height / 650);
         shop.anchor.setTo(0.5);
 
         creditos = this.add.button(game.world.centerX, game.world.height * 0.8, 'botones', function () { game.state.start('creditsState'); }, this, 5, 4);
-        creditos.scale.setTo(0.2);
+        creditos.scale.setTo(game.world.height / 650);
         creditos.anchor.setTo(0.5);
     },
 

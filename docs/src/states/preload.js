@@ -19,7 +19,7 @@ PunchemOut.preloadState.prototype = {
 
         logo = this.add.image(game.world.centerX, game.world.height * 0.4, 'logo');
         logo.anchor.setTo(0.5);
-        logo.scale.setTo(game.world.height / 3000);
+        logo.scale.setTo(game.world.height / 1000);
         
         //Carga de assets
 
@@ -43,23 +43,23 @@ PunchemOut.preloadState.prototype = {
         this.load.spritesheet('skeleton', 'assets/sprites/skeleton.png', 64, 64); //placeholders
         //this.load.spritesheet('link', 'assets/sprites/link.png', 96, 104); //placeholders
         //this.load.spritesheet('spritesheet', 'assets/sprites/spritesheet.png', 72, 128);
-        this.load.spritesheet('scoreText', 'assets/sprites/scoreText.png', 1437, 642);
-        this.load.spritesheet('pauseButton', 'assets/sprites/pauseButton.png', 244.5, 218);
-        this.load.spritesheet('levelSelect', 'assets/sprites/levelSelect.png', 752, 199.5);
+        this.load.spritesheet('scoreText', 'assets/sprites/scoreText.png', 287.5, 128);
+        this.load.spritesheet('pauseButton', 'assets/sprites/pauseButton.png', 61, 55);
+        this.load.spritesheet('levelSelect', 'assets/sprites/levelSelect.png', 225.5, 60);
         this.load.spritesheet('caballero', 'assets/sprites/caballero.png', 72, 128);
         this.load.spritesheet('mago', 'assets/sprites/mago.png', 72, 128);
         this.load.spritesheet('jineteMago', 'assets/sprites/jinete_mago.png', 108, 195.5);
         this.load.spritesheet('jineteCaballero', 'assets/sprites/jinete_caballero.png', 108, 195.5);
         this.load.spritesheet('fuerte', 'assets/sprites/fuerte.png', 108, 192);
         this.load.spritesheet('brujo', 'assets/sprites/hechicero.png', 72, 128);
-        this.load.spritesheet('vidas', 'assets/sprites/vidas.png', 945, 436);
-        this.load.spritesheet('botones', 'assets/sprites/botones.png', 862, 300);
-        this.load.spritesheet('punchL', 'assets/sprites/punchLAnimation.png', 491, 491);
-        this.load.spritesheet('punchR', 'assets/sprites/punchRAnimation.png', 491, 491);
-        this.load.spritesheet('punchIdle', 'assets/sprites/stillPunch.png', 635, 635);
+        this.load.spritesheet('vidas', 'assets/sprites/vidas.png', 236.5, 109.33);
+        this.load.spritesheet('botones', 'assets/sprites/botones.png', 215.5, 75);
+        this.load.spritesheet('punchL', 'assets/sprites/punchLAnimation.png', 245.5, 245.5);
+        this.load.spritesheet('punchR', 'assets/sprites/punchRAnimation.png', 245.5, 245.5);
+        //this.load.spritesheet('punchIdle', 'assets/sprites/stillPunch.png', 635, 635);
         this.load.spritesheet('powerUpEffect', 'assets/sprites/powerUpEffect.png', 400, 360);
-        this.load.spritesheet('botones2', 'assets/sprites/botones2.png', 916, 427);
-        this.load.spritesheet('menuPausa', 'assets/sprites/menuPausa.png', 2048, 2732);
+        this.load.spritesheet('botones2', 'assets/sprites/botones2.png', 231.5, 106.75);
+        this.load.spritesheet('menuPausa', 'assets/sprites/menuPausa.png', 491.5, 656);
 
         //audios
         this.load.audio('punch', 'assets/sounds/beat.mp3');
