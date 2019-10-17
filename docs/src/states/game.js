@@ -13,8 +13,10 @@ const FacingDirection = {
 const EnemyType = {
     TYPE1: 'Estandar',
     TYPE2: 'Caballero',
-    TYPE3: 'Giant',
-    TYPE4: 'Mage'
+    TYPE3: 'KnightRider',
+    TYPE4: 'MageRider',
+    TYPE5: 'Mage',
+    TYPE6: 'Giant'
 }
 
 const SpawnCoordinates = {
@@ -57,9 +59,9 @@ var spawnHeight = undefined;
 var track;
 
 var EnemySpeed;
-const EnemyHits = [1, 1, 2, 1];
-const EnemyAnimations = ['walkRightCaballero', 'walkRightMago', 'walkRightFuerte', 'walkRightBrujo'];
-const EnemyFrameRate = [24, 24, 12, 24];
+const EnemyHits = [1, 1, 1, 1, 1, 2];
+const EnemyAnimations = ['walkRightCaballero', 'walkRightMago', 'walkRightKnightRider', 'walkRightMageRider', 'walkRightBrujo', 'walkRightFuerte'];
+const EnemyFrameRate = [18, 18, 18, 18, 18, 12];
 
 var AllEnemies;
 
@@ -82,38 +84,68 @@ function CreateEnemy(type) {
             this.initPos = SpawnCoordinates.RIGHT;
             this.sprite = game.add.sprite(this.initPos, this.initHeight, 'caballero');
             this.sprite.anchor.x = 0.5;
-            this.sprite.animations.add('walkRightCaballero');
+            this.sprite.animations.add('walkRightCaballero', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
+            this.framefinal = 12;
             break;
+
         case EnemyType.TYPE2:
             this.initHeight = spawnHeight;
             this.direction = 2;
             this.initPos = SpawnCoordinates.LEFT;
             this.sprite = game.add.sprite(this.initPos, this.initHeight, 'mago');
             this.sprite.anchor.x = 0.5;
-            this.sprite.animations.add('walkRightMago');
+            this.sprite.animations.add('walkRightMago', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
+            this.framefinal = 12;
             break;
+
         case EnemyType.TYPE3:
             this.initHeight = spawnHeight - 30;
             this.direction = 1;
             this.initPos = SpawnCoordinates.RIGHT;
-            this.sprite = game.add.sprite(this.initPos, this.initHeight, 'fuerte');
+            this.sprite = game.add.sprite(this.initPos, this.initHeight, 'jineteCaballero');
             this.sprite.anchor.x = 0.5;
-            this.sprite.animations.add('walkRightFuerte');
+            this.sprite.animations.add('walkRightKnightRider', [0, 1, 2, 3, 4, 5, 6, 7, 8]);
+            this.framefinal = 9;
             break;
+
         case EnemyType.TYPE4:
+            this.initHeight = spawnHeight - 30;
+            this.direction = 2;
+            this.initPos = SpawnCoordinates.LEFT;
+            this.sprite = game.add.sprite(this.initPos, this.initHeight, 'jineteMago');
+            this.sprite.anchor.x = 0.5;
+            this.sprite.animations.add('walkRightMageRider', [0, 1, 2, 3, 4, 5, 6, 7, 8]);
+            this.framefinal = 9;
+            break;
+
+        case EnemyType.TYPE5:
             this.initHeight = spawnHeight;
             this.direction = 2;
             this.initPos = SpawnCoordinates.LEFT;
             this.alreadyTP = false;
             this.sprite = game.add.sprite(this.initPos, this.initHeight, 'brujo');
             this.sprite.anchor.x = 0.5;
-            this.sprite.animations.add('walkRightBrujo', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]);
-            this.sprite.animations.add('brujoTP', [18, 19, 20, 21, 22, 23, 24, 25, 26]).onComplete.add(function () {
+            this.sprite.animations.add('walkRightBrujo', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
+            this.framefinal = 23;
+            this.sprite.animations.add('brujoTP', [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22]).onComplete.add(function () {
                 this.sprite.position.x = game.world.centerX;
                 this.sprite.animations.play('walkRightBrujo', EnemyFrameRate[type]);
                 this.sprite.body.velocity.x = this.previousSpeed;
             }, this);
             break;
+
+        case EnemyType.TYPE6:
+            this.initHeight = spawnHeight - 30;
+            this.direction = 1;
+            this.initPos = SpawnCoordinates.RIGHT;
+            this.sprite = game.add.sprite(this.initPos, this.initHeight, 'fuerte');
+            this.sprite.anchor.x = 0.5;
+            this.sprite.animations.add('walkRightFuerte', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]);
+            this.framefinal = 18;
+            break;
+
+
+
         default:
             console.log("Error");
             break;
@@ -152,13 +184,13 @@ PunchemOut.gameState.prototype = {
             case 2:
                 MaxSpawnTime = 1400;
                 BaseSpawnTime = 900;
-                totalEnemyTypes = 3;
+                totalEnemyTypes = 4;
                 track = game.add.audio('track2');
                 break;
             case 3:
                 MaxSpawnTime = 1300;
                 BaseSpawnTime = 800;
-                totalEnemyTypes = 4;
+                totalEnemyTypes = 6;
                 track = game.add.audio('track3');
                 break;
         }
@@ -264,7 +296,7 @@ PunchemOut.gameState.prototype = {
         game.time.events.add(2000, function () { track.play() }, this);
 
         //Create the array of enemies
-        let TypeArray = [EnemyType.TYPE1, EnemyType.TYPE2, EnemyType.TYPE3, EnemyType.TYPE4, EnemyType.TYPE5];
+        let TypeArray = [EnemyType.TYPE1, EnemyType.TYPE2, EnemyType.TYPE3, EnemyType.TYPE4, EnemyType.TYPE5, EnemyType.TYPE6];
 
         let index;
         let enemy;
@@ -277,13 +309,13 @@ PunchemOut.gameState.prototype = {
                 AllEnemies.push(enemy);
             }
         }
-
-        if (totalEnemyTypes == 4) {
-            for (var i = maxEnemies * (totalEnemyTypes - 2); i < maxEnemies * (totalEnemyTypes - 1); i++) {
+        /*
+        if (totalEnemyTypes == 6) {
+            for (var i = maxEnemies * (totalEnemyTypes - 1); i < maxEnemies * totalEnemyTypes; i++) {
                 AllEnemies[i].sprite.bringToTop();
             }
         }
-
+        */
         punchSound = game.add.audio('punch');
 
         //Timer to spawn enemies
@@ -302,7 +334,7 @@ PunchemOut.gameState.prototype = {
 
         punchCD();
         checkPowerUpUsable();
-        if (AllEnemies.length / maxEnemies >= 4) {
+        if (totalEnemyTypes == 6) {
             TeleportMages();
         }
         backToOrigin();
@@ -370,15 +402,15 @@ function moveEnemy() {
 
         switch (level) {
             case 1:
-                xSpeed(1.1);
+                xSpeed(10);
                 decSpawnTime(0.9);
                 break;
             case 2:
-                xSpeed(1.2);
+                xSpeed(12);
                 decSpawnTime(0.9);
                 break;
             case 3:
-                xSpeed(1.3);
+                xSpeed(15);
                 decSpawnTime(0.9);
                 break;
         }
@@ -433,6 +465,8 @@ function hitEnemy(enemyIndex) {
 
             combo++;
             giveScore(AllEnemies[enemyIndex].sprite.body.center.x);
+            AllEnemies[enemyIndex].sprite.animations.stop();
+            AllEnemies[enemyIndex].sprite.frame = AllEnemies[enemyIndex].framefinal;
 
             if (powerUpCharge < powerUpMax) {
                 powerUpCharge++;
@@ -463,7 +497,7 @@ function checkOverlapR() {
 }
 //Revisar después
 function TeleportMages() {
-    for (var i = maxEnemies * (totalEnemyTypes - 1); i < maxEnemies * totalEnemyTypes; i++) {
+    for (var i = maxEnemies * (totalEnemyTypes - 2); i < maxEnemies * (totalEnemyTypes - 1); i++) {
         switch (true) {
             case (!AllEnemies[i].alreadyTP && AllEnemies[i].sprite.body.center.x >= punchL.position.x - 175) && AllEnemies[i].direction == FacingDirection.RIGHT:
             case (!AllEnemies[i].alreadyTP && AllEnemies[i].sprite.body.center.x <= punchR.position.x + 150) && AllEnemies[i].direction == FacingDirection.LEFT:
@@ -490,7 +524,7 @@ function stopAnimR() {
 
 function xSpeed(SpeedIncrement) {
     for (var i = 0; i < totalEnemyTypes; i++)
-        EnemySpeed[i] *= SpeedIncrement;
+        EnemySpeed[i] += SpeedIncrement;
 }
 
 function resetEnemy(enemyIndex) {
@@ -503,7 +537,7 @@ function resetEnemy(enemyIndex) {
     AllEnemies[enemyIndex].sprite.position.x = AllEnemies[enemyIndex].initPos;
     AllEnemies[enemyIndex].hits = EnemyHits[type];
     AllEnemies[enemyIndex].sprite.animations.stop();
-    if (type = 4) AllEnemies[enemyIndex].alreadyTP = false;
+    if (type = 5) AllEnemies[enemyIndex].alreadyTP = false;
 }
 
 function backToOrigin() {
@@ -727,7 +761,7 @@ function resetVariables() {
     combo = 0;
     maxCombo = 0;
 
-    EnemySpeed = [80, 100, 70, 80];
+    EnemySpeed = [80, 100, 150, 150, 80, 70];
 
     AllEnemies = [];
 
