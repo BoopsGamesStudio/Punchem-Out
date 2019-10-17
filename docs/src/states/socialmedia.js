@@ -32,7 +32,7 @@ PunchemOut.socialmediaState.prototype = {
         youtube.anchor.setTo(0.5);
         youtube.scale.setTo(0.2);
 
-        back = this.add.button(game.world.width * 0.13, game.world.height * 0.87, 'botones', function () { game.state.start('menuState'); }, this, 9, 8);
+        back = this.add.button(game.world.width * 0.13, game.world.height * 0.87, 'botones', function () { game.state.start('menuState'); }, this, 15, 14);
         back.scale.setTo(0.2);
         back.anchor.setTo(0.3, 1);
     },

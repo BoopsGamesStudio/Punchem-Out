@@ -2,7 +2,7 @@ PunchemOut.menuState = function () {
 
 }
 
-var styleSmall = { font: "15px Arial", fill: "#ffffff", align: "center" };
+var styleSmall = { font: "20px Arial", fill: "#ffffff", align: "center" };
 var styleMedium = { font: "20px Arial", fill: "#000000", align: "center" };
 var styleBig = { font: "80px Arial Black", fill: "#000000", align: "center" };
 var styleAux = { font: "30px Arial", fill: "#ffffff", align: "center" };
@@ -41,7 +41,7 @@ PunchemOut.menuState.prototype = {
         contacto.scale.setTo(0.07, 0.07);
         contacto.anchor.setTo(0, 1);
 
-        settings = this.add.button(game.world.width * 0.87, game.world.height * 0.87, 'botones', function () { game.state.start('settingsState'); }, this, 7, 6);
+        settings = this.add.button(game.world.width * 0.87, game.world.height * 0.87, 'botones', function () { game.state.start('settingsState'); }, this, 13, 12);
         settings.scale.setTo(0.2, 0.2);
         settings.anchor.setTo(0.7, 1);
 

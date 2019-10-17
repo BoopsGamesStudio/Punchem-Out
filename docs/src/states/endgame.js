@@ -33,23 +33,24 @@ PunchemOut.endgameState.prototype = {
         fondoMenu.alpha = 0;
 
         gameOver = this.add.sprite(game.world.centerX, game.world.height * 0.25, 'game_over');
+        gameOver.scale.setTo(game.world.height / 2000);
         gameOver.anchor.setTo(0.5);
         gameOver.alpha = 0;
 
-        waveText = this.add.text(game.world.centerX, game.world.height * 0.6, "Wave: " + waveNumberFinal, styleSmall);
+        waveText = this.add.text(game.world.centerX, game.world.height * 0.5, "Oleada: " + waveNumberFinal, styleSmall);
         waveText.anchor.setTo(0.5);
         waveText.alpha = 0;
 
-        scoreText = this.add.text(game.world.centerX, game.world.height * 0.65, "Score: " + scoreFinal, styleSmall);
+        scoreText = this.add.text(game.world.centerX, game.world.height * 0.55, "Puntuación: " + scoreFinal, styleSmall);
         scoreText.anchor.setTo(0.5);
         scoreText.alpha = 0;
 
-        maxComboText = this.add.text(game.world.centerX, game.world.height * 0.7, "MaxCombo: " + maxComboFinal, styleSmall);
+        maxComboText = this.add.text(game.world.centerX, game.world.height * 0.6, "Combo máximo: " + maxComboFinal, styleSmall);
         maxComboText.anchor.setTo(0.5);
         maxComboText.alpha = 0;
 
         if (topScore != 0) {
-            CongratsText = this.add.text(game.world.centerX, game.world.height * 0.75, "Congratulations !! You've reached TOP " + topScore, styleSmall);
+            CongratsText = this.add.text(game.world.centerX, game.world.height * 0.65, "Enhorabuena!! Has alcanzado el TOP " + topScore, styleSmall);
             CongratsText.anchor.setTo(0.5);
             CongratsText.alpha = 0;
         }
@@ -60,10 +61,10 @@ PunchemOut.endgameState.prototype = {
         tryAgain.anchor.setTo(1);
         tryAgain.alpha = 0;
 
-        back = this.add.button(game.world.width * 0.13, game.world.height * 0.87, 'botones', function () { game.state.start('levelState'); resetVariables(); }, this, 9, 8);
-        back.scale.setTo(0.2);
-        back.anchor.setTo(0.3, 1);
-        back.alpha = 0;
+        levelSelect = this.add.button(game.world.width * 0.13, game.world.height * 0.87, 'levelSelect', function () { game.state.start('levelState'); resetVariables(); }, this,  1, 0);
+        levelSelect.scale.setTo(0.3);
+        levelSelect.anchor.setTo(0, 1);
+        levelSelect.alpha = 0;
 
         game.add.tween(fondoMenu).to({ alpha: 1 }, 2000, Phaser.Easing.Linear.None, true, 0);
         game.add.tween(gameOver).to({ alpha: 1 }, 2000, Phaser.Easing.Linear.None, true, 0);
@@ -72,7 +73,7 @@ PunchemOut.endgameState.prototype = {
         game.add.tween(maxComboText).to({ alpha: 1 }, 2000, Phaser.Easing.Linear.None, true, 0);
         if (topScore != 0) game.add.tween(CongratsText).to({ alpha: 1 }, 2000, Phaser.Easing.Linear.None, true, 0);
         game.add.tween(tryAgain).to({ alpha: 1 }, 2000, Phaser.Easing.Linear.None, true, 0);
-        game.add.tween(back).to({ alpha: 1 }, 2000, Phaser.Easing.Linear.None, true, 0);
+        game.add.tween(levelSelect).to({ alpha: 1 }, 2000, Phaser.Easing.Linear.None, true, 0);
 
 
     },
