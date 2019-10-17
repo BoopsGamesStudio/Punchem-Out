@@ -47,6 +47,8 @@ PunchemOut.preloadState.prototype = {
         //this.load.spritesheet('spritesheet', 'assets/sprites/spritesheet.png', 72, 128);
         this.load.spritesheet('caballero', 'assets/sprites/caballero.png', 72, 128);
         this.load.spritesheet('mago', 'assets/sprites/mago.png', 72, 128);
+        this.load.spritesheet('jineteMago', 'assets/sprites/jinete_mago.png', 108, 195.5);
+        this.load.spritesheet('jineteCaballero', 'assets/sprites/jinete_caballero.png', 108, 195.5);
         this.load.spritesheet('fuerte', 'assets/sprites/fuerte.png', 108, 192);
         this.load.spritesheet('brujo', 'assets/sprites/hechicero.png', 72, 128);
         this.load.spritesheet('vidas', 'assets/sprites/vidas.png', 945, 436);

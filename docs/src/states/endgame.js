@@ -2,6 +2,7 @@ const scoreLength = 10;
 var scoreLvl1 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 var scoreLvl2 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 var scoreLvl3 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+var topScore;
 
 PunchemOut.endgameState = function () {
 
@@ -21,7 +22,10 @@ PunchemOut.endgameState.prototype = {
     },
 
     create: function () {
-        //scoreLvl3 = [0,0,0];
+
+        Score = 0;
+
+        checkScore();
 
         fondoMenu = this.add.image(0, 0, 'menuFondo');
         fondoMenu.height = game.world.height;
@@ -44,6 +48,13 @@ PunchemOut.endgameState.prototype = {
         maxComboText.anchor.setTo(0.5);
         maxComboText.alpha = 0;
 
+        if (topScore != 0) {
+            CongratsText = this.add.text(game.world.centerX, game.world.height * 0.75, "Congratulations !! You've reached TOP " + topScore, styleSmall);
+            CongratsText.anchor.setTo(0.5);
+            CongratsText.alpha = 0;
+        }
+
+
         tryAgain = this.add.button(game.world.width * 0.87, game.world.height * 0.87, 'botones2', function () { game.state.start('gameState'); resetVariables(); }, this, 1, 0);
         tryAgain.scale.setTo(0.2);
         tryAgain.anchor.setTo(1);
@@ -59,11 +70,11 @@ PunchemOut.endgameState.prototype = {
         game.add.tween(waveText).to({ alpha: 1 }, 2000, Phaser.Easing.Linear.None, true, 0);
         game.add.tween(scoreText).to({ alpha: 1 }, 2000, Phaser.Easing.Linear.None, true, 0);
         game.add.tween(maxComboText).to({ alpha: 1 }, 2000, Phaser.Easing.Linear.None, true, 0);
+        if (topScore != 0) game.add.tween(CongratsText).to({ alpha: 1 }, 2000, Phaser.Easing.Linear.None, true, 0);
         game.add.tween(tryAgain).to({ alpha: 1 }, 2000, Phaser.Easing.Linear.None, true, 0);
         game.add.tween(back).to({ alpha: 1 }, 2000, Phaser.Easing.Linear.None, true, 0);
 
-        checkScore();
-        console.log(scoreLvl3);
+
     },
 
     update: function () {
@@ -77,6 +88,11 @@ function checkScore() {
             if (scoreFinal > scoreLvl1[0]) {
                 scoreLvl1[0] = scoreFinal;
                 scoreLvl1.sort(function (a, b) { return a - b });
+                for (var i = 0; i < scoreLength; i++) {
+                    if (scoreFinal == scoreLvl1[i]) {
+                        topScore = scoreLength % i;
+                    }
+                }
             }
             break;
 
@@ -84,6 +100,11 @@ function checkScore() {
             if (scoreFinal > scoreLvl2[0]) {
                 scoreLvl2[0] = scoreFinal;
                 scoreLvl2.sort(function (a, b) { return a - b });
+                for (var i = 0; i < scoreLength; i++) {
+                    if (scoreFinal == scoreLvl2[i]) {
+                        topScore = scoreLength % i;
+                    }
+                }
             }
             break;
 
@@ -91,6 +112,11 @@ function checkScore() {
             if (scoreFinal > scoreLvl3[0]) {
                 scoreLvl3[0] = scoreFinal;
                 scoreLvl3.sort(function (a, b) { return a - b });
+                for (var i = 0; i < scoreLength; i++) {
+                    if (scoreFinal == scoreLvl3[i]) {
+                        topScore = scoreLength % i;
+                    }
+                }
             }
             break;
     }
