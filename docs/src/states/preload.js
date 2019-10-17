@@ -38,6 +38,8 @@ PunchemOut.preloadState.prototype = {
         this.load.image('puente', 'assets/backgrounds/puente.png');
         this.load.image('madera', 'assets/backgrounds/madera.png');
         this.load.image('powerUpLogo', 'assets/sprites/powerUpLogo.png');
+        this.load.image('scoreFrame', 'assets/sprites/scoreFrame.png');
+        this.load.image('scoreButton', 'assets/sprites/scoreButton.png');
 
         //spritesheets
         this.load.spritesheet('skeleton', 'assets/sprites/skeleton.png', 64, 64); //placeholders
@@ -45,7 +47,7 @@ PunchemOut.preloadState.prototype = {
         //this.load.spritesheet('spritesheet', 'assets/sprites/spritesheet.png', 72, 128);
         this.load.spritesheet('scoreText', 'assets/sprites/scoreText.png', 287.5, 128);
         this.load.spritesheet('pauseButton', 'assets/sprites/pauseButton.png', 61, 55);
-        this.load.spritesheet('levelSelect', 'assets/sprites/levelSelect.png', 225.5, 60);
+        this.load.spritesheet('levelSelect', 'assets/sprites/levelSelect.png', 231.5, 94.5);
         this.load.spritesheet('caballero', 'assets/sprites/caballero.png', 72, 128);
         this.load.spritesheet('mago', 'assets/sprites/mago.png', 72, 128);
         this.load.spritesheet('jineteMago', 'assets/sprites/jinete_mago.png', 108, 195.5);

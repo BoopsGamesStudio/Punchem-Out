@@ -38,15 +38,15 @@ PunchemOut.levelState.prototype = {
         lvl3.scale.setTo(game.world.height / 800);
         lvl3.anchor.setTo(0.5);
 
-        lvl1Score = game.add.button(lvl1.position.x, lvl1.position.y + game.world.height * 0.1, 'botones2', function () { startState(1, 'leaderboardState'); }, this, 1, 0);
+        lvl1Score = game.add.button(lvl1.position.x, lvl1.position.y + game.world.height * 0.1, 'scoreButton', function () { startState(1, 'leaderboardState'); }, this);
         lvl1Score.scale.setTo(game.world.height / 1000);
         lvl1Score.anchor.setTo(0.5);
 
-        lvl2Score = game.add.button(lvl2.position.x, lvl1.position.y + game.world.height * 0.1, 'botones2', function () { startState(2, 'leaderboardState'); }, this, 1, 0);
+        lvl2Score = game.add.button(lvl2.position.x, lvl1.position.y + game.world.height * 0.1, 'scoreButton', function () { startState(2, 'leaderboardState'); }, this);
         lvl2Score.scale.setTo(game.world.height / 1000);
         lvl2Score.anchor.setTo(0.5);
 
-        lvl3Score = game.add.button(lvl3.position.x, lvl1.position.y + game.world.height * 0.1, 'botones2', function () { startState(3, 'leaderboardState'); }, this, 1, 0);
+        lvl3Score = game.add.button(lvl3.position.x, lvl1.position.y + game.world.height * 0.1, 'scoreButton', function () { startState(3, 'leaderboardState'); }, this);
         lvl3Score.scale.setTo(game.world.height / 1000);
         lvl3Score.anchor.setTo(0.5);
 
