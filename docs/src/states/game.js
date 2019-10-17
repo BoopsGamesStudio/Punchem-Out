@@ -144,8 +144,6 @@ function CreateEnemy(type) {
             this.framefinal = 18;
             break;
 
-
-
         default:
             console.log("Error");
             break;
@@ -206,12 +204,12 @@ PunchemOut.gameState.prototype = {
 
         maderaL = this.add.image(game.world.centerX - 175, 0, 'madera');
         maderaL.anchor.setTo(0.5, 0);
-        maderaL.scale.setTo(0.2);
+        maderaL.scale.setTo(0.4);
         maderaL.height = game.world.height;
 
         maderaR = this.add.image(game.world.centerX + 175, 0, 'madera');
         maderaR.anchor.setTo(0.5, 0);
-        maderaR.scale.setTo(0.2);
+        maderaR.scale.setTo(0.4);
         maderaR.height = game.world.height;
 
         puente = this.add.image(0, game.world.centerY + 30, 'puente');
@@ -220,29 +218,27 @@ PunchemOut.gameState.prototype = {
 
         switch (level) {
             case 1:
-                game.add.sprite(20, 20, 'botones2', 2).scale.setTo(0.2);
+                game.add.sprite(20, 20, 'botones2', 2).scale.setTo(game.world.height / 1000);
                 break;
             case 2:
-                game.add.sprite(20, 20, 'botones2', 4).scale.setTo(0.2);
+                game.add.sprite(20, 20, 'botones2', 4).scale.setTo(game.world.height / 1000);
                 break;
             case 3:
-                game.add.sprite(20, 20, 'botones2', 6).scale.setTo(0.2);
+                game.add.sprite(20, 20, 'botones2', 6).scale.setTo(game.world.height / 1000);
                 break;
         }
 
         livesLeftL = game.add.sprite(50, game.world.height * 0.2, 'vidas');
         livesLeftL.anchor.setTo(0, 0.5);
-        livesLeftL.scale.setTo(0.2);
 
         livesLeftR = game.add.sprite(game.world.width - 50, game.world.height * 0.2, 'vidas', 1);
         livesLeftR.anchor.setTo(1, 0.5);
-        livesLeftR.scale.setTo(0.2);
 
         scoreText = game.add.sprite(game.world.centerX, 90, 'scoreText', 0);
-        scoreText.scale.setTo(0.15);
+        scoreText.scale.setTo(0.8);
         scoreText.anchor.setTo(0.5);
 
-        currentScore = game.add.text(game.world.centerX, scoreText.y, score, styleMedium);
+        currentScore = game.add.text(scoreText.x, scoreText.y, score, styleMedium);
         currentScore.anchor.setTo(0, 0.5);
 
         currentcombo = game.add.text(game.world.width * 0.15, game.world.height * 0.85, 'x' + combo);
@@ -266,26 +262,19 @@ PunchemOut.gameState.prototype = {
         powerUpSpace.onDown.add(executePowerUp);
         powerUpSpace.enabled = false;
 
-        powerUp = game.add.button(game.world.centerX, game.world.height - 100, 'powerUpLogo', function () { executePowerUp(); });
-        powerUp.anchor.setTo(0.5);
-        powerUp.scale.setTo(0.05);
-        powerUp.inputEnabled = false;
-
-        powerUpBar = game.add.image(game.world.centerX, game.world.height - 40, 'powerUpCharge');
-        powerUpBar.scale.setTo(0.4, 0.5);
-        powerUpBar.anchor.setTo(0.5);
+        escapeKey = game.input.keyboard.addKey(Phaser.Keyboard.ESC);
+        escapeKey.onDown.add(pauseEvent);
 
         pauseButton = game.add.button(game.world.width - 10, 10, 'pauseButton', function () { pauseEvent(); }, this, 1, 0);
-        pauseButton.scale.setTo(0.3);
         pauseButton.anchor.setTo(1, 0);
 
         //Create punches and their animations
         punchL = game.add.sprite(game.world.centerX - 175, game.world.centerY, 'punchL');
-        punchL.scale.setTo(0.3);
+        punchL.scale.setTo(0.6);
         punchL.anchor.setTo(0.5);
 
         punchR = game.add.sprite(game.world.centerX + 175, game.world.centerY, 'punchR');
-        punchR.scale.setTo(0.3);
+        punchR.scale.setTo(0.6);
         punchR.anchor.setTo(0.5);
 
         animL = punchL.animations.add('punching', [0, 1, 2, 3, 4, 5, 6, 7, 8]);
@@ -298,9 +287,10 @@ PunchemOut.gameState.prototype = {
         animR.onStart.add(checkOverlapR, this);
 
         //Create text for first wave
-        newWaveText = game.add.text(game.world.centerX, game.world.centerY - 100, "OLEADA " + waveNumber, styleBig);
+        newWaveText = game.add.text(game.world.centerX, game.world.height * 0.3, "OLEADA " + waveNumber, styleBig);
         newWaveText.anchor.setTo(0.5);
         newWaveText.lifespan = 2000;
+        newWaveText.fontSize = game.world.height * 0.1;
         game.time.events.add(0, function () { game.add.tween(newWaveText).to({ alpha: 0 }, 2000, Phaser.Easing.Linear.None, true); }, this);
         console.log("OLEADA " + waveNumber);
 
@@ -327,6 +317,16 @@ PunchemOut.gameState.prototype = {
             }
         }
         */
+
+        powerUp = game.add.button(game.world.centerX, game.world.height - 100, 'powerUpLogo', function () { executePowerUp(); });
+        powerUp.anchor.setTo(0.5);
+        powerUp.scale.setTo(0.05);
+        powerUp.inputEnabled = false;
+
+        powerUpBar = game.add.image(game.world.centerX, game.world.height - 40, 'powerUpCharge');
+        powerUpBar.scale.setTo(0.4, 0.5);
+        powerUpBar.anchor.setTo(0.5);
+
         punchSound = game.add.audio('punch');
 
         //Timer to spawn enemies
@@ -710,7 +710,7 @@ function pauseEvent() {
         punchButtonR.inputEnabled = false;
 
         menu = game.add.sprite(game.world.centerX, game.world.centerY, 'menuPausa', 0);
-        menu.scale.setTo(game.world.height / 3000);
+        menu.scale.setTo(game.world.height / 700);
         menu.anchor.setTo(0.5);
 
         tryAgain = game.add.button(game.world.centerX, menu.top + menu.height * 0.45, 'botones2', function () {
@@ -718,16 +718,16 @@ function pauseEvent() {
             game.paused = false;
             game.state.start('gameState');
         }, this, 1, 0);
-        tryAgain.scale.setTo(0.3);
+        tryAgain.scale.setTo(game.world.height / 700);
         tryAgain.anchor.setTo(0.5);
 
-        back = game.add.button(game.world.centerX, menu.top + menu.height * 0.7, 'levelSelect', function () {
+        levelSelect = game.add.button(game.world.centerX, menu.top + menu.height * 0.7, 'levelSelect', function () {
             track.stop();
             game.paused = false;
             game.state.start('levelState');
         }, this, 1, 0);
-        back.scale.setTo(0.5);
-        back.anchor.setTo(0.5);
+        levelSelect.scale.setTo(game.world.height / 700);
+        levelSelect.anchor.setTo(0.5);
     } else {
         game.paused = false;
 
@@ -750,7 +750,7 @@ function pauseEvent() {
 
         menu.destroy();
         tryAgain.destroy();
-        back.destroy();
+        levelSelect.destroy();
     }
 }
 
