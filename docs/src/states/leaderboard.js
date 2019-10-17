@@ -20,7 +20,7 @@ PunchemOut.leaderboardState.prototype = {
         fondoMenu.height = game.world.height;
         fondoMenu.width = game.world.width;
 
-        leaderBoard = game.add.text(game.world.centerX, game.world.height * 0.1, "Top Scores:\n");
+        leaderBoard = game.add.text(game.world.centerX, game.world.height * 0.1, "Top Puntuaciones [NIVEL " + level + "]:\n");
         switch (level) {
             case 1:
                 for (var i = scoreLength - 1; i >= 0; i--) {
@@ -44,7 +44,7 @@ PunchemOut.leaderboardState.prototype = {
         leaderBoard.anchor.setTo(0.5, 0);
         leaderBoard.align = 'center';
 
-        back = this.add.button(game.world.width * 0.13, game.world.height * 0.87, 'botones', function () { game.state.start('levelState'); }, this, 9, 8);
+        back = this.add.button(game.world.width * 0.13, game.world.height * 0.87, 'botones', function () { game.state.start('levelState'); }, this, 15, 14);
         back.scale.setTo(0.2);
         back.anchor.setTo(0.3, 1);
     },

@@ -218,7 +218,17 @@ PunchemOut.gameState.prototype = {
         puente.width = game.world.width;
         puente.height = 300;
 
-        game.add.text(20, 20, "LEVEL " + level);
+        switch (level) {
+            case 1:
+                game.add.sprite(20, 20, 'botones2', 2).scale.setTo(0.2);
+                break;
+            case 2:
+                game.add.sprite(20, 20, 'botones2', 4).scale.setTo(0.2);
+                break;
+            case 3:
+                game.add.sprite(20, 20, 'botones2', 6).scale.setTo(0.2);
+                break;
+        }
 
         livesLeftL = game.add.sprite(50, game.world.height * 0.2, 'vidas');
         livesLeftL.anchor.setTo(0, 0.5);
@@ -228,7 +238,7 @@ PunchemOut.gameState.prototype = {
         livesLeftR.anchor.setTo(1, 0.5);
         livesLeftR.scale.setTo(0.2);
 
-        scoreText = game.add.sprite(game.world.centerX, 90, 'scoreText');
+        scoreText = game.add.sprite(game.world.centerX, 90, 'scoreText', 0);
         scoreText.scale.setTo(0.15);
         scoreText.anchor.setTo(0.5);
 
@@ -265,7 +275,8 @@ PunchemOut.gameState.prototype = {
         powerUpBar.scale.setTo(0.4, 0.5);
         powerUpBar.anchor.setTo(0.5);
 
-        pauseButton = game.add.button(game.world.width - 10, 10, 'skeleton', function () { pauseEvent(); }, this, 2, 1, 0);
+        pauseButton = game.add.button(game.world.width - 10, 10, 'pauseButton', function () { pauseEvent(); }, this, 1, 0);
+        pauseButton.scale.setTo(0.3);
         pauseButton.anchor.setTo(1, 0);
 
         //Create punches and their animations
@@ -287,7 +298,7 @@ PunchemOut.gameState.prototype = {
         animR.onStart.add(checkOverlapR, this);
 
         //Create text for first wave
-        newWaveText = game.add.text(game.world.centerX, game.world.centerY - 100, "WAVE " + waveNumber, styleBig);
+        newWaveText = game.add.text(game.world.centerX, game.world.centerY - 100, "OLEADA " + waveNumber, styleBig);
         newWaveText.anchor.setTo(0.5);
         newWaveText.lifespan = 2000;
         game.time.events.add(0, function () { game.add.tween(newWaveText).to({ alpha: 0 }, 2000, Phaser.Easing.Linear.None, true); }, this);
@@ -344,7 +355,7 @@ PunchemOut.gameState.prototype = {
             console.log("..." + checkEnemiesAlive());
             if (waveTimer.ms >= 2000) {
                 checkBuggedUnits();
-                newWaveText = game.add.text(game.world.centerX, game.world.centerY - 100, "WAVE " + waveNumber, styleBig);
+                newWaveText = game.add.text(game.world.centerX, game.world.centerY - 100, "OLEADA " + waveNumber, styleBig);
                 newWaveText.anchor.setTo(0.5);
                 newWaveText.lifespan = 2000;
                 game.time.events.add(0, function () { game.add.tween(newWaveText).to({ alpha: 0 }, 2000, Phaser.Easing.Linear.None, true); }, this);
@@ -461,7 +472,7 @@ function hitEnemy(enemyIndex) {
 
         if (AllEnemies[enemyIndex].hits == 0) {
             AllEnemies[enemyIndex].sprite.body.velocity.x = 0;
-            AllEnemies[enemyIndex].sprite.body.velocity.y = 200;
+            AllEnemies[enemyIndex].sprite.body.velocity.y = 400;
 
             combo++;
             giveScore(AllEnemies[enemyIndex].sprite.body.center.x);
@@ -698,7 +709,7 @@ function pauseEvent() {
         cursors.right.enabled = false;
         punchButtonR.inputEnabled = false;
 
-        menu = game.add.sprite(game.world.centerX, game.world.centerY, 'menuPausa');
+        menu = game.add.sprite(game.world.centerX, game.world.centerY, 'menuPausa', 0);
         menu.scale.setTo(game.world.height / 3000);
         menu.anchor.setTo(0.5);
 
@@ -707,20 +718,16 @@ function pauseEvent() {
             game.paused = false;
             game.state.start('gameState');
         }, this, 1, 0);
-        tryAgain.scale.setTo(0.2);
+        tryAgain.scale.setTo(0.3);
         tryAgain.anchor.setTo(0.5);
 
-        back = game.add.button(game.world.centerX, menu.top + menu.height * 0.7, 'botones2', function () {
+        back = game.add.button(game.world.centerX, menu.top + menu.height * 0.7, 'levelSelect', function () {
             track.stop();
             game.paused = false;
             game.state.start('levelState');
         }, this, 1, 0);
-        back.scale.setTo(0.2);
+        back.scale.setTo(0.5);
         back.anchor.setTo(0.5);
-
-        backText = game.add.text(back.x, back.y, "Select level", styleMedium);
-        backText.fontSize = 30;
-        backText.anchor.setTo(0.5);
     } else {
         game.paused = false;
 
@@ -744,7 +751,6 @@ function pauseEvent() {
         menu.destroy();
         tryAgain.destroy();
         back.destroy();
-        backText.destroy();
     }
 }
 
