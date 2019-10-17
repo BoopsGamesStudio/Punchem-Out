@@ -60,12 +60,12 @@ PunchemOut.endgameState.prototype = {
         }
 
         tryAgain = this.add.button(game.world.width * 0.87, game.world.height * 0.87, 'botones2', function () { game.state.start('gameState'); resetVariables(); }, this, 1, 0);
-        tryAgain.scale.setTo(0.7);
+        tryAgain.scale.setTo(game.world.height / 700);
         tryAgain.anchor.setTo(1);
         tryAgain.alpha = 0;
 
-        levelSelect = this.add.button(game.world.width * 0.13, game.world.height * 0.87, 'levelSelect', function () { game.state.start('levelState'); resetVariables(); }, this,  1, 0);
-        levelSelect.scale.setTo(0.7);
+        levelSelect = this.add.button(game.world.width * 0.1, game.world.height * 0.87, 'levelSelect', function () { game.state.start('levelState'); resetVariables(); }, this,  1, 0);
+        levelSelect.scale.setTo(game.world.height / 700);
         levelSelect.anchor.setTo(0, 1);
         levelSelect.alpha = 0;
 

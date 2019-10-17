@@ -38,11 +38,12 @@ PunchemOut.menuState.prototype = {
         logo.anchor.setTo(0.5);
 
         contacto = this.add.button(game.world.width * 0.13, game.world.height * 0.87, 'logo', function () { game.state.start('socialmediaState'); });
-        contacto.scale.setTo(0.25);
+        contacto.scale.setTo(game.world.height / 3000);
         contacto.anchor.setTo(0, 1);
 
-        settings = this.add.button(game.world.width * 0.87, game.world.height * 0.87, 'botones', function () { game.state.start('settingsState'); }, this, 13, 12);
+        settings = this.add.button(game.world.width * 0.87, game.world.height * 0.87, 'botones', function () { game.state.start('endgameState'); }, this, 13, 12);
         settings.anchor.setTo(0.7, 1);
+        settings.scale.setTo(game.world.height / 700);
 
         jugar = this.add.button(game.world.centerX, game.world.centerY, 'botones', function () { game.state.start('levelState'); }, this, 1, 0);
         jugar.scale.setTo(game.world.height / 650);
