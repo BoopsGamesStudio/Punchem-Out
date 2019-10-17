@@ -323,7 +323,7 @@ PunchemOut.gameState.prototype = {
 
         powerUp = game.add.button(game.world.centerX, game.world.height - 100, 'powerUpLogo', function () { executePowerUp(); });
         powerUp.anchor.setTo(0.5);
-        powerUp.scale.setTo(0.05);
+        powerUp.scale.setTo(0.5);
         powerUp.inputEnabled = false;
 
         powerUpBar = game.add.image(game.world.centerX, game.world.height - 40, 'powerUpCharge');
