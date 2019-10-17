@@ -230,11 +230,11 @@ PunchemOut.gameState.prototype = {
 
         livesLeftL = game.add.sprite(50, game.world.height * 0.2, 'vidas');
         livesLeftL.anchor.setTo(0, 0.5);
-        livesLeftL.scale.setTo(game.world.height / 700);
+        livesLeftL.scale.setTo(game.world.width / 1000);
 
         livesLeftR = game.add.sprite(game.world.width - 50, game.world.height * 0.2, 'vidas', 1);
         livesLeftR.anchor.setTo(1, 0.5);
-        livesLeftR.scale.setTo(game.world.height / 700);
+        livesLeftR.scale.setTo(game.world.width / 1000);
 
         scoreText = game.add.sprite(game.world.centerX, 90, 'scoreText', 0);
         scoreText.scale.setTo(0.8);
