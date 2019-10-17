@@ -230,9 +230,11 @@ PunchemOut.gameState.prototype = {
 
         livesLeftL = game.add.sprite(50, game.world.height * 0.2, 'vidas');
         livesLeftL.anchor.setTo(0, 0.5);
+        livesLeftL.scale.setTo(game.world.height / 700);
 
         livesLeftR = game.add.sprite(game.world.width - 50, game.world.height * 0.2, 'vidas', 1);
         livesLeftR.anchor.setTo(1, 0.5);
+        livesLeftR.scale.setTo(game.world.height / 700);
 
         scoreText = game.add.sprite(game.world.centerX, 90, 'scoreText', 0);
         scoreText.scale.setTo(0.8);
@@ -291,6 +293,7 @@ PunchemOut.gameState.prototype = {
         newWaveText.anchor.setTo(0.5);
         newWaveText.lifespan = 2000;
         newWaveText.fontSize = game.world.height * 0.1;
+        newWaveText.fontWeight = 'bold';
         game.time.events.add(0, function () { game.add.tween(newWaveText).to({ alpha: 0 }, 2000, Phaser.Easing.Linear.None, true); }, this);
         console.log("OLEADA " + waveNumber);
 
@@ -358,6 +361,8 @@ PunchemOut.gameState.prototype = {
                 newWaveText = game.add.text(game.world.centerX, game.world.centerY - 100, "OLEADA " + waveNumber, styleBig);
                 newWaveText.anchor.setTo(0.5);
                 newWaveText.lifespan = 2000;
+                newWaveText.fontSize = game.world.height * 0.1;
+                newWaveText.fontWeight = 'bold';
                 game.time.events.add(0, function () { game.add.tween(newWaveText).to({ alpha: 0 }, 2000, Phaser.Easing.Linear.None, true); }, this);
                 console.log("WAVE " + waveNumber);
 
