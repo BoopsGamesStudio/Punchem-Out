@@ -41,7 +41,7 @@ PunchemOut.menuState.prototype = {
         contacto.scale.setTo(0.25);
         contacto.anchor.setTo(0, 1);
 
-        settings = this.add.button(game.world.width * 0.87, game.world.height * 0.87, 'botones', function () { game.state.start('settingsState'); }, this, 13, 12);
+        settings = this.add.button(game.world.width * 0.87, game.world.height * 0.87, 'botones', function () { game.state.start('endgameState'); }, this, 13, 12);
         settings.anchor.setTo(0.7, 1);
 
         jugar = this.add.button(game.world.centerX, game.world.centerY, 'botones', function () { game.state.start('levelState'); }, this, 1, 0);
