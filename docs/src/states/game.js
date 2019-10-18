@@ -57,6 +57,7 @@ var currentcombo;
 var currentScore;
 var spawnHeight = undefined;
 var track;
+var comboBreak;
 
 var EnemySpeed;
 const EnemyHits = [1, 1, 1, 1, 1, 2];
@@ -330,7 +331,8 @@ PunchemOut.gameState.prototype = {
         powerUpBar.scale.setTo(0.4, 0.5);
         powerUpBar.anchor.setTo(0.5);
 
-        punchSound = game.add.audio('punch');
+        punchSound = game.add.audio('punch', 0.5);
+        comboBreak = game.add.audio('combobreak', 0.3);
 
         //Timer to spawn enemies
         timer = game.time.create(false);
@@ -474,10 +476,12 @@ function hitEnemy(enemyIndex) {
     if (enemyHittable(enemyIndex)) {
         AllEnemies[enemyIndex].hits--;
         punchSound.play();
+        if(AllEnemies[enemyIndex].hits == 1) AllEnemies[enemyIndex].sprite.tint = 0xde2b07;
 
         if (AllEnemies[enemyIndex].hits == 0) {
+            AllEnemies[enemyIndex].sprite.tint = 0xffffff;
             AllEnemies[enemyIndex].sprite.body.velocity.x = 0;
-            AllEnemies[enemyIndex].sprite.body.velocity.y = 400;
+            AllEnemies[enemyIndex].sprite.body.velocity.y = 350;
 
             combo++;
             giveScore(AllEnemies[enemyIndex].sprite.body.center.x);
@@ -564,6 +568,7 @@ function backToOrigin() {
                 if (combo > maxCombo)
                     maxCombo = combo;
                 combo = 0;
+                if (lifeR > 0) comboBreak.play();
 
                 lifeR--;
 
@@ -583,6 +588,7 @@ function backToOrigin() {
                 if (combo > maxCombo)
                     maxCombo = combo;
                 combo = 0;
+                if (lifeL > 0) comboBreak.play();
 
                 lifeL--;
 
@@ -719,6 +725,7 @@ function pauseEvent() {
         menu.anchor.setTo(0.5);
 
         tryAgain = game.add.button(game.world.centerX, menu.top + menu.height * 0.45, 'botones2', function () {
+            menuHit.play();
             track.stop();
             game.paused = false;
             game.state.start('gameState');
@@ -727,6 +734,7 @@ function pauseEvent() {
         tryAgain.anchor.setTo(0.5);
 
         levelSelect = game.add.button(game.world.centerX, menu.top + menu.height * 0.7, 'levelSelect', function () {
+            menuHit.play();
             track.stop();
             game.paused = false;
             game.state.start('levelState');

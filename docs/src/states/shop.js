@@ -30,12 +30,12 @@ PunchemOut.shopState.prototype = {
         comprarPowerUp.anchor.setTo(0.5);
         comprarPowerUpText.anchor.setTo(0.5);
 
-        back = this.add.button(game.world.width * 0.13, game.world.height * 0.87, 'botones', function () { game.state.start('menuState'); }, this, 15, 14);
+        back = this.add.button(game.world.width * 0.13, game.world.height * 0.87, 'botones', function () { menuHit.play(); game.state.start('menuState'); }, this, 15, 14);
         back.anchor.setTo(0.3, 1);
         back.scale.setTo(game.world.height / 700);
 
         escapeKey = game.input.keyboard.addKey(Phaser.Keyboard.ESC);
-        escapeKey.onDown.add(function () { game.state.start('menuState'); });
+        escapeKey.onDown.add(function () { menuHit.play(); game.state.start('menuState'); });
     },
 
     update: function () {

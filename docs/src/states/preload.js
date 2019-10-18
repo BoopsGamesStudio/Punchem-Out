@@ -65,6 +65,8 @@ PunchemOut.preloadState.prototype = {
 
         //audios
         this.load.audio('punch', 'assets/sounds/beat.mp3');
+        this.load.audio('menuhit', 'assets/sounds/menuhit.mp3');
+        this.load.audio('combobreak', 'assets/sounds/combobreak.mp3');
         this.load.audio('track1', 'assets/sounds/track1.mp3');
         this.load.audio('track2', 'assets/sounds/track2.mp3');
         this.load.audio('track3', 'assets/sounds/track3.mp3');
