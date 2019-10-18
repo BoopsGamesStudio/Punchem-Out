@@ -32,9 +32,13 @@ ___
 
 + __[5. Arte](#art)__
 
-+ __[6. Historial de versiones](#changelog)__
++ __[6. Sistema de monetización](#money)__
 
-+ __[7. Boops Games Studio](#credits)__
++ __[7. El futuro del proyecto](#future)__
+
++ __[8. Historial de versiones](#changelog)__
+
++ __[9. Boops Games Studio](#credits)__
 
 # <a name="intro"></a>2.- Introducción
 
@@ -42,7 +46,7 @@ Este es el documento de diseño de **_Punch'em Up!_**, un videojuego de navegado
 	
 + ## <a name="game_concept"></a> 2.1 Concepto del juego	
 
-En un puente dos rivales se encuentran y tú quieres evitarlo. Juega como dos puños de madera gigantes e intenta tirar a todo aquel que se atreva a pasar por el puente. ¿Conseguirás la máxima puntuación?
+En un puente dos rivales se encuentran y tú quieres evitarlo... Juega como dos puños de madera gigantes e intenta tirar a todo aquel que se atreva a pasar por el puente. ¿Conseguirás la máxima puntuación?
 	
 + ## <a name="main_features"></a>2.2 Características principales		
 	
@@ -103,9 +107,9 @@ También se abrirá el otro lado del puente, pudiendo los personajes cruzar de i
 	
 El jugador seleccionará una de las dificultades a elegir en el juego, clasificadas por niveles:
 
-* **Nivel 1**: _Unidades Normales_. Tras pasar un rato se abrirá la otra puerta.
-* **Nivel 2**: Todo lo anterior y tras pasar un rato aparecerán _Unidades a Caballo_.
-* **Nivel 3**: Todo lo anterior y tras pasar un rato aparecerán _Unidades Exclusivas_.
+* **Nivel 1**: Aparecerán _Unidades Normales_ y _Unidades a Caballo_. 
+* **Nivel 2**: Todo lo anterior y aparecerán _Caballeros Gigantes_ .
+* **Nivel 3**: Todo lo anterior y aparecerán _Hechiceros_.
 
 Además, durante la partida la velocidad de los personajes que van por el puente irá aumentando con el tiempo.
 
@@ -126,7 +130,7 @@ Exclusivas de _Caballeros_:
 	
 Exclusivas de _Magos_:
 
-* **Brujo**: Se teletransporta a la mitad del mapa, esquivando uno de los puños automáticamente.
+* **Hechicero**: Se teletransporta a la mitad del mapa, esquivando uno de los puños automáticamente.
 
 + ## <a name="movement"></a>3.4 Movimiento
 	
@@ -193,7 +197,36 @@ _Concept Escenario_
 <img src="Arte/894AB0BA-BA12-4771-9A2A-821255FCE754.jpeg" width="750">
 </p>
 
-# <a name="changelog"></a>6.- Historial de versiones
+
+# <a name="money"></a>6.- Sistema de monetización
+
+Haremos uso de un sistema *freemium*. En la tienda, podremos:
+
++ **Comprar paquete de niveles**: *2.99€* Con ello, el jugador podrá desbloquear niveles sin necesidad de jugar y conseguir los puntos necesarios.
++ **Comprar una vida:** *0.50€* Con ello el jugador podrá revivir un puño que haya perdido una vez por partida. Con ello, el jugador podrá seguir jugando durante más tiempo.
+
+*Todos los precios aquí puestos son orientativos*
+
+# <a name="future"></a>7.- El futuro del proyecto
+
+El plan del juego de aquí a dos años el el siguiente:
+
++ **Seguir actualizando el juego con más niveles:** Se seguirá actualizando el juego añadiendo nuevos niveles, lo que implica nuevos escenarios, enemigos y mecánicas. Los niveles se actualizarán en paquetes de niveles, cada uno reuniendo un número variante de niveles a desbloquear.
+
+  * Nueva estética: Los nuevos niveles tendrán distintas estéticas, siempre con dos bandos enfrentándose. Un ejemplo podría ser Aliens vs Humanos, jugando en una estación espacial o un planeta.
+  * Nuevos enemigos: Cada nivel temático tendría sus propios enemigos. Algunos con mecánicas exclusivas. Un ejemplo podría ser un alien que necesita tres golpes, pero que va más lento con cada golpe que le des.
+  * Nuevas mecánicas: Mientras la mecánica principal sería la misma, cada nivel puede añadir un nuevo giro de tuerca para hacer el juego más interesante. Un ejemplo de ello puede ser jugar la posibilidad de mover los puños por un rail, pudiendo cambiar su posición, permitiendo abatir nuevos tipos de enemigos.
+  
++ **Nuevos Power-ups**: Actualmente el juego tiene un solo power-up. La idea es ampliar el catálogo de power-ups que puede usar el usuario. Un ejemplo de esto sería un power-up que permitiese al jugador ampliar el tamaño de los puños, para aumentar su alcance. 
+
++ **Más opciones de compra**: Se podrán comprar los paquetes de niveles para desbloquearlos antes de tiempo. Aparte de eso, la idea es que se puedan comprar Power-ups que se vayan diseñando
+
++ **Seguir actualizando las RRSS:** Para ayudar a la interacción con la comunidad se seguirán actualizando periódicamente las redes sociales, publicando actualizaciones y resolviendo dudas.
+
++ **Resolver dudas y ayudar al usuario**: Tras la salida del juego, se resolverán las dudas y problemas de los usuarios a través del correo del grupo.
+
+# <a name="changelog"></a>8.- Historial de versiones
+
 + (24/09/2019) Estructura básica del documento.
 + (28/09/2019) Añadidas muchas mejoras:
 
@@ -207,8 +240,13 @@ _Concept Escenario_
   * Pequeñas mejoras.
   
 +  (08/10/2019) Añadidas animaciones al GDD
++  (19/10/2019) Actualizado el GDD para la entrega del proyecto:
 
-# <a name="credits"></a>7.- Boops Games Studio
+  * Añadida sección para explicar la monetización del juego.
+  * Añadida sección explicando el futuro del proyecto.
+  * Pequeñas mejoras por el documento
+
+# <a name="credits"></a>9.- Boops Games Studio
 
 + Alejandro Hernández Pérez -Programador
 + Mario Marquez Balduque - Programador
