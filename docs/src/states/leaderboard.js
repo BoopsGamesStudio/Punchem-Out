@@ -52,12 +52,12 @@ PunchemOut.leaderboardState.prototype = {
         leaderBoardCell.height = leaderBoard.height * 0.83;
         leaderBoardCell.width = game.world.height * 0.3;
         
-        back = this.add.button(game.world.width * 0.13, game.world.height * 0.87, 'botones', function () { game.state.start('levelState'); }, this, 15, 14);
+        back = this.add.button(game.world.width * 0.13, game.world.height * 0.87, 'botones', function () { menuHit.play(); game.state.start('levelState'); }, this, 15, 14);
         back.anchor.setTo(0.3, 1);
         back.scale.setTo(game.world.height / 700);
 
         escapeKey = game.input.keyboard.addKey(Phaser.Keyboard.ESC);
-        escapeKey.onDown.add(function () { game.state.start('levelState'); });
+        escapeKey.onDown.add(function () { menuHit.play(); game.state.start('levelState'); });
     },
 
     update: function () {

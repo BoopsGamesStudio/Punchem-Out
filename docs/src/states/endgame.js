@@ -23,7 +23,7 @@ PunchemOut.endgameState.prototype = {
 
     create: function () {
 
-        Score = 0;
+        topScore = 0;
 
         checkScore();
 
@@ -59,12 +59,12 @@ PunchemOut.endgameState.prototype = {
             CongratsText.fontSize = game.world.height * 0.03;
         }
 
-        tryAgain = this.add.button(game.world.width * 0.87, game.world.height * 0.87, 'botones2', function () { game.state.start('gameState'); resetVariables(); }, this, 1, 0);
+        tryAgain = this.add.button(game.world.width * 0.87, game.world.height * 0.87, 'botones2', function () { menuHit.play(); game.state.start('gameState'); resetVariables(); }, this, 1, 0);
         tryAgain.scale.setTo(game.world.height / 700);
         tryAgain.anchor.setTo(1);
         tryAgain.alpha = 0;
 
-        levelSelect = this.add.button(game.world.width * 0.1, game.world.height * 0.87, 'levelSelect', function () { game.state.start('levelState'); resetVariables(); }, this,  1, 0);
+        levelSelect = this.add.button(game.world.width * 0.1, game.world.height * 0.87, 'levelSelect', function () { menuHit.play(); game.state.start('levelState'); resetVariables(); }, this,  1, 0);
         levelSelect.scale.setTo(game.world.height / 700);
         levelSelect.anchor.setTo(0, 1);
         levelSelect.alpha = 0;
@@ -94,7 +94,7 @@ function checkScore() {
                 scoreLvl1.sort(function (a, b) { return a - b });
                 for (var i = 0; i < scoreLength; i++) {
                     if (scoreFinal == scoreLvl1[i]) {
-                        topScore = scoreLength % i;
+                        topScore = scoreLength - i;
                     }
                 }
             }
@@ -106,7 +106,7 @@ function checkScore() {
                 scoreLvl2.sort(function (a, b) { return a - b });
                 for (var i = 0; i < scoreLength; i++) {
                     if (scoreFinal == scoreLvl2[i]) {
-                        topScore = scoreLength % i;
+                        topScore = scoreLength - i;
                     }
                 }
             }
@@ -118,7 +118,7 @@ function checkScore() {
                 scoreLvl3.sort(function (a, b) { return a - b });
                 for (var i = 0; i < scoreLength; i++) {
                     if (scoreFinal == scoreLvl3[i]) {
-                        topScore = scoreLength % i;
+                        topScore = scoreLength - i;
                     }
                 }
             }
