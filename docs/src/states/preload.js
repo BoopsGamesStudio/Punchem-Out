@@ -40,8 +40,6 @@ PunchemOut.preloadState.prototype = {
         this.load.image('powerUpLogo', 'assets/sprites/powerUpLogo.png');
         this.load.image('scoreFrame', 'assets/sprites/scoreFrame.png');
         this.load.image('scoreButton', 'assets/sprites/scoreButton.png');
-        this.load.image('uk_flag', 'assets/sprites/UK_flag.png');
-        this.load.image('spain_flag', 'assets/sprites/spain_flag.png');
         this.load.image('info', 'assets/sprites/info.png');
 
         //spritesheets
@@ -65,6 +63,10 @@ PunchemOut.preloadState.prototype = {
         this.load.spritesheet('powerUpEffect', 'assets/sprites/powerUpEffect.png', 400, 360);
         this.load.spritesheet('botones2', 'assets/sprites/botones2.png', 231.5, 106.75);
         this.load.spritesheet('menuPausa', 'assets/sprites/menuPausa.png', 491.5, 656);
+        this.load.spritesheet('uk_flag', 'assets/sprites/UK_flag.png', 758, 494);
+        this.load.spritesheet('spain_flag', 'assets/sprites/spain_flag.png', 750, 500);
+        this.load.spritesheet('flechas', 'assets/sprites/flechas.png', 108, 75);
+        this.load.spritesheet('shop', 'assets/sprites/shop.png', 225, 163.33);
 
         //audios
         this.load.audio('punch', 'assets/sounds/beat.mp3');
@@ -73,6 +75,7 @@ PunchemOut.preloadState.prototype = {
         this.load.audio('track1', 'assets/sounds/track1.mp3');
         this.load.audio('track2', 'assets/sounds/track2.mp3');
         this.load.audio('track3', 'assets/sounds/track3.mp3');
+        this.load.audio('rayo', 'assets/sounds/rayo.mp3');
     },
 
     create: function () {

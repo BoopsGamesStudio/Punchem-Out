@@ -25,7 +25,7 @@ const SpawnCoordinates = {
 }
 
 var powerUpCharge = 0;
-var powerUpMax = 30;
+var powerUpMax = 5;
 var time;
 var punchR;
 var punchL;
@@ -47,7 +47,9 @@ var waveNumberFinal;
 var MaxSpawnTime;
 var BaseSpawnTime;
 var spawnTime;
+var track;
 var punchSound;
+var rayo;
 var combo = 0;
 var maxCombo = 0;
 var maxComboFinal
@@ -56,7 +58,6 @@ var livesLeftR;
 var currentcombo;
 var currentScore;
 var spawnHeight = undefined;
-var track;
 var comboBreak;
 var LanguageSprite;
 
@@ -224,13 +225,13 @@ PunchemOut.gameState.prototype = {
 
         switch (level) {
             case 1:
-                game.add.sprite(20, 20, 'botones2', 2).scale.setTo(game.world.height / 1000);
+                game.add.sprite(20, 20, 'botones2', 2 + (LanguageSprite * 8)).scale.setTo(game.world.height / 1000);
                 break;
             case 2:
-                game.add.sprite(20, 20, 'botones2', 4).scale.setTo(game.world.height / 1000);
+                game.add.sprite(20, 20, 'botones2', 4 + (LanguageSprite * 8)).scale.setTo(game.world.height / 1000);
                 break;
             case 3:
-                game.add.sprite(20, 20, 'botones2', 6).scale.setTo(game.world.height / 1000);
+                game.add.sprite(20, 20, 'botones2', 6 + (LanguageSprite * 8)).scale.setTo(game.world.height / 1000);
                 break;
         }
 
@@ -251,6 +252,7 @@ PunchemOut.gameState.prototype = {
 
         currentcombo = game.add.text(game.world.width * 0.15, game.world.height * 0.85, 'x' + combo, styleBig);
         currentcombo.anchor.setTo(0.5);
+        currentcombo.fontSize = 40;
 
         //Controls
         cursors = this.input.keyboard.createCursorKeys();
@@ -273,7 +275,7 @@ PunchemOut.gameState.prototype = {
         escapeKey = game.input.keyboard.addKey(Phaser.Keyboard.ESC);
         escapeKey.onDown.add(pauseEvent);
 
-        pauseButton = game.add.button(game.world.width - 10, 10, 'pauseButton', function () { pauseEvent(); }, this, 1, 0);
+        pauseButton = game.add.button(game.world.width - 10, 10, 'pauseButton', function () { pauseEvent(); }, this, 1, 0, 1, 0);
         pauseButton.anchor.setTo(1, 0);
 
         //Create punches and their animations
@@ -344,6 +346,7 @@ PunchemOut.gameState.prototype = {
         powerUpBar.scale.setTo(0.4, 0.5);
         powerUpBar.anchor.setTo(0.5);
 
+        rayo = game.add.audio('rayo');
         punchSound = game.add.audio('punch', 0.5);
         comboBreak = game.add.audio('combobreak', 0.3);
 
@@ -553,14 +556,18 @@ function TeleportMages() {
 
 function stopAnimL() {
     animL.stop(true);
-    punchL.frame = 9;
-    punchL.alpha = 0.6;
+    if (lifeL > 0) {
+        punchL.frame = 9;
+        punchL.alpha = 0.6;
+    }
 }
 
 function stopAnimR() {
     animR.stop(true);
-    punchR.frame = 9;
-    punchR.alpha = 0.6;
+    if (lifeR > 0) {
+        punchR.frame = 9;
+        punchR.alpha = 0.6;
+    }
 }
 
 function xSpeed(SpeedIncrement) {
@@ -598,6 +605,7 @@ function backToOrigin() {
                     livesLeftR.destroy();
                     punchR.frame = 9;
                     punchR.alpha = 0.3;
+                    pressR = false;
                     punchButtonR.inputEnabled = false;
                     cursors.right.enabled = false;
                 } else {
@@ -618,6 +626,7 @@ function backToOrigin() {
                     livesLeftL.destroy();
                     punchL.frame = 9;
                     punchL.alpha = 0.3;
+                    pressL = false;
                     punchButtonL.inputEnabled = false;
                     cursors.left.enabled = false;
                 } else {
@@ -693,6 +702,7 @@ function executePowerUp() {
     rayos.width = game.world.width;
     rayos.height = game.world.height;
     rayos.animations.add('rayos').play(15, false, true);
+    rayo.play();
 
     for (var i = 0; i < totalEnemyTypes * maxEnemies; i++) {
         if (enemyHittable(i)) {
@@ -750,7 +760,7 @@ function pauseEvent() {
             track.stop();
             game.paused = false;
             game.state.start('gameState');
-        }, this, 1, 0);
+        }, this, 1 + (LanguageSprite * 8), 0 + (LanguageSprite * 8));
         tryAgain.scale.setTo(game.world.height / 700);
         tryAgain.anchor.setTo(0.5);
 
@@ -790,6 +800,11 @@ function pauseEvent() {
 
 function resetVariables() {
     powerUpCharge = 0;
+
+    pressL = false;
+    pressR = false;
+    punchL_CD = 0;
+    punchR_CD = 0;
 
     lifeL = livesL;
     lifeR = livesR;

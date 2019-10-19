@@ -26,15 +26,19 @@ PunchemOut.levelState.prototype = {
         logo.scale.setTo(game.world.height / 1000);
         logo.anchor.setTo(0.5);
 
-        lvl1 = this.add.button(game.world.width * 0.25, game.world.height * 0.5, 'botones2', function () { menuHit.play(); startState(1, 'gameState'); }, this, 3, 2);
+        var LanguageSprite = 0;
+        if(Language == 'english')
+            LanguageSprite = 8;
+
+        lvl1 = this.add.button(game.world.width * 0.25, game.world.height * 0.5, 'botones2', function () { menuHit.play(); startState(1, 'gameState'); }, this, 3 + LanguageSprite, 2 + LanguageSprite);
         lvl1.scale.setTo(game.world.height / 800);
         lvl1.anchor.setTo(0.5);
 
-        lvl2 = this.add.button(game.world.centerX, game.world.height * 0.5, 'botones2', function () { menuHit.play(); startState(2, 'gameState'); }, this, 5, 4);
+        lvl2 = this.add.button(game.world.centerX, game.world.height * 0.5, 'botones2', function () { menuHit.play(); startState(2, 'gameState'); }, this, 5 + LanguageSprite, 4 + LanguageSprite);
         lvl2.scale.setTo(game.world.height / 800);
         lvl2.anchor.setTo(0.5);
 
-        lvl3 = this.add.button(game.world.width * 0.75, game.world.height * 0.5, 'botones2', function () { menuHit.play(); startState(3, 'gameState'); }, this, 7, 6);
+        lvl3 = this.add.button(game.world.width * 0.75, game.world.height * 0.5, 'botones2', function () { menuHit.play(); startState(3, 'gameState'); }, this, 7 + LanguageSprite, 6 + LanguageSprite);
         lvl3.scale.setTo(game.world.height / 800);
         lvl3.anchor.setTo(0.5);
 
@@ -49,6 +53,10 @@ PunchemOut.levelState.prototype = {
         lvl3Score = game.add.button(lvl3.position.x, lvl1.position.y + game.world.height * 0.1, 'scoreButton', function () { menuHit.play(); startState(3, 'leaderboardState'); }, this);
         lvl3Score.scale.setTo(game.world.height / 1000);
         lvl3Score.anchor.setTo(0.5);
+
+        info = this.add.button(game.world.centerX, game.world.height * 0.75, 'info', function () { menuHit.play(); game.state.start('infoState'); }, this, 5 + LanguageSprite, 4 + LanguageSprite);
+        info.anchor.setTo(0.5);
+        info.scale.setTo(game.world.height / 5000);
 
         back = this.add.button(game.world.width * 0.13, game.world.height * 0.87, 'botones', function () { menuHit.play(); game.state.start('menuState'); }, this, 15, 14);
         back.anchor.setTo(0.3, 1);

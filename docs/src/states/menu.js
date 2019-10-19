@@ -65,11 +65,7 @@ PunchemOut.menuState.prototype = {
         creditos.scale.setTo(game.world.height / 650);
         creditos.anchor.setTo(0.5);
 
-        info = this.add.button(game.world.width * 0.83, game.world.height * 0.5, 'info', function () { menuHit.play(); game.state.start('infoState'); }, this, 5 + LanguageSprite, 4 + LanguageSprite);
-        info.anchor.setTo(0.5);
-        info.scale.setTo(game.world.height / 5000);
-
-        console.log('Current language is:' + Language);
+        console.log('Current language is: ' + Language);
     },
 
     update: function () {
