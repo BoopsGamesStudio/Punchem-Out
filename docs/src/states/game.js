@@ -25,7 +25,7 @@ const SpawnCoordinates = {
 }
 
 var powerUpCharge = 0;
-var powerUpMax = 5;
+var powerUpMax = 30;
 var time;
 var punchR;
 var punchL;
