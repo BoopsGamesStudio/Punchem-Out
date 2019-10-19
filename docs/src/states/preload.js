@@ -40,6 +40,9 @@ PunchemOut.preloadState.prototype = {
         this.load.image('powerUpLogo', 'assets/sprites/powerUpLogo.png');
         this.load.image('scoreFrame', 'assets/sprites/scoreFrame.png');
         this.load.image('scoreButton', 'assets/sprites/scoreButton.png');
+        this.load.image('uk_flag', 'assets/sprites/UK_flag.png');
+        this.load.image('spain_flag', 'assets/sprites/spain_flag.png');
+        this.load.image('info', 'assets/sprites/info.png');
 
         //spritesheets
         this.load.spritesheet('skeleton', 'assets/sprites/skeleton.png', 64, 64); //placeholders

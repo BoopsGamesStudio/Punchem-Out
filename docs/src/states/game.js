@@ -58,6 +58,7 @@ var currentScore;
 var spawnHeight = undefined;
 var track;
 var comboBreak;
+var LanguageSprite;
 
 var EnemySpeed;
 const EnemyHits = [1, 1, 1, 1, 1, 2];
@@ -194,6 +195,10 @@ PunchemOut.gameState.prototype = {
                 break;
         }
 
+        LanguageSprite = 0;
+        if (Language == 'english')
+            LanguageSprite = 1;
+
         track.loop = true;
 
         spawnTime = Math.floor(Math.random() * MaxSpawnTime) + BaseSpawnTime;
@@ -237,14 +242,14 @@ PunchemOut.gameState.prototype = {
         livesLeftR.anchor.setTo(1, 0.5);
         livesLeftR.scale.setTo(game.world.width / 1000);
 
-        scoreText = game.add.sprite(game.world.centerX, 90, 'scoreText', 0);
+        scoreText = game.add.sprite(game.world.centerX, 90, 'scoreText', LanguageSprite);
         scoreText.scale.setTo(0.8);
         scoreText.anchor.setTo(0.5);
 
         currentScore = game.add.text(scoreText.x, scoreText.y, score, styleMedium);
         currentScore.anchor.setTo(0, 0.5);
 
-        currentcombo = game.add.text(game.world.width * 0.15, game.world.height * 0.85, 'x' + combo);
+        currentcombo = game.add.text(game.world.width * 0.15, game.world.height * 0.85, 'x' + combo, styleBig);
         currentcombo.anchor.setTo(0.5);
 
         //Controls
@@ -290,12 +295,20 @@ PunchemOut.gameState.prototype = {
         animR.onStart.add(checkOverlapR, this);
 
         //Create text for first wave
-        newWaveText = game.add.text(game.world.centerX, game.world.height * 0.3, "OLEADA " + waveNumber, styleBig);
+        switch (Language) {
+            case 'spanish':
+                newWaveText = game.add.text(game.world.centerX, game.world.height * 0.3, "OLEADA " + waveNumber, styleBig);
+                break;
+            case 'english':
+                newWaveText = game.add.text(game.world.centerX, game.world.height * 0.3, "WAVE " + waveNumber, styleBig);
+                break;
+        }
         newWaveText.anchor.setTo(0.5);
         newWaveText.lifespan = 2000;
         newWaveText.fontSize = game.world.height * 0.1;
         newWaveText.fontWeight = 'bold';
         game.time.events.add(0, function () { game.add.tween(newWaveText).to({ alpha: 0 }, 2000, Phaser.Easing.Linear.None, true); }, this);
+
         console.log("OLEADA " + waveNumber);
 
         game.time.events.add(2000, function () { track.play() }, this);
@@ -360,7 +373,15 @@ PunchemOut.gameState.prototype = {
             console.log("..." + checkEnemiesAlive());
             if (waveTimer.ms >= 2000) {
                 checkBuggedUnits();
-                newWaveText = game.add.text(game.world.centerX, game.world.centerY - 100, "OLEADA " + waveNumber, styleBig);
+                switch (Language) {
+                    case 'spanish':
+                        newWaveText = game.add.text(game.world.centerX, game.world.centerY - 100, "OLEADA " + waveNumber, styleBig);
+                        break;
+                    case 'english':
+                        newWaveText = game.add.text(game.world.centerX, game.world.centerY - 100, "WAVE " + waveNumber, styleBig);
+                        break;
+                }
+
                 newWaveText.anchor.setTo(0.5);
                 newWaveText.lifespan = 2000;
                 newWaveText.fontSize = game.world.height * 0.1;
@@ -476,7 +497,7 @@ function hitEnemy(enemyIndex) {
     if (enemyHittable(enemyIndex)) {
         AllEnemies[enemyIndex].hits--;
         punchSound.play();
-        if(AllEnemies[enemyIndex].hits == 1) AllEnemies[enemyIndex].sprite.tint = 0xde2b07;
+        if (AllEnemies[enemyIndex].hits == 1) AllEnemies[enemyIndex].sprite.tint = 0xde2b07;
 
         if (AllEnemies[enemyIndex].hits == 0) {
             AllEnemies[enemyIndex].sprite.tint = 0xffffff;
@@ -720,7 +741,7 @@ function pauseEvent() {
         cursors.right.enabled = false;
         punchButtonR.inputEnabled = false;
 
-        menu = game.add.sprite(game.world.centerX, game.world.centerY, 'menuPausa', 0);
+        menu = game.add.sprite(game.world.centerX, game.world.centerY, 'menuPausa', LanguageSprite);
         menu.scale.setTo(game.world.height / 700);
         menu.anchor.setTo(0.5);
 
@@ -738,7 +759,7 @@ function pauseEvent() {
             track.stop();
             game.paused = false;
             game.state.start('levelState');
-        }, this, 1, 0);
+        }, this, 1 + (LanguageSprite * 2), 0 + (LanguageSprite * 2));
         levelSelect.scale.setTo(game.world.height / 700);
         levelSelect.anchor.setTo(0.5);
     } else {

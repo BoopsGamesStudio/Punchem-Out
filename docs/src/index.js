@@ -19,6 +19,7 @@ game.state.add('levelState', PunchemOut.levelState)
 game.state.add('gameState', PunchemOut.gameState)
 game.state.add('creditsState', PunchemOut.creditsState)
 game.state.add('leaderboardState', PunchemOut.leaderboardState)
+game.state.add('infoState', PunchemOut.infoState);
 
 game.state.start('bootState')
 
