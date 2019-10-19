@@ -3,6 +3,7 @@ var scoreLvl1 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 var scoreLvl2 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 var scoreLvl3 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 var topScore;
+var LanguageSprite;
 
 PunchemOut.endgameState = function () {
 
@@ -22,7 +23,6 @@ PunchemOut.endgameState.prototype = {
     },
 
     create: function () {
-
         topScore = 0;
 
         checkScore();
@@ -37,34 +37,53 @@ PunchemOut.endgameState.prototype = {
         gameOver.anchor.setTo(0.5);
         gameOver.alpha = 0;
 
-        waveText = this.add.text(game.world.centerX, game.world.height * 0.5, "Oleada: " + waveNumberFinal, styleSmall);
+        switch (Language) {
+            case 'english':
+                LanguageSprite = 2;
+                waveText = this.add.text(game.world.centerX, game.world.height * 0.5, "Wave: " + waveNumberFinal, styleSmall);
+                scoreText = this.add.text(game.world.centerX, game.world.height * 0.55, "Score: " + scoreFinal, styleSmall);
+                maxComboText = this.add.text(game.world.centerX, game.world.height * 0.6, "Max combo: " + maxComboFinal, styleSmall);
+                if (topScore != 0) CongratsText = this.add.text(game.world.centerX, game.world.height * 0.65, "Congratulations!! You've reached TOP " + topScore, styleSmall);
+                break;
+            case 'spanish':
+                LanguageSprite = 0;
+                waveText = this.add.text(game.world.centerX, game.world.height * 0.5, "Oleada: " + waveNumberFinal, styleSmall);
+                scoreText = this.add.text(game.world.centerX, game.world.height * 0.55, "Puntuación: " + scoreFinal, styleSmall);
+                maxComboText = this.add.text(game.world.centerX, game.world.height * 0.6, "Combo máximo: " + maxComboFinal, styleSmall);
+                if (topScore != 0) CongratsText = this.add.text(game.world.centerX, game.world.height * 0.65, "Enhorabuena!! Has alcanzado el TOP " + topScore, styleSmall);
+                break;
+        }
+
         waveText.anchor.setTo(0.5);
         waveText.alpha = 0;
         waveText.fontSize = game.world.height * 0.03;
 
-        scoreText = this.add.text(game.world.centerX, game.world.height * 0.55, "Puntuación: " + scoreFinal, styleSmall);
+
         scoreText.anchor.setTo(0.5);
         scoreText.alpha = 0;
         scoreText.fontSize = game.world.height * 0.03;
 
-        maxComboText = this.add.text(game.world.centerX, game.world.height * 0.6, "Combo máximo: " + maxComboFinal, styleSmall);
+
         maxComboText.anchor.setTo(0.5);
         maxComboText.alpha = 0;
         maxComboText.fontSize = game.world.height * 0.03;
 
         if (topScore != 0) {
-            CongratsText = this.add.text(game.world.centerX, game.world.height * 0.65, "Enhorabuena!! Has alcanzado el TOP " + topScore, styleSmall);
             CongratsText.anchor.setTo(0.5);
             CongratsText.alpha = 0;
             CongratsText.fontSize = game.world.height * 0.03;
         }
 
-        tryAgain = this.add.button(game.world.width * 0.87, game.world.height * 0.87, 'botones2', function () { menuHit.play(); game.state.start('gameState'); resetVariables(); }, this, 1, 0);
+        tryAgain = this.add.button(game.world.width * 0.87, game.world.height * 0.87, 'botones2', function () {
+            menuHit.play(); game.state.start('gameState'); resetVariables();
+        }, this, 1 + (4 * LanguageSprite), 0 + (4 * LanguageSprite));
         tryAgain.scale.setTo(game.world.height / 700);
         tryAgain.anchor.setTo(1);
         tryAgain.alpha = 0;
 
-        levelSelect = this.add.button(game.world.width * 0.1, game.world.height * 0.87, 'levelSelect', function () { menuHit.play(); game.state.start('levelState'); resetVariables(); }, this,  1, 0);
+        levelSelect = this.add.button(game.world.width * 0.1, game.world.height * 0.87, 'levelSelect', function () {
+            menuHit.play(); game.state.start('levelState'); resetVariables();
+        }, this, 1 + LanguageSprite, 0 + LanguageSprite);
         levelSelect.scale.setTo(game.world.height / 700);
         levelSelect.anchor.setTo(0, 1);
         levelSelect.alpha = 0;

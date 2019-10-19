@@ -20,7 +20,15 @@ PunchemOut.leaderboardState.prototype = {
         fondoMenu.height = game.world.height;
         fondoMenu.width = game.world.width;
 
-        leaderBoard = game.add.text(game.world.centerX, game.world.height * 0.1, "TOP PUNTUACIONES [NIVEL " + level + "]:\n", styleBig);
+        switch (Language) {
+            case 'english':
+                    leaderBoard = game.add.text(game.world.centerX, game.world.height * 0.1, "TOP SCORES [LEVEL " + level + "]:\n", styleBig);
+                break;
+            case 'spanish':
+                    leaderBoard = game.add.text(game.world.centerX, game.world.height * 0.1, "TOP PUNTUACIONES [NIVEL " + level + "]:\n", styleBig);
+                break;
+        }
+        
         leaderBoard.fontSize = game.world.height/30;
         leaderBoard.lineSpacing = game.world.height/50;
     
