@@ -584,6 +584,7 @@ function resetEnemy(enemyIndex) {
     AllEnemies[enemyIndex].sprite.position.y = AllEnemies[enemyIndex].initHeight;
     AllEnemies[enemyIndex].sprite.position.x = AllEnemies[enemyIndex].initPos;
     AllEnemies[enemyIndex].hits = EnemyHits[type];
+    AllEnemies[enemyIndex].sprite.tint = 0xffffff;
     AllEnemies[enemyIndex].sprite.animations.stop();
     if (type = 5) AllEnemies[enemyIndex].alreadyTP = false;
 }
