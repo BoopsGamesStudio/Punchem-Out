@@ -138,20 +138,79 @@ Los personajes se moverán de un lado al otro del puente. Los puños solo se mue
 
 # <a name="interface"></a>4.- Interfaz
 
-+ ## 4.1 Diagrama de flujo	
++ ## 4.a Diagrama de flujo (Idea inicial)	
 
 ![Error al cargar la imagen](flujo.png)
 
-+ ## 4.2 Menú principal
-*POR HACER*
-+ ## 4.3 Créditos	
-*POR HACER*
-+ ## 4.4 Selección de perfil
-*POR HACER*
-+ ## 4.5 Selección de nivel	
-*POR HACER*
-+ ## 4.6 Fin del nivel
-*POR HACER*
++ ## 4.b Menú principal
+
+<p align="center">
+  <img src="Arte/captura1.png" width="750">
+</p>
+
++ ## 4.c Créditos	
+
+<p align="center">
+  <img src="Arte/captura4.png" width="750">
+</p>
+
+
++ ## 4.d Redes sociales
+
+<p align="center">
+  <img src="Arte/captura2.png" width="750">
+</p>
+
++ ## 4.e Tienda	
+
+<p align="center">
+  <img src="Arte/captura3.png" width="750">
+</p>
+
++ ## 4.f Ajustes	
+
+<p align="center">
+  <img src="Arte/captura5.png" width="750">
+</p>
+
++ ## 4.g Selección de nivel	
+
+<p align="center">
+  <img src="Arte/captura6.png" width="750">
+</p>
+
++ ## 4.h Rankings	
+
+<p align="center">
+  <img src="Arte/captura8.png" width="750">
+</p>
+
++ ## 4.i Información de los personajes	
+
+<p align="center">
+  <img src="Arte/captura7.png" width="750">
+</p>
+
++ ## 4.j Juego	
+
+<p align="center">
+  <img src="Arte/captura9.png" width="750">
+</p>
+
++ ## 4.k Pausa	
+
+<p align="center">
+  <img src="Arte/captura11.png" width="750">
+</p>
+
+
++ ## 4.l Fin del nivel
+
+<p align="center">
+  <img src="Arte/captura10.png" width="750">
+</p>
+
+
 
 # <a name="art"></a>5.- Arte 
 
@@ -190,6 +249,10 @@ _Sketch de la animación del Hechicero_
 _Sketch de la animación del Caballero Gigante_
 
 ![Error al cargar la imagen](https://raw.githubusercontent.com/BoopsGamesStudio/Punchem-Out/master/docs/assets/sprites/fuerte2.gif)
+
+_Sketch de la animación delos jinetes_
+
+![Error al cargar la imagen](https://raw.githubusercontent.com/BoopsGamesStudio/Punchem-Out/master/jinete.gif)
 
 _Concept Escenario_
 
@@ -242,9 +305,11 @@ El plan del juego de aquí a dos años el el siguiente:
 +  (08/10/2019) Añadidas animaciones al GDD
 +  (19/10/2019) Actualizado el GDD para la entrega del proyecto:
 
-  * Añadida sección para explicar la monetización del juego.
-  * Añadida sección explicando el futuro del proyecto.
-  * Pequeñas mejoras por el documento
+   * Añadida sección para explicar la monetización del juego.
+   * Añadida sección explicando el futuro del proyecto.
+   * Pequeñas mejoras por el documento
+  
++ (20/10/19) Añadidas imágenes que faltaban: Listo para entregar
 
 # <a name="credits"></a>9.- Boops Games Studio
 
