@@ -11,6 +11,11 @@
 
 ___
 
+Para aprender rápidamente a *Cómo jugar* y una explicación básica de los controles, pulsar __[aquí](#controls)__
+
+
+___
+
 # 1.- Índice
 
 + __[2.- Introducción](#intro)__
@@ -27,6 +32,7 @@ ___
 	+ __[3.2 Flujo de juego](#game_flow)__
 	+ __[3.3 Personajes](#characters)__
 	+ __[3.4 Movimiento](#movement)__
+	+ __[3.5 Cómo jugar](#controls)__
 	
 + __[4.- Interfaz](#interface)__
 
@@ -135,6 +141,19 @@ Exclusivas de _Magos_:
 + ## <a name="movement"></a>3.4 Movimiento
 	
 Los personajes se moverán de un lado al otro del puente. Los puños solo se mueven hacia el jugador para tirar a los personajes.
+
++ ## <a name="controls"></a>3.5 Cómo Jugar
+
+Tira a todos los personajes que pasen por delante de los puños. Una vez lanzado un puño tardará un poco en poderse lanzar de nuevo. Para más información sobre los tipos de personaje, leer la sección de arriba, __[Personajes](#characters)__. 
+
+Hay dos modos de jugar, uno más pensado para dispositivos móviles y otro más pensado para PC
+
+***Controles:***
+
+* **Jugando en dispositivo móvil**: Con una pulsación del dedo en la parte derecha de la pantalla se activará el puño derecho (No es necesario pulsar en la imagen del puño en sí). Ocurre lo mismo al hacer una pulsación en la parte izquierda de la pantalla, pero con el puño izquierdo. Para activar el Power-Up, pulsar en el icono una vez esté cargado (totalmente opaco).
+
+* **Jugando en PC**: Puedes pulsar las flechas de dirección izquierda y derecha para activar los respectivos puños. Para usar el Power-up una vez cargado, pulsar espacio.
+
 
 # <a name="interface"></a>4.- Interfaz
 
@@ -309,7 +328,7 @@ El plan del juego de aquí a dos años el el siguiente:
    * Añadida sección explicando el futuro del proyecto.
    * Pequeñas mejoras por el documento
   
-+ (20/10/19) Añadidas imágenes que faltaban: Listo para entregar
++ (20/10/19) Añadidas imágenes que faltaban e instrucciones: Listo para entregar
 
 # <a name="credits"></a>9.- Boops Games Studio
 
