@@ -299,10 +299,10 @@ PunchemOut.gameState.prototype = {
         //Create text for first wave
         switch (Language) {
             case 'spanish':
-                newWaveText = game.add.text(game.world.centerX, game.world.height * 0.3, "OLEADA " + waveNumber, styleBig);
+                newWaveText = game.add.text(game.world.centerX, game.world.centerY, "OLEADA " + waveNumber, styleBig);
                 break;
             case 'english':
-                newWaveText = game.add.text(game.world.centerX, game.world.height * 0.3, "WAVE " + waveNumber, styleBig);
+                newWaveText = game.add.text(game.world.centerX, game.world.centerY, "WAVE " + waveNumber, styleBig);
                 break;
         }
         newWaveText.anchor.setTo(0.5);
@@ -378,10 +378,10 @@ PunchemOut.gameState.prototype = {
                 checkBuggedUnits();
                 switch (Language) {
                     case 'spanish':
-                        newWaveText = game.add.text(game.world.centerX, game.world.centerY - 100, "OLEADA " + waveNumber, styleBig);
+                        newWaveText = game.add.text(game.world.centerX, game.world.centerY, "OLEADA " + waveNumber, styleBig);
                         break;
                     case 'english':
-                        newWaveText = game.add.text(game.world.centerX, game.world.centerY - 100, "WAVE " + waveNumber, styleBig);
+                        newWaveText = game.add.text(game.world.centerX, game.world.centerY, "WAVE " + waveNumber, styleBig);
                         break;
                 }
 
