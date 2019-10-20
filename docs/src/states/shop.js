@@ -34,6 +34,7 @@ PunchemOut.shopState.prototype = {
         }
         
         bought.anchor.setTo(0.5);
+        bought.fontSize = game.world.height * 0.04;
         bought.alpha = 0;
 
         comprarVida = this.add.button(game.world.width * 0.3, game.world.height * 0.4, 'shop', function () {
